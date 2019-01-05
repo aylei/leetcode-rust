@@ -1,0 +1,6 @@
+[package]
+name = "leetcode-rust"
+version = "0.1.0"
+authors = ["alei <rayingecho@gmail.com>"]
+edition = "2019"
+
