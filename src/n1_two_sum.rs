@@ -21,6 +21,8 @@
 
 pub struct Solution {}
 
+// submission codes start here
+
 use std::collections::HashMap;
 impl Solution {
     pub fn two_sum(nums: Vec<i32>, target: i32) -> Vec<i32> {
@@ -34,6 +36,8 @@ impl Solution {
         vec![]
     }
 }
+
+// submission codes end
 
 #[cfg(test)]
 mod tests {
