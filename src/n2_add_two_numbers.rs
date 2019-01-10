@@ -59,7 +59,8 @@ pub struct Solution {}
 impl Solution {
     pub fn add_two_numbers(l1: Option<Box<ListNode>>, l2: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
         let (mut l1, mut l2) = (l1, l2);
-        let mut curr = None;
+        let mut dummy_head = Some(Box::new(ListNode::new(0)));
+        let mut tail = &mut dummy_head;
         let (mut l1_end, mut l2_end, mut overflow) = (false, false, false);
         loop {
             let lhs = match l1 {
@@ -72,26 +73,13 @@ impl Solution {
             };
             // if l1, l2 end and there is not overflow from previous operation, return the result
             if l1_end && l2_end && !overflow {
-                break Solution::reverse(curr);
+                break dummy_head.unwrap().next
             }
             let sum = lhs + rhs + if overflow { 1 } else { 0 };
             let sum = if sum >= 10 { overflow = true; sum - 10 } else { overflow = false; sum };
-            let mut node =  ListNode::new(sum);
-            node.next = curr;
-            curr = Some(Box::new(node));
+            tail.as_mut().unwrap().next = Some(Box::new(ListNode::new(sum)));
+            tail = &mut tail.as_mut().unwrap().next
         }
-    }
-
-    fn reverse(l: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
-        let mut prev = None;
-        let mut current = l;
-        while let Some(mut current_node_inner) = current {
-            let next = current_node_inner.next;
-            current_node_inner.next = prev;
-            prev = Some(current_node_inner);
-            current = next;
-        }
-        prev
     }
 }
 
@@ -106,5 +94,7 @@ mod tests {
         assert_eq!(Solution::add_two_numbers(to_list(vec![2, 4, 3]), to_list(vec![5, 6, 4])), to_list(vec![7, 0, 8]));
 
         assert_eq!(Solution::add_two_numbers(to_list(vec![9, 9, 9, 9]), to_list(vec![9, 9, 9, 9, 9, 9])), to_list(vec![8, 9, 9, 9, 0, 0, 1]));
+
+        assert_eq!(Solution::add_two_numbers(to_list(vec![0]), to_list(vec![0])), to_list(vec![0]))
     }
 }
