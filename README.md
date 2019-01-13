@@ -1,13 +1,15 @@
 # My Leetcode Solution in Rust
 
-Each `.rs` file consists of three parts:
+Run `cargo run {id}` to initialize the template submission file of "question #id".
 
-* problem description
-* my solution
-* test cases
+Run `cargo test test_{id}` to test the solution for "question #id".
 
-Run `cargo test test_{id}` to test the solution for problem #id.
+Working in progress, to do:
 
-Working in progress, solutions list:
+- [ ] auto generation of solution list
 
-* [1 - two sum](src/n1_two_sum.rs)
+## Usage
+
+* Remove all the solution .rs
+* Clean lib.rs file
+* Start your leetcode journey in rust by typing `cargo run {question_id}`

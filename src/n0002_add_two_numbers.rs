@@ -1,13 +1,5 @@
-/*
+/**
  * [2] Add Two Numbers
- *
- * https://leetcode.com/problems/add-two-numbers/description/
- *
- * algorithms
- * Medium (30.03%)
- * Total Accepted:    705.4K
- * Total Submissions: 2.3M
- * Testcase Example:  '[2,4,3]\n[5,6,4]'
  *
  * You are given two non-empty linked lists representing two non-negative
  * integers. The digits are stored in reverse order and each of their nodes
@@ -17,41 +9,13 @@
  * number 0 itself.
  * 
  * Example:
- * 
- * 
+ *
+ *
  * Input: (2 -> 4 -> 3) + (5 -> 6 -> 4)
  * Output: 7 -> 0 -> 8
  * Explanation: 342 + 465 = 807.
  *
  */
-
-#[derive(PartialEq, Eq, Debug)]
-pub struct ListNode {
-    pub val: i32,
-    pub next: Option<Box<ListNode>>
-}
-
-impl ListNode {
-    #[inline]
-    fn new(val: i32) -> Self {
-        ListNode {
-            next: None,
-            val
-        }
-    }
-}
-
-// helper function for test
-pub fn to_list(vec: Vec<i32>) -> Option<Box<ListNode>> {
-    let mut current = None;
-    for &v in vec.iter().rev() {
-        let mut node = ListNode::new(v);
-        node.next = current;
-        current = Some(Box::new(node));
-    }
-    current
-}
-
 pub struct Solution {}
 
 // submission codes start here
@@ -84,6 +48,33 @@ impl Solution {
 }
 
 // submission codes end
+
+#[derive(PartialEq, Eq, Debug)]
+pub struct ListNode {
+    pub val: i32,
+    pub next: Option<Box<ListNode>>
+}
+
+impl ListNode {
+    #[inline]
+    fn new(val: i32) -> Self {
+        ListNode {
+            next: None,
+            val
+        }
+    }
+}
+
+// helper function for test
+pub fn to_list(vec: Vec<i32>) -> Option<Box<ListNode>> {
+    let mut current = None;
+    for &v in vec.iter().rev() {
+        let mut node = ListNode::new(v);
+        node.next = current;
+        current = Some(Box::new(node));
+    }
+    current
+}
 
 #[cfg(test)]
 mod tests {
