@@ -69,7 +69,8 @@ fn build_desc(content: &str) -> String {
         .replace("</b>", "")
         .replace("</pre>", "")
         .replace("<pre>", "")
-        .replace("&nbsp;", "")
+        .replace("&nbsp;", " ")
+        .replace("&quot;", "\"")
         .replace("\n\n", "\n")
         .replace("\n", "\n * ")
 }

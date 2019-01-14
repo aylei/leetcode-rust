@@ -1,12 +1,7 @@
 /**
  * [3] Longest Substring Without Repeating Characters
  *
- * You are given two non-empty linked lists representing two non-negative
- * integers. The digits are stored in reverse order and each of their nodes
- * contain a single digit. Add the two numbers and return it as a linked list.
- *
- * You may assume the two numbers do not contain any leading zero, except the
- * number 0 itself.
+ * Given a string, find the length of the longest substring without repeating characters.
  *
  * Example:
  *
@@ -21,7 +16,22 @@ pub struct Solution {}
 
 impl Solution {
     pub fn length_of_longest_substring(s: String) -> i32 {
+        let seq: Vec<char> = s.chars().collect();
+        let len = seq.len();
+        let (mut start, mut end, mut max) = (0, 0, 0);
 
+        while end < len {
+            for idx in start..end {
+                if seq[end] == seq[idx] {
+                    start = idx + 1;
+                    break
+                }
+            }
+            let curr = end - start + 1;
+            if curr > max { max = curr }
+            end += 1
+        }
+        max as i32
     }
 }
 
