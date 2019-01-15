@@ -5,3 +5,5 @@ mod n0004_median_of_two_sorted_arrays;
 mod n0005_longest_palindromic_substring;
 mod n0006_zigzag_conversion;
 mod n0007_reverse_integer;
+mod n0008_string_to_integer_atoi;
+mod n0009_palindrome_number;
