@@ -35,7 +35,7 @@ pub struct Solution {}
 
 // submission codes start here
 
-// not optimal, we only have to revert half of the string
+// TODO: not optimal, we only have to revert half of the string
 impl Solution {
     pub fn is_palindrome(x: i32) -> bool {
         if x < 0 { return false }
