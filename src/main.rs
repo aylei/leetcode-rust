@@ -58,6 +58,7 @@ fn main() {
 }
 
 fn build_desc(content: &str) -> String {
+    // TODO: fix this shit
     content
         .replace("<strong>", "")
         .replace("</strong>", "")
@@ -67,13 +68,24 @@ fn build_desc(content: &str) -> String {
         .replace("<p>", "")
         .replace("<b>", "")
         .replace("</b>", "")
-        .replace("</pre>", "")
         .replace("<pre>", "")
-        .replace("&nbsp;", " ")
-        .replace("&quot;", "\"")
-        .replace("\n\n", "\n")
-        .replace("\n", "\n * ")
-        .replace("&minus;", "-")
+        .replace("</pre>", "")
+        .replace("<ul>", "")
+        .replace("</ul>", "")
+        .replace("<li>", "")
+        .replace("</li>", "")
+        .replace("<code>", "")
+        .replace("</code>", "")
+        .replace("<i>", "")
+        .replace("</i>", "")
+        .replace("<sub>", "")
+        .replace("</sub>", "")
         .replace("</sup>", "")
         .replace("<sup>", "^")
+        .replace("&nbsp;", " ")
+        .replace("&quot;", "\"")
+        .replace("&minus;", "-")
+        .replace("&#39;", "'")
+        .replace("\n\n", "\n")
+        .replace("\n", "\n * ")
 }
