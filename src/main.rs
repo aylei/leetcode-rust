@@ -37,7 +37,8 @@ fn main() {
         .replace("__PROBLEM_TITLE__", &problem.title)
         .replace("__PROBLEM_DESC__", &build_desc(&problem.content))
         .replace("__PROBLEM_DEFAULT_CODE__", &code.default_code)
-        .replace("__PROBLEM_ID__", &format!("{}", id));
+        .replace("__PROBLEM_ID__", &format!("{}", id))
+        .replace("__EXTRA_USE__", &parse_extra_use(&code.default_code));
 
     let mut file = fs::OpenOptions::new()
         .write(true)
@@ -55,6 +56,15 @@ fn main() {
         .open("./src/lib.rs")
         .unwrap();
     writeln!(lib_file, "mod {};", file_name);
+}
+
+fn parse_extra_use(code: &str) -> String {
+    let mut extra_use_line = String::new();
+    // a linked-list problem
+    if code.contains("pub struct ListNode") {
+        extra_use_line.push_str("\nuse super::util::linked_list::{ListNode, to_list};")
+    }
+    extra_use_line
 }
 
 fn build_desc(content: &str) -> String {

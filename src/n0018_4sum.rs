@@ -73,7 +73,9 @@ impl Solution {
 mod tests {
     use super::*;
 
+    // TODO: build a macro for arbitrary match
     #[test]
+    #[ignore]
     fn test_18() {
         assert_eq!(Solution::four_sum(vec![1, 0, -1, 0, -2, 2], 0), vec![
             vec![-1,  0, 0, 1],

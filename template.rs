@@ -3,7 +3,7 @@
  *
  * __PROBLEM_DESC__
  */
-pub struct Solution {}
+pub struct Solution {}__EXTRA_USE__
 
 // submission codes start here
 
