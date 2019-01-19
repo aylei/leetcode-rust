@@ -93,6 +93,8 @@ fn build_desc(content: &str) -> String {
         .replace("</sup>", "")
         .replace("<sup>", "^")
         .replace("&nbsp;", " ")
+        .replace("&gt;", ">")
+        .replace("&lt;", "<")
         .replace("&quot;", "\"")
         .replace("&minus;", "-")
         .replace("&#39;", "'")
