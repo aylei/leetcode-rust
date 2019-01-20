@@ -6,7 +6,7 @@ Run `cargo test test_{id}` to test the solution for "question #id".
 
 Working in progress, to do:
 
-- [ ] auto generation of solution list
+- [ ] auto generation of solution list (when 100 problems solved)
 
 ## Usage
 
