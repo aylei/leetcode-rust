@@ -32,3 +32,4 @@ mod n0029_divide_two_integers;
 mod n0030_substring_with_concatenation_of_all_words;
 mod n0031_next_permutation;
 mod n0032_longest_valid_parentheses;
+mod n0033_search_in_rotated_sorted_array;
