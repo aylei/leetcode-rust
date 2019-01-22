@@ -50,6 +50,25 @@ impl Solution {
 
 // submission codes end
 
+/*
+// a clean solution (from leetcode submissions)
+impl Solution {
+    pub fn next_permutation(a: &mut Vec<i32>) {
+        let n = a.len();
+
+        if let Some(i) = (1..n).rev().find(|&i| a[i - 1] < a[i]) {
+            let j = (i..n).rev().find(|&j| a[i - 1] < a[j])
+                .unwrap();
+
+            a.swap(i - 1, j);
+            a[i..].reverse();
+        } else {
+            a.reverse();
+        }
+    }
+}
+ */
+
 #[cfg(test)]
 mod tests {
     use super::*;
