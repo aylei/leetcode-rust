@@ -33,3 +33,7 @@ mod n0030_substring_with_concatenation_of_all_words;
 mod n0031_next_permutation;
 mod n0032_longest_valid_parentheses;
 mod n0033_search_in_rotated_sorted_array;
+mod n0034_find_first_and_last_position_of_element_in_sorted_array;
+mod n0035_search_insert_position;
+mod n0036_valid_sudoku;
+mod n0037_sudoku_solver;
