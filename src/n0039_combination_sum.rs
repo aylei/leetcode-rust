@@ -58,7 +58,6 @@ impl Solution {
             new_vec.push(item);
             if target == item {
                 result.push(new_vec);
-                Solution::backtrack(seq, target - item, curr.clone(), result, i + 1);
             }  else {
                 Solution::backtrack(seq, target - item, new_vec, result, i);
             }
