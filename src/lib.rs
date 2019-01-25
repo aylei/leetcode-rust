@@ -47,3 +47,4 @@ mod n0044_wildcard_matching;
 mod n0045_jump_game_ii;
 mod n0046_permutations;
 mod n0047_permutations_ii;
+mod n0048_rotate_image;
