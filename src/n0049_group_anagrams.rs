@@ -47,6 +47,7 @@ impl Solution {
 mod tests {
     use super::*;
 
+    use std::collections::HashSet;
     // TODO: implement arbitrary match macro
     #[test]
     #[ignore]

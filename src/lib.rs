@@ -50,3 +50,4 @@ mod n0046_permutations;
 mod n0047_permutations_ii;
 mod n0048_rotate_image;
 mod n0049_group_anagrams;
+mod n0050_powx_n;
