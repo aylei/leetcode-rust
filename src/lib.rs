@@ -53,3 +53,5 @@ mod n0049_group_anagrams;
 mod n0050_powx_n;
 mod n0051_n_queens;
 mod n0052_n_queens_ii;
+mod n0053_maximum_subarray;
+mod n0054_spiral_matrix;
