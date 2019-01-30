@@ -64,3 +64,4 @@ mod n0060_permutation_sequence;
 mod n0061_rotate_list;
 mod n0062_unique_paths;
 mod n0063_unique_paths_ii;
+mod n0064_minimum_path_sum;
