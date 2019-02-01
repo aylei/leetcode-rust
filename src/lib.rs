@@ -69,3 +69,4 @@ mod n0065_valid_number;
 mod n0066_plus_one;
 mod n0067_add_binary;
 mod n0068_text_justification;
+mod n0069_sqrtx;
