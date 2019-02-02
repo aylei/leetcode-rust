@@ -73,3 +73,5 @@ mod n0069_sqrtx;
 mod n0070_climbing_stairs;
 mod n0071_simplify_path;
 mod n0072_edit_distance;
+mod n0073_set_matrix_zeroes;
+mod n0074_search_a_2d_matrix;
