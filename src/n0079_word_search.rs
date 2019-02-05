@@ -25,6 +25,7 @@ pub struct Solution {}
 
 // submission codes start here
 
+// TODO: use HashSet to record visited pos
 impl Solution {
     pub fn exist(board: Vec<Vec<char>>, word: String) -> bool {
         if board.is_empty() || word.len() < 1 { return false }
