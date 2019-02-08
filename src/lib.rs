@@ -91,3 +91,7 @@ mod n0087_scramble_string;
 mod n0088_merge_sorted_array;
 mod n0089_gray_code;
 mod n0090_subsets_ii;
+mod n0091_decode_ways;
+mod n0092_reverse_linked_list_ii;
+mod n0093_restore_ip_addresses;
+mod n0094_binary_tree_inorder_traversal;
