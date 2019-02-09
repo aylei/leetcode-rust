@@ -95,3 +95,6 @@ mod n0091_decode_ways;
 mod n0092_reverse_linked_list_ii;
 mod n0093_restore_ip_addresses;
 mod n0094_binary_tree_inorder_traversal;
+mod n0095_unique_binary_search_trees_ii;
+mod n0096_unique_binary_search_trees;
+mod n0097_interleaving_string;
