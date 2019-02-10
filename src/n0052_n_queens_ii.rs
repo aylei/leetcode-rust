@@ -86,7 +86,7 @@ mod tests {
     fn test_52() {
         assert_eq!(Solution::total_n_queens(4), 2);
         assert_eq!(Solution::total_n_queens(8), 92);
-        // assert_eq!(Solution::total_n_queens(13), 73712);
+        assert_eq!(Solution::total_n_queens(13), 73712);
         // assert_eq!(Solution::total_n_queens(14), 365596);
     }
 }

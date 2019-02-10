@@ -22,6 +22,8 @@ pub struct Solution {}
 
 // submission codes start here
 
+// DFS with memorization
+
 impl Solution {
     pub fn is_interleave(s1: String, s2: String, s3: String) -> bool {
         let mut cache = vec![vec![false;s2.len()+1];s1.len()+1];
