@@ -104,3 +104,4 @@ mod n0100_same_tree;
 mod n0101_symmetric_tree;
 mod n0102_binary_tree_level_order_traversal;
 mod n0103_binary_tree_zigzag_level_order_traversal;
+mod n0104_maximum_depth_of_binary_tree;
