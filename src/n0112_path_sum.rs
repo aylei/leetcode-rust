@@ -34,15 +34,15 @@ impl Solution {
     pub fn has_path_sum(root: Option<Rc<RefCell<TreeNode>>>, sum: i32) -> bool {
         if root.is_none() { return false }
         let mut deq = VecDeque::new();
-        deq.push_back((0, root.clone()));
+        deq.push_back((0, root.unwrap().clone()));
         while !deq.is_empty() {
-            if let Some((acc, Some(node))) = deq.pop_front() {
+            if let Some((acc, node)) = deq.pop_front() {
                 let acc = acc + node.borrow().val;
                 if node.borrow().left.is_none() && node.borrow().right.is_none() {
                     if acc == sum { return true }
                 } else {
-                    deq.push_back((acc, node.borrow().left.clone()));
-                    deq.push_back((acc, node.borrow().right.clone()));
+                    if node.borrow().left.is_some() { deq.push_back((acc, node.borrow().left.as_ref().unwrap().clone())) };
+                    if node.borrow().right.is_some() { deq.push_back((acc, node.borrow().right.as_ref().unwrap().clone())) };
                 }
             }
         }
