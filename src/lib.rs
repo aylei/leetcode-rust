@@ -112,3 +112,4 @@ mod n0108_convert_sorted_array_to_binary_search_tree;
 mod n0109_convert_sorted_list_to_binary_search_tree;
 mod n0110_balanced_binary_tree;
 mod n0111_minimum_depth_of_binary_tree;
+mod n0112_path_sum;
