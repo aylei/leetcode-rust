@@ -110,3 +110,4 @@ mod n0106_construct_binary_tree_from_inorder_and_postorder_traversal;
 mod n0107_binary_tree_level_order_traversal_ii;
 mod n0108_convert_sorted_array_to_binary_search_tree;
 mod n0109_convert_sorted_list_to_binary_search_tree;
+mod n0110_balanced_binary_tree;
