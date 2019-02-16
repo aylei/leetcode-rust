@@ -118,3 +118,4 @@ mod n0114_flatten_binary_tree_to_linked_list;
 mod n0115_distinct_subsequences;
 mod n0118_pascals_triangle;
 mod n0119_pascals_triangle_ii;
+mod n0120_triangle;
