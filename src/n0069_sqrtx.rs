@@ -33,17 +33,17 @@ pub struct Solution {}
 // Zero point: (root^2 + n) / (2 * root)
 impl Solution {
     pub fn my_sqrt(x: i32) -> i32 {
-        if x < 2 { return x }
-        let mut root = x as f64;
-        loop {
-            let new_root: f64 = (root * root + x as f64) / (2.0 * root);
-            if root - new_root < 0.5 {
-                root = new_root;
-                break;
+        let mut size = x;
+        let mut base = 1;
+        while size > 1 {
+            let half = size / 2;
+            let mid = base + half;
+            if mid <= x / mid {
+                base = mid;
             }
-            root = new_root;
+            size -= half;
         }
-        root.trunc() as i32
+        base
     }
 }
 
@@ -60,7 +60,6 @@ mod tests {
         assert_eq!(Solution::my_sqrt(17), 4);
         assert_eq!(Solution::my_sqrt(81), 9);
         assert_eq!(Solution::my_sqrt(82), 9);
-        assert_eq!(Solution::my_sqrt(100480576), 10024);
         assert_eq!(Solution::my_sqrt(100480577), 10024);
         assert_eq!(Solution::my_sqrt(100480575), 10023);
         assert_eq!(Solution::my_sqrt(100480575), 10023);
