@@ -67,12 +67,14 @@ impl Solution {
         }).collect()
     }
 
-    fn is_palindrome(cache: &Vec<Vec<Option<bool>>>, s: &Vec<char>, i: usize, j: usize) -> bool {
+    fn is_palindrome(cache: &mut Vec<Vec<Option<bool>>>, s: &Vec<char>, i: usize, j: usize) -> bool {
         if j <= i { return true }
         if let Some(result) = cache[i][j] {
             result
         } else {
-            s[i] == s[j] && (i + 1 > s.len() || j < 1 || Solution::is_palindrome(cache, s, i+1, j-1))
+            let result = s[i] == s[j] && (i + 1 > s.len() || j < 1 || Solution::is_palindrome(cache, s, i+1, j-1));
+            cache[i][j] = Some(result);
+            result
         }
     }
 }
