@@ -131,3 +131,6 @@ mod n0129_sum_root_to_leaf_numbers;
 mod n0130_surrounded_regions;
 mod n0131_palindrome_partitioning;
 mod n0132_palindrome_partitioning_ii;
+mod n0134_gas_station;
+mod n0135_candy;
+mod n0136_single_number;
