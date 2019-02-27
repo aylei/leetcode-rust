@@ -136,3 +136,5 @@ mod n0135_candy;
 mod n0136_single_number;
 mod n0137_single_number_ii;
 mod n0139_word_break;
+mod n0140_word_break_ii;
+mod n0143_reorder_list;
