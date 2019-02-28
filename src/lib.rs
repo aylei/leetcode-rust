@@ -140,3 +140,4 @@ mod n0140_word_break_ii;
 mod n0143_reorder_list;
 mod n0144_binary_tree_preorder_traversal;
 mod n0145_binary_tree_postorder_traversal;
+mod n0146_lru_cache;
