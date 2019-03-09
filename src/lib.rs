@@ -146,3 +146,4 @@ mod n0148_sort_list;
 mod n0149_max_points_on_a_line;
 mod n0150_evaluate_reverse_polish_notation;
 mod n0151_reverse_words_in_a_string;
+mod n0152_maximum_product_subarray;
