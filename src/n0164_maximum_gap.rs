@@ -35,6 +35,8 @@ pub struct Solution {}
  想不出来, 一看解析居然是 Radix Sort 或 Bucket Sort, 我就 ??? 了...
 
  最佳算法是 Bucket Sort 吗? (桶大小取 max - min / len 那种), 看时间复杂度好像是这样
+
+ 但假如整体排布非常稠密, 那么这个聪明的算法也就退化成了桶大小为 1 的桶排序
  */
 impl Solution {
     pub fn maximum_gap(nums: Vec<i32>) -> i32 {
