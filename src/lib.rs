@@ -153,3 +153,5 @@ mod n0155_min_stack;
 mod n0162_find_peak_element;
 mod n0164_maximum_gap;
 mod n0165_compare_version_numbers;
+mod n0166_fraction_to_recurring_decimal;
+mod n0167_two_sum_ii_input_array_is_sorted;
