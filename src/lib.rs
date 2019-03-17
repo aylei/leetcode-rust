@@ -156,3 +156,4 @@ mod n0165_compare_version_numbers;
 mod n0166_fraction_to_recurring_decimal;
 mod n0167_two_sum_ii_input_array_is_sorted;
 mod n0168_excel_sheet_column_title;
+mod n0169_majority_element;
