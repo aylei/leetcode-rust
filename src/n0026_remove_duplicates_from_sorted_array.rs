@@ -49,8 +49,18 @@ pub struct Solution {}
 
 impl Solution {
     pub fn remove_duplicates(nums: &mut Vec<i32>) -> i32 {
-        nums.dedup();
-        nums.len() as i32
+        let len = nums.len();
+        if len <= 1 {
+            return len as i32;
+        }
+        let mut slow = 0usize;
+        for fast in 1..len {
+            if nums[slow] != nums[fast] {
+                slow += 1;
+                nums[slow] = nums[fast];
+            }
+        }
+        (slow + 1) as i32
     }
 }
 
