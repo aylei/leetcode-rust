@@ -171,3 +171,4 @@ mod n0200_number_of_islands;
 mod n0201_bitwise_and_of_numbers_range;
 mod n0202_happy_number;
 mod n0203_remove_linked_list_elements;
+mod n0204_count_primes;
