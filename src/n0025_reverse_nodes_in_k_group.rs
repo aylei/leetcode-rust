@@ -29,24 +29,6 @@ use super::util::linked_list::{ListNode, to_list};
 
 // submission codes start here
 
-// Definition for singly-linked list.
-// #[derive(PartialEq, Eq, Debug)]
-// pub struct ListNode {
-//   pub val: i32,
-//   pub next: Option<Box<ListNode>>
-// }
-// 
-// impl ListNode {
-//   #[inline]
-//   fn new(val: i32) -> Self {
-//     ListNode {
-//       next: None,
-//       val
-//     }
-//   }
-// }
-
-// TODO: kind of verbose, try to simplify
 impl Solution {
     pub fn reverse_k_group(head: Option<Box<ListNode>>, k: i32) -> Option<Box<ListNode>> {
         let mut dummy_head = Some(Box::new(ListNode{val: 0, next: head}));
