@@ -28,17 +28,10 @@ pub struct Solution {}
 
 // submission codes start here
 
-// use idx 27 as special end character
-use std::cell::RefCell;
-use std::rc::Rc;
+#[derive(Default)]
 struct Trie {
-    root: Rc<RefCell<TrieNode>>,
-}
-
-#[derive(PartialEq, Eq, Debug, Clone)]
-struct TrieNode {
-    value: char,
-    nodes: Vec<Option<Rc<RefCell<TrieNode>>>>,
+    is_end: bool,
+    nodes: [Option<Box<Trie>>; 26],
 }
 
 /**
@@ -48,66 +41,35 @@ struct TrieNode {
 impl Trie {
     /** Initialize your data structure here. */
     fn new() -> Self {
-        Trie {
-            root: Trie::new_node(' '),
-        }
+        Default::default()
     }
 
     /** insert a word into the trie. */
     fn insert(&mut self, word: String) {
-        let mut curr = self.root.clone();
-        for ch in word.chars() {
-            let idx = Trie::to_idx(ch);
-            if let Some(node) = curr.clone().borrow().nodes[idx].clone() {
-                curr = node;
-                continue;
-            }
-            let next = Some(Trie::new_node(ch));
-            curr.borrow_mut().nodes[idx] = next.clone();
-            curr = next.clone().unwrap();
+        let mut curr = self;
+
+        for i in word.chars().map(|ch| (ch as u8 - 'a' as u8) as usize) {
+            curr = curr.nodes[i].get_or_insert_with(|| Box::new(Trie::new()));
         }
-        // Add end char
-        curr.borrow_mut().nodes[26] = Some(Trie::new_node(' '));
+        curr.is_end = true;
     }
 
     /** Returns if the word is in the trie. */
     fn search(&self, word: String) -> bool {
-        let mut curr = self.root.clone();
-        for ch in word.chars() {
-            let idx = Trie::to_idx(ch);
-            if let Some(node) = curr.clone().borrow().nodes[idx].clone() {
-                curr = node;
-            } else {
-                return false;
-            }
-        }
-        let searched = curr.borrow().nodes[26].is_some();
-        searched
+        self.find(word).map_or(false, |t| t.is_end)
     }
 
     /** Returns if there is any word in the trie that starts with the given prefix. */
     fn starts_with(&self, prefix: String) -> bool {
-        let mut curr = self.root.clone();
-        for ch in prefix.chars() {
-            let idx = Trie::to_idx(ch);
-            if let Some(node) = curr.clone().borrow().nodes[idx].clone() {
-                curr = node;
-            } else {
-                return false;
-            }
+        self.find(prefix).is_some()
+    }
+
+    fn find(&self, word: String) -> Option<&Trie> {
+        let mut curr = self;
+        for i in word.chars().map(|ch| (ch as u8 - 'a' as u8) as usize) {
+            curr = curr.nodes[i].as_ref()?;
         }
-        true
-    }
-
-    fn to_idx(ch: char) -> usize {
-        (ch as u8 - 'a' as u8) as usize
-    }
-
-    fn new_node(ch: char) -> Rc<RefCell<TrieNode>> {
-        Rc::new(RefCell::new(TrieNode {
-            value: ch,
-            nodes: vec![None; 27],
-        }))
+        Some(curr)
     }
 }
 
