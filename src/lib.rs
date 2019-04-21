@@ -178,3 +178,6 @@ mod n0207_course_schedule;
 mod n0208_implement_trie_prefix_tree;
 mod n0209_minimum_size_subarray_sum;
 mod n0210_course_schedule_ii;
+mod n0211_add_and_search_word_data_structure_design;
+mod n0212_word_search_ii;
+mod n0213_house_robber_ii;
