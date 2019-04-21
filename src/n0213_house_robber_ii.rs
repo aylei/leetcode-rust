@@ -60,7 +60,7 @@ mod tests {
 
     #[test]
     fn test_213() {
-        assert_eq!(Solution::rob(vec![2,3,2], 3));
-        assert_eq!(Solution::rob(vec![1,2,3,1], 4));
+        assert_eq!(Solution::rob(vec![2,3,2]), 3);
+        assert_eq!(Solution::rob(vec![1,2,3,1]), 4);
     }
 }

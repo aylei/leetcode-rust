@@ -181,3 +181,5 @@ mod n0210_course_schedule_ii;
 mod n0211_add_and_search_word_data_structure_design;
 mod n0212_word_search_ii;
 mod n0213_house_robber_ii;
+mod n0214_shortest_palindrome;
+mod n0215_kth_largest_element_in_an_array;
