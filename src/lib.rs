@@ -184,3 +184,7 @@ mod n0213_house_robber_ii;
 mod n0214_shortest_palindrome;
 mod n0215_kth_largest_element_in_an_array;
 mod n0216_combination_sum_iii;
+mod n0217_contains_duplicate;
+mod n0218_the_skyline_problem;
+mod n0220_contains_duplicate_iii;
+mod n0219_contains_duplicate_ii;
