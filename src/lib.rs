@@ -188,3 +188,4 @@ mod n0217_contains_duplicate;
 mod n0218_the_skyline_problem;
 mod n0220_contains_duplicate_iii;
 mod n0219_contains_duplicate_ii;
+mod n0221_maximal_square;
