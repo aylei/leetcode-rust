@@ -189,3 +189,5 @@ mod n0218_the_skyline_problem;
 mod n0220_contains_duplicate_iii;
 mod n0219_contains_duplicate_ii;
 mod n0221_maximal_square;
+mod n0223_rectangle_area;
+mod n0222_count_complete_tree_nodes;
