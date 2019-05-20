@@ -206,3 +206,5 @@ mod n0239_sliding_window_maximum;
 mod n0241_different_ways_to_add_parentheses;
 mod n0242_valid_anagram;
 mod n0257_binary_tree_paths;
+mod n0258_add_digits;
+mod n0260_single_number_iii;
