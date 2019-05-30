@@ -215,3 +215,5 @@ mod n0273_integer_to_english_words;
 mod n0274_h_index;
 mod n0275_h_index_ii;
 mod n0279_perfect_squares;
+mod n0282_expression_add_operators;
+mod n0283_move_zeroes;
