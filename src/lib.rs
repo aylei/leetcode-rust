@@ -218,3 +218,4 @@ mod n0279_perfect_squares;
 mod n0282_expression_add_operators;
 mod n0283_move_zeroes;
 mod n0287_find_the_duplicate_number;
+mod n0289_game_of_life;
