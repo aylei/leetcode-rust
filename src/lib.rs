@@ -221,3 +221,4 @@ mod n0287_find_the_duplicate_number;
 mod n0289_game_of_life;
 mod n0290_word_pattern;
 mod n0292_nim_game;
+mod n0295_find_median_from_data_stream;
