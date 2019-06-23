@@ -30,7 +30,6 @@ impl Solution {
         let mut incr = Vec::new();
         for &num in nums.iter() {
             if let Err(idx) = incr.binary_search(&num) {
-                println!("{:?}", idx);
                 if idx >= incr.len() {
                     incr.push(num);
                 } else {
@@ -38,7 +37,6 @@ impl Solution {
                 }
             }
         }
-        println!("{:?}", incr);
         incr.len() as i32
     }
 }
