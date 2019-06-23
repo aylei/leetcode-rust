@@ -222,3 +222,5 @@ mod n0289_game_of_life;
 mod n0290_word_pattern;
 mod n0292_nim_game;
 mod n0295_find_median_from_data_stream;
+mod n0299_bulls_and_cows;
+mod n0300_longest_increasing_subsequence;
