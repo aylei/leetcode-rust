@@ -16,8 +16,18 @@ fn main() {
     if args.len() < 2 {
         panic!("problem id must be provided");
     }
-    let id = &args[1];
-    let id = id.parse::<u32>().expect(&format!("not a number: {}", id));
+    let id_arg = &args[1];
+    let mut id :u32 = 0;
+    match id_arg.as_ref() {
+        "random" => {
+            println!("You select random mode.");
+            id = get_random_id();
+            println!("Generate random problem: {}", &id);
+        },
+        _ => {
+            id = id_arg.parse::<u32>().expect(&format!("not a number: {}", id));
+        }
+    }
 
     let problem = problem::get_problem(id)
         .expect(&format!("problem #{} not found", id));
@@ -56,6 +66,32 @@ fn main() {
         .open("./src/lib.rs")
         .unwrap();
     writeln!(lib_file, "mod {};", file_name);
+}
+
+fn get_random_id() -> u32 {
+    use std::fs;
+    let paths = fs::read_dir("./src").unwrap();
+    let mut solved_ids = Vec::new();
+
+    for path in paths {
+        let path = path.unwrap().path();
+        let s = path.to_str().unwrap();
+        if s.chars().next().unwrap() != 'n' {
+            continue;
+        }
+        let id = &s[7..11];
+        let id = id.parse::<u32>().unwrap();
+        solved_ids.push(id);
+    }
+    use rand::Rng;
+    let mut rng = rand::thread_rng();
+    loop {
+        let res :u32 = rng.gen_range(1, 1106);
+        if !solved_ids.contains(&res) {
+            return res;
+        }
+        println!("Generate a random num ({}), but it is solved. Regenerate..", res);
+    }
 }
 
 fn parse_extra_use(code: &str) -> String {
