@@ -41,7 +41,9 @@ fn main() {
         }
 
         let problem = problem::get_problem(id)
-            .expect(&format!("problem #{} not found", id));
+            .expect(&format!("Error: failed to get problem #{} \
+                              (The problem may be paid-only or may not be exist).",
+                             id));
         let code = problem.code_definition.iter()
             .filter(|&d| { d.value == "rust" })
             .next();
