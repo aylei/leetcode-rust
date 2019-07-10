@@ -228,3 +228,4 @@ mod n0301_remove_invalid_parentheses;
 mod n0303_range_sum_query_immutable;
 mod n0304_range_sum_query_2d_immutable;
 mod n1009_pancake_sorting;
+mod n0306_additive_number;
