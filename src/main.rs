@@ -9,53 +9,114 @@ use std::env;
 use std::fs;
 use std::path::{Path};
 use std::io::Write;
+use std::io;
 
 /// main() helps to generate the submission template .rs
 fn main() {
-    let args: Vec<String> = env::args().collect();
-    if args.len() < 2 {
-        panic!("problem id must be provided");
+    println!("Welcome to leetcode-rust system.");
+    let mut solved_ids = get_solved_ids();
+    loop {
+        println!("Please enter a problem id, or enter \"random\" to generate a random problem.");
+        let mut is_random = false;
+        let mut id :u32 = 0;
+        let mut id_arg = String::new();
+        io::stdin().read_line(&mut id_arg)
+            .expect("Failed to read line");
+        let id_arg = id_arg.trim();
+        match id_arg {
+            "random" => {
+                println!("You select random mode.");
+                id = generate_random_id(&solved_ids);
+                is_random = true;
+                println!("Generate random problem: {}", &id);
+            },
+            _ => {
+                id = id_arg.parse::<u32>().expect(&format!("not a number: {}", id_arg));
+                if solved_ids.contains(&id) {
+                    println!("The problem you chose is invalid (the problem may have been solved \
+                              or may have no rust version).");
+                    continue;
+                }
+            }
+        }
+
+        let problem = problem::get_problem(id)
+            .expect(&format!("Error: failed to get problem #{} \
+                              (The problem may be paid-only or may not be exist).",
+                             id));
+        let code = problem.code_definition.iter()
+            .filter(|&d| { d.value == "rust" })
+            .next();
+        if code.is_none() {
+            println!("Problem {} has no rust version.", &id);
+            solved_ids.push(id);
+            continue;
+        }
+        let code = code.unwrap();
+
+        let file_name = format!("n{:04}_{}", id, problem.title_slug.replace("-", "_"));
+        let file_path = Path::new("./src").join(format!("{}.rs", file_name));
+        if file_path.exists() {
+            panic!("problem already initialized");
+        }
+
+        let template = fs::read_to_string("./template.rs").unwrap();
+        let source = template
+            .replace("__PROBLEM_TITLE__", &problem.title)
+            .replace("__PROBLEM_DESC__", &build_desc(&problem.content))
+            .replace("__PROBLEM_DEFAULT_CODE__", &code.default_code)
+            .replace("__PROBLEM_ID__", &format!("{}", id))
+            .replace("__EXTRA_USE__", &parse_extra_use(&code.default_code));
+
+        let mut file = fs::OpenOptions::new()
+            .write(true)
+            .create(true)
+            .truncate(true)
+            .open(&file_path)
+            .unwrap();
+
+        file.write_all(source.as_bytes()).unwrap();
+        drop(file);
+
+        let mut lib_file = fs::OpenOptions::new()
+            .write(true)
+            .append(true)
+            .open("./src/lib.rs")
+            .unwrap();
+        writeln!(lib_file, "mod {};", file_name);
+        break;
     }
-    let id = &args[1];
-    let id = id.parse::<u32>().expect(&format!("not a number: {}", id));
+}
 
-    let problem = problem::get_problem(id)
-        .expect(&format!("problem #{} not found", id));
-    let code = problem.code_definition.iter()
-        .filter(|&d| { d.value == "rust" })
-        .next()
-        .expect("problem has no rust support yet");
-
-    let file_name = format!("n{:04}_{}", id, problem.title_slug.replace("-", "_"));
-    let file_path = Path::new("./src").join(format!("{}.rs", file_name));
-    if file_path.exists() {
-        panic!("problem already initialized");
+fn generate_random_id(except_ids : &Vec<u32>) -> u32 {
+    use std::fs;
+    use rand::Rng;
+    let mut rng = rand::thread_rng();
+    loop {
+        let res :u32 = rng.gen_range(1, 1106);
+        if !except_ids.contains(&res) {
+            return res;
+        }
+        println!("Generate a random num ({}), but it is invalid (the problem may have been solved \
+                  or may have no rust version). Regenerate..", res);
     }
+}
 
-    let template = fs::read_to_string("./template.rs").unwrap();
-    let source = template
-        .replace("__PROBLEM_TITLE__", &problem.title)
-        .replace("__PROBLEM_DESC__", &build_desc(&problem.content))
-        .replace("__PROBLEM_DEFAULT_CODE__", &code.default_code)
-        .replace("__PROBLEM_ID__", &format!("{}", id))
-        .replace("__EXTRA_USE__", &parse_extra_use(&code.default_code));
+fn get_solved_ids() -> Vec<u32> {
+    let paths = fs::read_dir("./src").unwrap();
+    let mut solved_ids = Vec::new();
 
-    let mut file = fs::OpenOptions::new()
-        .write(true)
-        .create(true)
-        .truncate(true)
-        .open(&file_path)
-        .unwrap();
-
-    file.write_all(source.as_bytes()).unwrap();
-    drop(file);
-
-    let mut lib_file = fs::OpenOptions::new()
-        .write(true)
-        .append(true)
-        .open("./src/lib.rs")
-        .unwrap();
-    writeln!(lib_file, "mod {};", file_name);
+    for path in paths {
+        let path = path.unwrap().path();
+        let s = path.to_str().unwrap();
+        if s.chars().next().unwrap() != 'n' {
+            continue;
+        }
+        let id = &s[7..11];
+        let id = id.parse::<u32>().unwrap();
+        solved_ids.push(id);
+    }
+    solved_ids
 }
 
 fn parse_extra_use(code: &str) -> String {
