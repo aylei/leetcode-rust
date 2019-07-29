@@ -229,3 +229,4 @@ mod n0303_range_sum_query_immutable;
 mod n0304_range_sum_query_2d_immutable;
 mod n1009_pancake_sorting;
 mod n0306_additive_number;
+mod n0307_range_sum_query_mutable;
