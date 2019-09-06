@@ -74,7 +74,7 @@ impl Solution {
             if !num_matched {
                 match ch {
                     ' ' => {},
-                    '0'...'9' => {
+                    '0'..='9' => {
                         num_matched = true;
                         result = result * 10 + ch.to_digit(10).unwrap() as i64;
                     },
@@ -84,7 +84,7 @@ impl Solution {
                 }
             } else {
                 match ch {
-                    '0'...'9' => {
+                    '0'..='9' => {
                         result = result * 10 + ch.to_digit(10).unwrap() as i64;
                         if result > i32_max { break }
                     },

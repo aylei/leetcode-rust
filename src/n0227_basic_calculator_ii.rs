@@ -47,7 +47,7 @@ impl Solution {
         let mut multiple = true;
         for ch in s.chars() {
             match ch {
-                '0'...'9' => { curr = 10 * curr + (ch as u8 - '0' as u8) as i64; },
+                '0'..='9' => { curr = 10 * curr + (ch as u8 - '0' as u8) as i64; },
                 '+' | '-' => {
                     if has_prev {
                         if multiple {
