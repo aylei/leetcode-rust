@@ -233,3 +233,4 @@ mod n0307_range_sum_query_mutable;
 mod n0309_best_time_to_buy_and_sell_stock_with_cooldown;
 mod n0310_minimum_height_trees;
 mod n0312_burst_balloons;
+mod n0313_super_ugly_number;
