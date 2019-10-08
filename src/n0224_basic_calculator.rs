@@ -52,7 +52,7 @@ impl Solution {
         let mut in_num = false;
         for ch in s.chars() {
             match ch {
-                '0'...'9' => {
+                '0'..='9' => {
                     in_num = true;
                     num = 10 * num + (ch as u8 - '0' as u8) as i64;
                 }
