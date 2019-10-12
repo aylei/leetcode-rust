@@ -2,14 +2,15 @@
 extern crate serde_derive;
 #[macro_use]
 extern crate serde_json;
-
+extern crate regex;
 mod problem;
 
+use regex::Regex;
 use std::env;
 use std::fs;
-use std::path::{Path};
-use std::io::Write;
 use std::io;
+use std::io::Write;
+use std::path::Path;
 
 /// main() helps to generate the submission template .rs
 fn main() {
@@ -18,9 +19,10 @@ fn main() {
     loop {
         println!("Please enter a problem id, or enter \"random\" to generate a random problem.");
         let mut is_random = false;
-        let mut id :u32 = 0;
+        let mut id: u32 = 0;
         let mut id_arg = String::new();
-        io::stdin().read_line(&mut id_arg)
+        io::stdin()
+            .read_line(&mut id_arg)
             .expect("Failed to read line");
         let id_arg = id_arg.trim();
         match id_arg {
@@ -29,23 +31,30 @@ fn main() {
                 id = generate_random_id(&solved_ids);
                 is_random = true;
                 println!("Generate random problem: {}", &id);
-            },
+            }
             _ => {
-                id = id_arg.parse::<u32>().expect(&format!("not a number: {}", id_arg));
+                id = id_arg
+                    .parse::<u32>()
+                    .expect(&format!("not a number: {}", id_arg));
                 if solved_ids.contains(&id) {
-                    println!("The problem you chose is invalid (the problem may have been solved \
-                              or may have no rust version).");
+                    println!(
+                        "The problem you chose is invalid (the problem may have been solved \
+                         or may have no rust version)."
+                    );
                     continue;
                 }
             }
         }
 
-        let problem = problem::get_problem(id)
-            .expect(&format!("Error: failed to get problem #{} \
-                              (The problem may be paid-only or may not be exist).",
-                             id));
-        let code = problem.code_definition.iter()
-            .filter(|&d| { d.value == "rust" })
+        let problem = problem::get_problem(id).expect(&format!(
+            "Error: failed to get problem #{} \
+             (The problem may be paid-only or may not be exist).",
+            id
+        ));
+        let code = problem
+            .code_definition
+            .iter()
+            .filter(|&d| d.value == "rust")
             .next();
         if code.is_none() {
             println!("Problem {} has no rust version.", &id);
@@ -88,17 +97,20 @@ fn main() {
     }
 }
 
-fn generate_random_id(except_ids : &Vec<u32>) -> u32 {
-    use std::fs;
+fn generate_random_id(except_ids: &Vec<u32>) -> u32 {
     use rand::Rng;
+    use std::fs;
     let mut rng = rand::thread_rng();
     loop {
-        let res :u32 = rng.gen_range(1, 1106);
+        let res: u32 = rng.gen_range(1, 1106);
         if !except_ids.contains(&res) {
             return res;
         }
-        println!("Generate a random num ({}), but it is invalid (the problem may have been solved \
-                  or may have no rust version). Regenerate..", res);
+        println!(
+            "Generate a random num ({}), but it is invalid (the problem may have been solved \
+             or may have no rust version). Regenerate..",
+            res
+        );
     }
 }
 
@@ -136,7 +148,7 @@ fn parse_extra_use(code: &str) -> String {
 
 fn build_desc(content: &str) -> String {
     // TODO: fix this shit
-    content
+    let content = content
         .replace("<strong>", "")
         .replace("</strong>", "")
         .replace("<em>", "")
@@ -147,6 +159,7 @@ fn build_desc(content: &str) -> String {
         .replace("</b>", "")
         .replace("<pre>", "")
         .replace("</pre>", "")
+        .replace("</font>", "")
         .replace("<ul>", "")
         .replace("</ul>", "")
         .replace("<li>", "")
@@ -166,5 +179,10 @@ fn build_desc(content: &str) -> String {
         .replace("&minus;", "-")
         .replace("&#39;", "'")
         .replace("\n\n", "\n")
-        .replace("\n", "\n * ")
+        .replace("\n", "\n * ");
+
+    Regex::new("<font color=\"[a-z]*\">")
+        .unwrap()
+        .replace_all(&content, "")
+        .to_string()
 }
