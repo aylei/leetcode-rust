@@ -49,12 +49,12 @@ fn main() {
             .next();
         if code.is_none() {
             println!("Problem {} has no rust version.", &id);
-            solved_ids.push(id);
+            solved_ids.push(problem.question_id);
             continue;
         }
         let code = code.unwrap();
 
-        let file_name = format!("n{:04}_{}", id, problem.title_slug.replace("-", "_"));
+        let file_name = format!("n{:04}_{}", problem.question_id, problem.title_slug.replace("-", "_"));
         let file_path = Path::new("./src").join(format!("{}.rs", file_name));
         if file_path.exists() {
             panic!("problem already initialized");
@@ -65,7 +65,7 @@ fn main() {
             .replace("__PROBLEM_TITLE__", &problem.title)
             .replace("__PROBLEM_DESC__", &build_desc(&problem.content))
             .replace("__PROBLEM_DEFAULT_CODE__", &code.default_code)
-            .replace("__PROBLEM_ID__", &format!("{}", id))
+            .replace("__PROBLEM_ID__", &format!("{}", problem.question_id))
             .replace("__EXTRA_USE__", &parse_extra_use(&code.default_code));
 
         let mut file = fs::OpenOptions::new()
