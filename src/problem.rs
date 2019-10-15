@@ -17,10 +17,10 @@ query questionData($titleSlug: String!) {
 }"#;
 const QUESTION_QUERY_OPERATION: &str = "questionData";
 
-pub fn get_problem(id: u32) -> Option<Problem> {
+pub fn get_problem(frontend_question_id: u32) -> Option<Problem> {
     let problems = get_problems().unwrap();
     for problem in problems.stat_status_pairs.iter() {
-        if problem.stat.question_id == id {
+        if problem.stat.frontend_question_id == frontend_question_id {
 
             if problem.paid_only {
                 return None
@@ -38,6 +38,7 @@ pub fn get_problem(id: u32) -> Option<Problem> {
                 content: resp.data.question.content,
                 sample_test_case: resp.data.question.sample_test_case,
                 difficulty: problem.difficulty.to_string(),
+                question_id: problem.stat.question_id,
             })
         }
     }
@@ -58,6 +59,7 @@ pub struct Problem {
     #[serde(rename = "sampleTestCase")]
     pub sample_test_case: String,
     pub difficulty: String,
+    pub question_id: u32,
 }
 
 #[derive(Serialize, Deserialize)]
