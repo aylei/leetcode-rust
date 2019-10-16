@@ -47,7 +47,9 @@ impl Solution {
         let mut multiple = true;
         for ch in s.chars() {
             match ch {
-                '0'..='9' => { curr = 10 * curr + (ch as u8 - '0' as u8) as i64; },
+                '0'..='9' => {
+                    curr = 10 * curr + (ch as u8 - '0' as u8) as i64;
+                }
                 '+' | '-' => {
                     if has_prev {
                         if multiple {
@@ -58,9 +60,9 @@ impl Solution {
                         has_prev = false;
                     }
                     acc += curr * sign;
-                        curr = 0;
-                        sign = if ch == '+' { 1 } else { -1 };
-                    }
+                    curr = 0;
+                    sign = if ch == '+' { 1 } else { -1 };
+                }
                 '*' | '/' => {
                     if has_prev {
                         if multiple {
@@ -73,8 +75,8 @@ impl Solution {
                     prev = curr;
                     curr = 0;
                     multiple = if ch == '*' { true } else { false };
-                },
-                _ => {},
+                }
+                _ => {}
             }
         }
         if has_prev {
@@ -91,7 +93,7 @@ impl Solution {
 
 // submission codes end
 
-    #[cfg(test)]
+#[cfg(test)]
 mod tests {
     use super::*;
 

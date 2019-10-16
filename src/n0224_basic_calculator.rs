@@ -35,7 +35,7 @@ pub struct Solution {}
 
 // submission codes start here
 
-#[derive(PartialEq,Copy,Clone,Debug)]
+#[derive(PartialEq, Copy, Clone, Debug)]
 enum Token {
     LeftBracket,
     RightBracket,
@@ -63,19 +63,26 @@ impl Solution {
                         in_num = false;
                     }
                     match ch {
-                        '(' => { token_stream.push(Token::LeftBracket); },
-                        ')' => { token_stream.push(Token::RightBracket); },
-                        '+' => { token_stream.push(Token::PlusSign); },
-                        '-' => { token_stream.push(Token::MinusSign); },
-                        _ => {},
+                        '(' => {
+                            token_stream.push(Token::LeftBracket);
+                        }
+                        ')' => {
+                            token_stream.push(Token::RightBracket);
+                        }
+                        '+' => {
+                            token_stream.push(Token::PlusSign);
+                        }
+                        '-' => {
+                            token_stream.push(Token::MinusSign);
+                        }
+                        _ => {}
                     };
-                },
+                }
             }
         }
         if in_num {
             token_stream.push(Token::Number(num));
         }
-
 
         // parser
         let mut stack = Vec::new();
@@ -95,35 +102,36 @@ impl Solution {
             match token {
                 Token::LeftBracket => {
                     stack.push(token);
-                },
+                }
                 Token::RightBracket => {
                     if let Token::Number(right_hand) = stack.pop().unwrap() {
                         stack.pop();
                         pause = true;
                         token = Token::Number(right_hand);
                     }
-                },
+                }
                 Token::PlusSign => {
                     stack.push(token);
-                },
+                }
                 Token::MinusSign => {
                     stack.push(token);
-                },
+                }
                 Token::Number(num) => {
                     if stack.is_empty() || Token::LeftBracket == *stack.last().unwrap() {
                         stack.push(Token::Number(num));
                     } else {
                         let sign = stack.pop().unwrap();
                         if let Token::Number(left_hand) = stack.pop().unwrap() {
-                            let res = left_hand + num * if Token::PlusSign == sign { 1 } else { -1 };
+                            let res =
+                                left_hand + num * if Token::PlusSign == sign { 1 } else { -1 };
                             stack.push(Token::Number(res));
                         }
                     }
-                },
+                }
             }
         }
         if let Token::Number(num) = stack.pop().unwrap() {
-            return num as i32
+            return num as i32;
         }
         0
     }

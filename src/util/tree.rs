@@ -1,5 +1,5 @@
-use std::rc::Rc;
 use std::cell::RefCell;
+use std::rc::Rc;
 
 #[derive(Debug, PartialEq, Eq)]
 pub struct TreeNode {
@@ -14,7 +14,7 @@ impl TreeNode {
         TreeNode {
             val,
             left: None,
-            right: None
+            right: None,
         }
     }
 }
@@ -55,4 +55,3 @@ macro_rules! tree {
     };
     ($($e:expr,)*) => {(tree![$($e),*])};
 }
-

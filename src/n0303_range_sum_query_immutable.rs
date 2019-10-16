@@ -40,12 +40,12 @@ impl NumArray {
             res += num;
             vec.push(res);
         }
-        NumArray{nums: vec}
+        NumArray { nums: vec }
     }
 
     fn sum_range(&self, i: i32, j: i32) -> i32 {
         let (i, j) = (i as usize, j as usize);
-        self.nums[j] - if i > 0 { self.nums[i-1] } else { 0 }
+        self.nums[j] - if i > 0 { self.nums[i - 1] } else { 0 }
     }
 }
 

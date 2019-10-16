@@ -2,31 +2,31 @@
  * [7] Reverse Integer
  *
  * Given a 32-bit signed integer, reverse digits of an integer.
- * 
+ *
  * Example 1:
- * 
- * 
+ *
+ *
  * Input: 123
  * Output: 321
- * 
- * 
+ *
+ *
  * Example 2:
- * 
- * 
+ *
+ *
  * Input: -123
  * Output: -321
- * 
- * 
+ *
+ *
  * Example 3:
- * 
- * 
+ *
+ *
  * Input: 120
  * Output: 21
- * 
- * 
+ *
+ *
  * Note:<br />
  * Assume we are dealing with an environment which could only store integers within the 32-bit signed integer range: [-2^31,  2^31 - 1]. For the purpose of this problem, assume that your function returns 0 when the reversed integer overflows.
- * 
+ *
  */
 pub struct Solution {}
 
@@ -38,7 +38,7 @@ impl Solution {
         let mut digit: i64 = 0;
         let base: i64 = 2;
         let upper_bound: i64 = base.pow(31) - 1;
-        let lower_bound: i64 = - base.pow(31);
+        let lower_bound: i64 = -base.pow(31);
         while input != 0 {
             digit = input % 10;
             result = result * 10 + digit;

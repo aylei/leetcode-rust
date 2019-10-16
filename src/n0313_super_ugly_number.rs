@@ -27,8 +27,8 @@ pub struct Solution {}
 
 // submission codes start here
 
-use std::collections::BinaryHeap;
 use std::cmp::Ordering;
+use std::collections::BinaryHeap;
 #[derive(Eq, PartialEq)]
 struct Invert {
     base: i32,
@@ -44,18 +44,22 @@ impl Ord for Invert {
 
 impl PartialOrd for Invert {
     fn partial_cmp(&self, other: &Invert) -> Option<Ordering> {
-       Some(self.cmp(other))
+        Some(self.cmp(other))
     }
 }
 
 impl Solution {
     pub fn nth_super_ugly_number(n: i32, primes: Vec<i32>) -> i32 {
-        let mut vec = vec![1;1];
+        let mut vec = vec![1; 1];
         let mut heap: BinaryHeap<Invert> = BinaryHeap::new();
         for &prime in primes.iter() {
-            heap.push(Invert{base: prime, idx: 0, value: prime});
+            heap.push(Invert {
+                base: prime,
+                idx: 0,
+                value: prime,
+            });
         }
-        for _ in 0..n-1 {
+        for _ in 0..n - 1 {
             let mut min = 0;
             if let Some(num) = heap.peek() {
                 min = num.value;
@@ -63,7 +67,11 @@ impl Solution {
             vec.push(min);
             while heap.peek().unwrap().value == min {
                 let p = heap.pop().unwrap();
-                heap.push(Invert{base: p.base, idx: p.idx+1, value: p.base * vec[p.idx+1]});
+                heap.push(Invert {
+                    base: p.base,
+                    idx: p.idx + 1,
+                    value: p.base * vec[p.idx + 1],
+                });
             }
         }
         *vec.last().unwrap()
@@ -78,6 +86,6 @@ mod tests {
 
     #[test]
     fn test_313() {
-        assert_eq!(Solution::nth_super_ugly_number(12, vec![2,7,13,19]), 32);
+        assert_eq!(Solution::nth_super_ugly_number(12, vec![2, 7, 13, 19]), 32);
     }
 }

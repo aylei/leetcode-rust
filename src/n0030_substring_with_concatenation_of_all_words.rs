@@ -2,27 +2,27 @@
  * [30] Substring with Concatenation of All Words
  *
  * You are given a string, s, and a list of words, words, that are all of the same length. Find all starting indices of substring(s) in s that is a concatenation of each word in words exactly once and without any intervening characters.
- * 
+ *
  * Example 1:
- * 
- * 
+ *
+ *
  * Input:
  *   s = "barfoothefoobarman",
  *   words = ["foo","bar"]
  * Output: [0,9]
  * Explanation: Substrings starting at index 0 and 9 are "barfoor" and "foobar" respectively.
  * The output order does not matter, returning [9,0] is fine too.
- * 
- * 
+ *
+ *
  * Example 2:
- * 
- * 
+ *
+ *
  * Input:
  *   s = "wordgoodgoodgoodbestword",
  *   words = ["word","good","best","word"]
  * Output: []
- * 
- * 
+ *
+ *
  */
 pub struct Solution {}
 
@@ -33,7 +33,7 @@ struct Term {
 }
 impl Term {
     fn new(expect: i32, count: i32) -> Self {
-        Term{expect, count}
+        Term { expect, count }
     }
     fn inc_expect(&mut self) {
         self.expect += 1;
@@ -52,14 +52,18 @@ impl Term {
     }
 }
 
-use std::collections::HashMap;
 use std::collections::hash_map::Entry;
+use std::collections::HashMap;
 
 impl Solution {
     pub fn find_substring(s: String, words: Vec<String>) -> Vec<i32> {
-        if words.len() < 1 { return vec![] }
+        if words.len() < 1 {
+            return vec![];
+        }
         let word_len = words[0].len();
-        if word_len < 1 { return vec![] }
+        if word_len < 1 {
+            return vec![];
+        }
         let substr_len = word_len * words.len();
         let mut map: HashMap<&str, Term> = HashMap::with_capacity(words.len());
         for word in words.iter() {
@@ -72,16 +76,18 @@ impl Solution {
             let mut j = shift;
             // we do a sliding window for each round
             while j + word_len - 1 < s.len() {
-                match map.entry(&s[j..j+word_len]) {
+                match map.entry(&s[j..j + word_len]) {
                     Entry::Occupied(mut entry) => {
                         entry.get_mut().inc();
                         // term exhausted, shrink the window to release
                         if entry.get().exhausted() {
                             while i < j {
-                                let term = &s[i..i+word_len];
+                                let term = &s[i..i + word_len];
                                 map.entry(term).and_modify(|t| t.dec());
                                 i += word_len;
-                                if term == &s[j..j+word_len] { break }
+                                if term == &s[j..j + word_len] {
+                                    break;
+                                }
                             }
                             j += word_len;
                         } else {
@@ -91,16 +97,18 @@ impl Solution {
                                 // matched!
                                 result.push(i as i32);
                                 // move the whole window, release the dropped term
-                                map.entry(&s[i..i+word_len]).and_modify(|t| t.dec());
-                                j += word_len; i += word_len;
+                                map.entry(&s[i..i + word_len]).and_modify(|t| t.dec());
+                                j += word_len;
+                                i += word_len;
                             }
                         }
-                    },
+                    }
                     // bad term, move over and do a reset
                     Entry::Vacant(entry) => {
                         map.iter_mut().for_each(|(_, v)| v.reset());
-                        j += word_len; i = j;
-                    },
+                        j += word_len;
+                        i = j;
+                    }
                 }
             }
             map.iter_mut().for_each(|(_, v)| v.reset())
@@ -117,16 +125,48 @@ mod tests {
 
     #[test]
     fn test_30() {
-        assert_eq!(Solution::find_substring("barfoothefoobarman".to_string(), vec!["foo".to_string(),"bar".to_string()]),
-                   vec![0, 9]);
-        assert_eq!(Solution::find_substring("wordgoodgoodgoodbestword".to_string(),
-                                            vec!["word".to_string(),"good".to_string(), "best".to_string(), "word".to_string()]),
-                   vec![]);
-        assert_eq!(Solution::find_substring("wordgoodgoodgoodbestword".to_string(),
-                                            vec!["word".to_string(),"good".to_string(), "best".to_string(), "good".to_string()]),
-                   vec![8]);
-        assert_eq!(Solution::find_substring("xxwordgoodgoodgoodbestword".to_string(),
-                                            vec!["word".to_string(),"good".to_string(), "best".to_string(), "good".to_string()]),
-                   vec![10]);
+        assert_eq!(
+            Solution::find_substring(
+                "barfoothefoobarman".to_string(),
+                vec!["foo".to_string(), "bar".to_string()]
+            ),
+            vec![0, 9]
+        );
+        assert_eq!(
+            Solution::find_substring(
+                "wordgoodgoodgoodbestword".to_string(),
+                vec![
+                    "word".to_string(),
+                    "good".to_string(),
+                    "best".to_string(),
+                    "word".to_string()
+                ]
+            ),
+            vec![]
+        );
+        assert_eq!(
+            Solution::find_substring(
+                "wordgoodgoodgoodbestword".to_string(),
+                vec![
+                    "word".to_string(),
+                    "good".to_string(),
+                    "best".to_string(),
+                    "good".to_string()
+                ]
+            ),
+            vec![8]
+        );
+        assert_eq!(
+            Solution::find_substring(
+                "xxwordgoodgoodgoodbestword".to_string(),
+                vec![
+                    "word".to_string(),
+                    "good".to_string(),
+                    "best".to_string(),
+                    "good".to_string()
+                ]
+            ),
+            vec![10]
+        );
     }
 }

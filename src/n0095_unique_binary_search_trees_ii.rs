@@ -2,10 +2,10 @@
  * [95] Unique Binary Search Trees II
  *
  * Given an integer n, generate all structurally unique BST's (binary search trees) that store values 1 ... n.
- * 
+ *
  * Example:
- * 
- * 
+ *
+ *
  * Input: 3
  * Output:
  * [
@@ -17,7 +17,7 @@
  * ]
  * Explanation:
  * The above output corresponds to the 5 unique BST's shown below:
- * 
+ *
  *    1         3     3      2      1
  *     \       /     /      / \      \
  *      3     2     1      1   3      2
@@ -48,19 +48,23 @@ pub struct Solution {}
       / \
      2   4
  */
-use super::util::tree::{TreeNode, to_tree};
-use std::rc::Rc;
+use super::util::tree::{to_tree, TreeNode};
 use std::cell::RefCell;
+use std::rc::Rc;
 impl Solution {
     pub fn generate_trees(n: i32) -> Vec<Option<Rc<RefCell<TreeNode>>>> {
         if n < 1 {
             return vec![];
         }
         let mut res = vec![Some(Rc::new(RefCell::new(TreeNode::new(1))))];
-        for val in 2..n+1 {
+        for val in 2..n + 1 {
             let mut next = Vec::new();
             for root in res.into_iter() {
-                let mut dummy = Some(Rc::new(RefCell::new(TreeNode{val: 0, left: None, right: None})));
+                let mut dummy = Some(Rc::new(RefCell::new(TreeNode {
+                    val: 0,
+                    left: None,
+                    right: None,
+                })));
                 let mut parent = dummy.as_ref().unwrap().clone();
                 let mut node = root;
                 // we know that val is larger than all the elements in the tree
@@ -78,6 +82,5 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_95() {
-    }
+    fn test_95() {}
 }

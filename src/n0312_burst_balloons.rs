@@ -26,27 +26,27 @@ pub struct Solution {}
 // submission codes start here
 
 /*
- The key idea is, for a sequence of balloon, select a balloon to be the last one to be bursted:
+The key idea is, for a sequence of balloon, select a balloon to be the last one to be bursted:
 
- max of [1 . a b c d e f . 1]
+max of [1 . a b c d e f . 1]
 
-                 ^   say we select 'c' as the last balloon to burst, then:
+                ^   say we select 'c' as the last balloon to burst, then:
 
- =
-    max of [1 . a b . c] +
+=
+   max of [1 . a b . c] +
 
-    max of [c . d e f . 1] +
+   max of [c . d e f . 1] +
 
-    1 * c * 1
+   1 * c * 1
 
- Then we can use memorize to record the max of every sub sequence
- */
+Then we can use memorize to record the max of every sub sequence
+*/
 impl Solution {
     pub fn max_coins(nums: Vec<i32>) -> i32 {
         if nums.is_empty() {
-            return 0
+            return 0;
         }
-        let mut coins = vec![0; nums.len()+2];
+        let mut coins = vec![0; nums.len() + 2];
         let mut len = 0_usize;
         // filter out zeros
         for &num in nums.iter() {
@@ -56,28 +56,39 @@ impl Solution {
             }
         }
         coins[0] = 1;
-        coins[len+1] = 1;
+        coins[len + 1] = 1;
 
-        let mut memo = vec![vec![0; len+1]; len+1];
+        let mut memo = vec![vec![0; len + 1]; len + 1];
         Solution::max_subrange(&coins, 1, len, &mut memo)
     }
 
     fn max_subrange(coins: &Vec<i32>, start: usize, end: usize, memo: &mut Vec<Vec<i32>>) -> i32 {
         if memo[start][end] != 0 {
-            return memo[start][end]
+            return memo[start][end];
         }
         if start == end {
-            memo[start][end] = coins[start-1] * coins[start] * coins[start+1];
-            return memo[start][end]
+            memo[start][end] = coins[start - 1] * coins[start] * coins[start + 1];
+            return memo[start][end];
         }
         let mut max = 0;
-        for i in start..end+1 {
-            let left_max = if i > start { Solution::max_subrange(coins, start, i-1, memo) } else { 0 };
-            let right_max = if i < end { Solution::max_subrange(coins, i+1, end, memo) } else { 0 };
-            max = i32::max(max, left_max + right_max + coins[i] * coins[start-1] * coins[end+1]);
+        for i in start..end + 1 {
+            let left_max = if i > start {
+                Solution::max_subrange(coins, start, i - 1, memo)
+            } else {
+                0
+            };
+            let right_max = if i < end {
+                Solution::max_subrange(coins, i + 1, end, memo)
+            } else {
+                0
+            };
+            max = i32::max(
+                max,
+                left_max + right_max + coins[i] * coins[start - 1] * coins[end + 1],
+            );
         }
         memo[start][end] = max;
-        return memo[start][end]
+        return memo[start][end];
     }
 }
 
@@ -89,6 +100,6 @@ mod tests {
 
     #[test]
     fn test_312() {
-        assert_eq!(Solution::max_coins(vec![3,1,5,8]), 167);
+        assert_eq!(Solution::max_coins(vec![3, 1, 5, 8]), 167);
     }
 }

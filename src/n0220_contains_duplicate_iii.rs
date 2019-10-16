@@ -37,19 +37,27 @@ pub struct Solution {}
 use std::collections::HashMap;
 impl Solution {
     pub fn contains_nearby_almost_duplicate(nums: Vec<i32>, k: i32, t: i32) -> bool {
-        if k < 1 || t < 0 { return false }
+        if k < 1 || t < 0 {
+            return false;
+        }
         let mut map = HashMap::new();
         for i in 0..nums.len() {
             let remap = nums[i] as i64 - i32::min_value() as i64;
             let bucket = remap / (t as i64 + 1);
             println!("{} {}", remap, bucket);
             if map.contains_key(&bucket)
-                || map.get(&(bucket-1)).map_or(false, |v| { remap - v <= t as i64})
-                || map.get(&(bucket+1)).map_or(false, |v| { v - remap <= t as i64}) {
-                    return true
+                || map
+                    .get(&(bucket - 1))
+                    .map_or(false, |v| remap - v <= t as i64)
+                || map
+                    .get(&(bucket + 1))
+                    .map_or(false, |v| v - remap <= t as i64)
+            {
+                return true;
             }
             if i >= k as usize {
-                let last_bucket = (nums[i - k as usize] as i64 - i32::min_value() as i64) / (t as i64 + 1);
+                let last_bucket =
+                    (nums[i - k as usize] as i64 - i32::min_value() as i64) / (t as i64 + 1);
                 map.remove(&last_bucket);
             }
             map.insert(bucket, remap);
@@ -68,6 +76,9 @@ mod tests {
     fn test_220() {
         // assert_eq!(Solution::contains_nearby_almost_duplicate(vec![1,5,9,1,5,9], 2, 3), false);
         // assert_eq!(Solution::contains_nearby_almost_duplicate(vec![1,2,3,1], 3, 0), true);
-        assert_eq!(Solution::contains_nearby_almost_duplicate(vec![-1,2147483647], 1 ,2147483647), false);
+        assert_eq!(
+            Solution::contains_nearby_almost_duplicate(vec![-1, 2147483647], 1, 2147483647),
+            false
+        );
     }
 }

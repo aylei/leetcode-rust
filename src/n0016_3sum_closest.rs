@@ -2,15 +2,15 @@
  * [16] 3Sum Closest
  *
  * Given an array nums of n integers and an integer target, find three integers in nums such that the sum is closest to target. Return the sum of the three integers. You may assume that each input would have exactly one solution.
- * 
+ *
  * Example:
- * 
- * 
+ *
+ *
  * Given array nums = [-1, 2, 1, -4], and target = 1.
- * 
+ *
  * The sum that is closest to the target is 2. (-1 + 2 + 1 = 2).
- * 
- * 
+ *
+ *
  */
 pub struct Solution {}
 
@@ -23,10 +23,12 @@ impl Solution {
         nums.sort();
         let mut i = 0;
         while i < nums.len() - 2 {
-            let sub_min = Solution::two_sum_closest(&nums[(i+1)..nums.len()], target - nums[i]);
+            let sub_min = Solution::two_sum_closest(&nums[(i + 1)..nums.len()], target - nums[i]);
             if sub_min.abs() < min_distance.abs() {
                 min_distance = sub_min;
-                if min_distance == 0 { break }
+                if min_distance == 0 {
+                    break;
+                }
             }
             i += 1;
         }
@@ -38,9 +40,13 @@ impl Solution {
         let mut local_min = i32::max_value();
         while i < j {
             let sum = nums[i] + nums[j];
-            if sum > target { j -= 1; }
-            else if sum < target { i += 1; }
-            else { return 0 }
+            if sum > target {
+                j -= 1;
+            } else if sum < target {
+                i += 1;
+            } else {
+                return 0;
+            }
             if (sum - target).abs() < local_min.abs() {
                 local_min = sum - target
             }
@@ -59,6 +65,9 @@ mod tests {
     fn test_16() {
         assert_eq!(Solution::three_sum_closest(vec![-1, 2, 1, -4], 1), 2);
         assert_eq!(Solution::three_sum_closest(vec![1, 2, 3], 1), 6);
-        assert_eq!(Solution::three_sum_closest(vec![1,2,4,8,16,32,64,128], 82), 82);
+        assert_eq!(
+            Solution::three_sum_closest(vec![1, 2, 4, 8, 16, 32, 64, 128], 82),
+            82
+        );
     }
 }

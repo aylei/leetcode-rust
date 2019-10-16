@@ -7,20 +7,21 @@ mod problem;
 
 use std::env;
 use std::fs;
-use std::path::{Path};
-use std::io::Write;
 use std::io;
+use std::io::Write;
+use std::path::Path;
 
 /// main() helps to generate the submission template .rs
 fn main() {
     println!("Welcome to leetcode-rust system.");
     let mut solved_ids = get_solved_ids();
     loop {
-        println!("Please enter a problem id, or enter \"random\" to generate a random problem.");
+        println!("Please enter a frontend problem id, or \"random\" to generate a random one.");
         let mut is_random = false;
-        let mut id :u32 = 0;
+        let mut id: u32 = 0;
         let mut id_arg = String::new();
-        io::stdin().read_line(&mut id_arg)
+        io::stdin()
+            .read_line(&mut id_arg)
             .expect("Failed to read line");
         let id_arg = id_arg.trim();
         match id_arg {
@@ -29,23 +30,30 @@ fn main() {
                 id = generate_random_id(&solved_ids);
                 is_random = true;
                 println!("Generate random problem: {}", &id);
-            },
+            }
             _ => {
-                id = id_arg.parse::<u32>().expect(&format!("not a number: {}", id_arg));
+                id = id_arg
+                    .parse::<u32>()
+                    .expect(&format!("not a number: {}", id_arg));
                 if solved_ids.contains(&id) {
-                    println!("The problem you chose is invalid (the problem may have been solved \
-                              or may have no rust version).");
+                    println!(
+                        "The problem you chose is invalid (the problem may have been solved \
+                         or may have no rust version)."
+                    );
                     continue;
                 }
             }
         }
 
-        let problem = problem::get_problem(id)
-            .expect(&format!("Error: failed to get problem #{} \
-                              (The problem may be paid-only or may not be exist).",
-                             id));
-        let code = problem.code_definition.iter()
-            .filter(|&d| { d.value == "rust" })
+        let problem = problem::get_problem(id).expect(&format!(
+            "Error: failed to get problem #{} \
+             (The problem may be paid-only or may not be exist).",
+            id
+        ));
+        let code = problem
+            .code_definition
+            .iter()
+            .filter(|&d| d.value == "rust")
             .next();
         if code.is_none() {
             println!("Problem {} has no rust version.", &id);
@@ -54,7 +62,11 @@ fn main() {
         }
         let code = code.unwrap();
 
-        let file_name = format!("n{:04}_{}", problem.question_id, problem.title_slug.replace("-", "_"));
+        let file_name = format!(
+            "n{:04}_{}",
+            problem.question_id,
+            problem.title_slug.replace("-", "_")
+        );
         let file_path = Path::new("./src").join(format!("{}.rs", file_name));
         if file_path.exists() {
             panic!("problem already initialized");
@@ -88,17 +100,20 @@ fn main() {
     }
 }
 
-fn generate_random_id(except_ids : &Vec<u32>) -> u32 {
-    use std::fs;
+fn generate_random_id(except_ids: &Vec<u32>) -> u32 {
     use rand::Rng;
+    use std::fs;
     let mut rng = rand::thread_rng();
     loop {
-        let res :u32 = rng.gen_range(1, 1106);
+        let res: u32 = rng.gen_range(1, 1106);
         if !except_ids.contains(&res) {
             return res;
         }
-        println!("Generate a random num ({}), but it is invalid (the problem may have been solved \
-                  or may have no rust version). Regenerate..", res);
+        println!(
+            "Generate a random num ({}), but it is invalid (the problem may have been solved \
+             or may have no rust version). Regenerate..",
+            res
+        );
     }
 }
 

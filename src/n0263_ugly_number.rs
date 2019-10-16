@@ -46,11 +46,11 @@ impl Solution {
         } else if num == 1 {
             true
         } else if num % 5 == 0 {
-            Solution::is_ugly(num/5)
+            Solution::is_ugly(num / 5)
         } else if num % 3 == 0 {
-            Solution::is_ugly(num/3)
+            Solution::is_ugly(num / 3)
         } else if num % 2 == 0 {
-            Solution::is_ugly(num/2)
+            Solution::is_ugly(num / 2)
         } else {
             false
         }

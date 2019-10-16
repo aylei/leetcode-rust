@@ -47,7 +47,7 @@ use std::collections::VecDeque;
 impl MyStack {
     /** Initialize your data structure here. */
     fn new() -> Self {
-        MyStack{
+        MyStack {
             q1: VecDeque::new(),
             q2: VecDeque::new(),
         }
@@ -113,8 +113,8 @@ mod tests {
 
         stack.push(1);
         stack.push(2);
-        assert_eq!(stack.top(), 2);   // returns 2
-        assert_eq!(stack.pop(), 2);   // returns 2
+        assert_eq!(stack.top(), 2); // returns 2
+        assert_eq!(stack.pop(), 2); // returns 2
         assert_eq!(stack.empty(), false); // returns false
         assert_eq!(stack.pop(), 1);
         assert_eq!(stack.empty(), true);

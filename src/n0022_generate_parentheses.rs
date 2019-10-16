@@ -1,14 +1,14 @@
 /**
  * [22] Generate Parentheses
  *
- * 
+ *
  * Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.
- * 
- * 
- * 
+ *
+ *
+ *
  * For example, given n = 3, a solution set is:
- * 
- * 
+ *
+ *
  * [
  *   "((()))",
  *   "(()())",
@@ -16,7 +16,7 @@
  *   "()(())",
  *   "()()()"
  * ]
- * 
+ *
  */
 pub struct Solution {}
 
@@ -25,7 +25,9 @@ pub struct Solution {}
 // DFS
 impl Solution {
     pub fn generate_parenthesis(n: i32) -> Vec<String> {
-        if n < 1 { return vec![] }
+        if n < 1 {
+            return vec![];
+        }
         let mut result = Vec::new();
         Solution::dfs(n, 0, 0, &mut result, String::new());
         result
@@ -57,14 +59,11 @@ mod tests {
 
     #[test]
     fn test_22() {
-        assert_eq!(Solution::generate_parenthesis(1), vec!["()"] );
-        assert_eq!(Solution::generate_parenthesis(2), vec!["(())", "()()"] );
-        assert_eq!(Solution::generate_parenthesis(3), vec![
-            "((()))",
-            "(()())",
-            "(())()",
-            "()(())",
-            "()()()"
-        ] );
+        assert_eq!(Solution::generate_parenthesis(1), vec!["()"]);
+        assert_eq!(Solution::generate_parenthesis(2), vec!["(())", "()()"]);
+        assert_eq!(
+            Solution::generate_parenthesis(3),
+            vec!["((()))", "(()())", "(())()", "()(())", "()()()"]
+        );
     }
 }

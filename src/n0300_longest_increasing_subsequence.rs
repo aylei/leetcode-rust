@@ -49,6 +49,6 @@ mod tests {
 
     #[test]
     fn test_300() {
-        assert_eq!(Solution::length_of_lis(vec![10,9,2,5,3,7,101,18]), 4);
+        assert_eq!(Solution::length_of_lis(vec![10, 9, 2, 5, 3, 7, 101, 18]), 4);
     }
 }

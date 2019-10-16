@@ -16,7 +16,7 @@
  *
  */
 pub struct Solution {}
-use super::util::linked_list::{ListNode, to_list};
+use super::util::linked_list::{to_list, ListNode};
 
 // submission codes start here
 
@@ -41,6 +41,9 @@ mod tests {
 
     #[test]
     fn test_206() {
-        assert_eq!(Solution::reverse_list(linked![1,2,3,4,5]), linked![5,4,3,2,1]);
+        assert_eq!(
+            Solution::reverse_list(linked![1, 2, 3, 4, 5]),
+            linked![5, 4, 3, 2, 1]
+        );
     }
 }

@@ -36,11 +36,11 @@ impl Solution {
             let (mut prev, mut curr) = (0, 0);
             for (k, &num) in nums.iter().enumerate() {
                 if k == 0 && !rob_first {
-                    continue
+                    continue;
                 }
                 // k is last element but not the first element
                 if k != 0 && k == (nums.len() - 1) && rob_first {
-                    continue
+                    continue;
                 }
                 let next = i32::max(prev + num, curr);
                 prev = curr;
@@ -60,7 +60,7 @@ mod tests {
 
     #[test]
     fn test_213() {
-        assert_eq!(Solution::rob(vec![2,3,2]), 3);
-        assert_eq!(Solution::rob(vec![1,2,3,1]), 4);
+        assert_eq!(Solution::rob(vec![2, 3, 2]), 3);
+        assert_eq!(Solution::rob(vec![1, 2, 3, 1]), 4);
     }
 }

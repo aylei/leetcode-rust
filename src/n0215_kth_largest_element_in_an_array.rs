@@ -24,8 +24,8 @@ pub struct Solution {}
 
 // submission codes start here
 
-use std::collections::BinaryHeap;
 use std::cmp::Reverse;
+use std::collections::BinaryHeap;
 impl Solution {
     pub fn find_kth_largest(nums: Vec<i32>, k: i32) -> i32 {
         let k = k as usize;
@@ -50,13 +50,10 @@ mod tests {
 
     #[test]
     fn test_215() {
-        assert_eq!(Solution::find_kth_largest(
-            vec![3, 2, 3, 1, 2, 4, 5, 5, 6],
+        assert_eq!(
+            Solution::find_kth_largest(vec![3, 2, 3, 1, 2, 4, 5, 5, 6], 4),
             4
-        ), 4);
-        assert_eq!(Solution::find_kth_largest(
-            vec![3,2,1,5,6,4],
-            2
-        ), 5);
+        );
+        assert_eq!(Solution::find_kth_largest(vec![3, 2, 1, 5, 6, 4], 2), 5);
     }
 }

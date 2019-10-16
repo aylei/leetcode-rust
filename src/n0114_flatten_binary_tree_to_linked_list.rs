@@ -2,20 +2,20 @@
  * [114] Flatten Binary Tree to Linked List
  *
  * Given a binary tree, flatten it to a linked list in-place.
- * 
+ *
  * For example, given the following tree:
- * 
- * 
+ *
+ *
  *     1
  *    / \
  *   2   5
  *  / \   \
  * 3   4   6
- * 
- * 
+ *
+ *
  * The flattened tree should look like:
- * 
- * 
+ *
+ *
  * 1
  *  \
  *   2
@@ -27,16 +27,16 @@
  *         5
  *          \
  *           6
- * 
- * 
+ *
+ *
  */
 pub struct Solution {}
-use super::util::tree::{TreeNode, to_tree};
+use super::util::tree::{to_tree, TreeNode};
 
 // submission codes start here
 
-use std::rc::Rc;
 use std::cell::RefCell;
+use std::rc::Rc;
 impl Solution {
     pub fn flatten(root: &mut Option<Rc<RefCell<TreeNode>>>) {
         Solution::flatten_helper(root.clone());
@@ -72,16 +72,16 @@ mod tests {
 
     #[test]
     fn test_114() {
-        let mut tree = tree![1,2,5,3,4,null,6];
+        let mut tree = tree![1, 2, 5, 3, 4, null, 6];
         Solution::flatten(&mut tree);
-        assert_eq!(tree, tree![1,null,2,null,3,null,4,null,5,null,6]);
+        assert_eq!(tree, tree![1, null, 2, null, 3, null, 4, null, 5, null, 6]);
 
-        let mut tree = tree![1,2,null,3];
+        let mut tree = tree![1, 2, null, 3];
         Solution::flatten(&mut tree);
-        assert_eq!(tree, tree![1,null,2,null,3]);
+        assert_eq!(tree, tree![1, null, 2, null, 3]);
 
-        let mut tree = tree![1,null,2,3];
+        let mut tree = tree![1, null, 2, 3];
         Solution::flatten(&mut tree);
-        assert_eq!(tree, tree![1,null,2,null,3]);
+        assert_eq!(tree, tree![1, null, 2, null, 3]);
     }
 }

@@ -51,7 +51,7 @@ impl Solution {
 
     pub fn helper(root: Option<Rc<RefCell<TreeNode>>>, k: i32, res: &mut i32) -> i32 {
         if k <= 0 {
-            return 0
+            return 0;
         }
         if let Some(node) = root {
             let left = Solution::helper(node.borrow().left.clone(), k, res);
@@ -74,8 +74,8 @@ mod tests {
 
     #[test]
     fn test_230() {
-        assert_eq!(Solution::kth_smallest(tree![3,1,4,null,2], 1), 1);
-        assert_eq!(Solution::kth_smallest(tree![3,1,4,null,2], 2), 2);
-        assert_eq!(Solution::kth_smallest(tree![3,1,4,null,2], 3), 3);
+        assert_eq!(Solution::kth_smallest(tree![3, 1, 4, null, 2], 1), 1);
+        assert_eq!(Solution::kth_smallest(tree![3, 1, 4, null, 2], 2), 2);
+        assert_eq!(Solution::kth_smallest(tree![3, 1, 4, null, 2], 3), 3);
     }
 }

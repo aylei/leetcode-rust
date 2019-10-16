@@ -2,14 +2,14 @@
  * [52] N-Queens II
  *
  * The n-queens puzzle is the problem of placing n queens on an n&times;n chessboard such that no two queens attack each other.
- * 
+ *
  * <img src="https://assets.leetcode.com/uploads/2018/10/12/8-queens.png" style="width: 258px; height: 276px;" />
- * 
+ *
  * Given an integer n, return the number of distinct solutions to the n-queens puzzle.
- * 
+ *
  * Example:
- * 
- * 
+ *
+ *
  * Input: 4
  * Output: 2
  * Explanation: There are two distinct solutions to the 4-queens puzzle as shown below.
@@ -18,14 +18,14 @@
  *   "...Q",
  *   "Q...",
  *   "..Q."],
- * 
+ *
  *  ["..Q.",  // Solution 2
  *   "Q...",
  *   "...Q",
  *   ".Q.."]
  * ]
- * 
- * 
+ *
+ *
  */
 pub struct Solution {}
 
@@ -39,16 +39,14 @@ impl Solution {
         num
     }
 
-    fn schedule_queens(board: &mut Vec<Vec<char>>,
-                       num: &mut i32,
-                       len: usize, row: usize) {
+    fn schedule_queens(board: &mut Vec<Vec<char>>, num: &mut i32, len: usize, row: usize) {
         for col in 0..len {
             if !Solution::collision(&board, len, row, col) {
                 board[row][col] = 'Q';
                 if row == len - 1 {
                     *num += 1;
                 } else {
-                    Solution::schedule_queens(board, num, len, row+1);
+                    Solution::schedule_queens(board, num, len, row + 1);
                 }
                 board[row][col] = '.';
             }
@@ -58,17 +56,23 @@ impl Solution {
     #[inline(always)]
     fn collision(board: &Vec<Vec<char>>, len: usize, x: usize, y: usize) -> bool {
         for i in 0..x {
-            if board[i][y] == 'Q' { return true }
+            if board[i][y] == 'Q' {
+                return true;
+            }
         }
         let (mut i, mut j) = (x as i32 - 1, y as i32 - 1);
         while i >= 0 && j >= 0 {
-            if board[i as usize][j as usize] == 'Q' { return true }
+            if board[i as usize][j as usize] == 'Q' {
+                return true;
+            }
             i -= 1;
             j -= 1;
         }
         let (mut i, mut j) = (x as i32 - 1, y as i32 + 1);
         while i >= 0 && j < len as i32 {
-            if board[i as usize][j as usize] == 'Q' { return true }
+            if board[i as usize][j as usize] == 'Q' {
+                return true;
+            }
             i -= 1;
             j += 1;
         }

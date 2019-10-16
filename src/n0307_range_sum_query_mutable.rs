@@ -50,19 +50,19 @@ struct NumArray {
 impl NumArray {
     fn new(nums: Vec<i32>) -> Self {
         let n = nums.len();
-        let mut tree = vec![0; 4*n];
+        let mut tree = vec![0; 4 * n];
         if n > 0 {
-            NumArray::build(1, 0, n-1, &mut tree, &nums);
+            NumArray::build(1, 0, n - 1, &mut tree, &nums);
         }
-        NumArray{tree: tree, n: n}
+        NumArray { tree: tree, n: n }
     }
 
     fn update(&mut self, i: i32, val: i32) {
-        NumArray::update_internal(i as usize, val, 1, 0, self.n-1, &mut self.tree);
+        NumArray::update_internal(i as usize, val, 1, 0, self.n - 1, &mut self.tree);
     }
 
     fn sum_range(&self, i: i32, j: i32) -> i32 {
-        NumArray::sum(1, 0, self.n-1, i as usize, j as usize, &self.tree)
+        NumArray::sum(1, 0, self.n - 1, i as usize, j as usize, &self.tree)
     }
 
     fn build(node: usize, start: usize, end: usize, tree: &mut Vec<i32>, nums: &Vec<i32>) {
@@ -70,27 +70,41 @@ impl NumArray {
             tree[node] = nums[start];
         } else {
             let mid = (start + end) / 2;
-            NumArray::build(2*node, start, mid, tree, nums);
-            NumArray::build(2*node+1, mid+1, end, tree, nums);
-            tree[node] = tree[2*node] + tree[2*node+1];
+            NumArray::build(2 * node, start, mid, tree, nums);
+            NumArray::build(2 * node + 1, mid + 1, end, tree, nums);
+            tree[node] = tree[2 * node] + tree[2 * node + 1];
         }
     }
 
-    fn update_internal(i: usize, val: i32, node: usize, start: usize, end: usize, tree: &mut Vec<i32>) {
+    fn update_internal(
+        i: usize,
+        val: i32,
+        node: usize,
+        start: usize,
+        end: usize,
+        tree: &mut Vec<i32>,
+    ) {
         if start == end {
             tree[node] = val;
         } else {
             let mid = (start + end) / 2;
             if i <= mid {
-                NumArray::update_internal(i, val, 2*node, start, mid, tree);
+                NumArray::update_internal(i, val, 2 * node, start, mid, tree);
             } else {
-                NumArray::update_internal(i, val, 2*node+1, mid+1, end, tree);
+                NumArray::update_internal(i, val, 2 * node + 1, mid + 1, end, tree);
             }
-            tree[node] = tree[2*node] + tree[2*node+1];
+            tree[node] = tree[2 * node] + tree[2 * node + 1];
         }
     }
 
-    fn sum(node: usize, start: usize, end: usize, left: usize, right: usize, tree: &Vec<i32>) -> i32 {
+    fn sum(
+        node: usize,
+        start: usize,
+        end: usize,
+        left: usize,
+        right: usize,
+        tree: &Vec<i32>,
+    ) -> i32 {
         if right < start || left > end {
             // not in range
             0
@@ -100,8 +114,8 @@ impl NumArray {
         } else {
             // partially in range
             let mid = (start + end) / 2;
-            NumArray::sum(2*node, start, mid, left, right, tree) +
-                NumArray::sum(2*node+1, mid+1, end, left, right ,tree)
+            NumArray::sum(2 * node, start, mid, left, right, tree)
+                + NumArray::sum(2 * node + 1, mid + 1, end, left, right, tree)
         }
     }
 }
@@ -122,7 +136,7 @@ mod tests {
     #[test]
     fn test_307() {
         let _empty = NumArray::new(vec![]);
-        let mut tree = NumArray::new(vec![1,1,1,1,1,1,1,1,1,1]);
+        let mut tree = NumArray::new(vec![1, 1, 1, 1, 1, 1, 1, 1, 1, 1]);
         assert_eq!(tree.sum_range(0, 6), 7);
         tree.update(0, 2);
         assert_eq!(tree.sum_range(0, 6), 8);

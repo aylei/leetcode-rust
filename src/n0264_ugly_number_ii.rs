@@ -28,15 +28,21 @@ impl Solution {
         let mut base2 = 0;
         let mut base3 = 0;
         let mut base5 = 0;
-        let mut ugly = vec![1;1];
+        let mut ugly = vec![1; 1];
         for _ in 1..n {
             let next2 = ugly[base2] * 2;
             let next3 = ugly[base3] * 3;
             let next5 = ugly[base5] * 5;
             let next = i32::min(next2, i32::min(next3, next5));
-            if next2 == next { base2 += 1 }
-            if next3 == next { base3 += 1 }
-            if next5 == next { base5 += 1 }
+            if next2 == next {
+                base2 += 1
+            }
+            if next3 == next {
+                base3 += 1
+            }
+            if next5 == next {
+                base5 += 1
+            }
             ugly.push(next)
         }
         *ugly.last().unwrap()

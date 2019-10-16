@@ -2,10 +2,10 @@
  * [49] Group Anagrams
  *
  * Given an array of strings, group anagrams together.
- * 
+ *
  * Example:
- * 
- * 
+ *
+ *
  * Input: ["eat", "tea", "tan", "ate", "nat", "bat"],
  * Output:
  * [
@@ -13,14 +13,14 @@
  *   ["nat","tan"],
  *   ["bat"]
  * ]
- * 
+ *
  * Note:
- * 
- * 
+ *
+ *
  * 	All inputs will be in lowercase.
  * 	The order of your output does not matter.
- * 
- * 
+ *
+ *
  */
 pub struct Solution {}
 
@@ -52,11 +52,13 @@ mod tests {
     #[test]
     #[ignore]
     fn test_49() {
-        assert_eq!(Solution::group_anagrams(vec_string!["eat", "tea", "tan", "ate", "nat", "bat"]),
-                   vec![
-                       vec_string!["tan","nat"],
-                       vec_string!["bat"],
-                       vec_string!["eat","ate","tea"],
-                   ]);
+        assert_eq!(
+            Solution::group_anagrams(vec_string!["eat", "tea", "tan", "ate", "nat", "bat"]),
+            vec![
+                vec_string!["tan", "nat"],
+                vec_string!["bat"],
+                vec_string!["eat", "ate", "tea"],
+            ]
+        );
     }
 }

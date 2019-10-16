@@ -24,11 +24,13 @@ impl Solution {
             for idx in start..end {
                 if seq[end] == seq[idx] {
                     start = idx + 1;
-                    break
+                    break;
                 }
             }
             let curr = end - start + 1;
-            if curr > max { max = curr }
+            if curr > max {
+                max = curr
+            }
             end += 1
         }
         max as i32
@@ -43,8 +45,14 @@ mod tests {
 
     #[test]
     fn test_3() {
-        assert_eq!(Solution::length_of_longest_substring("abcabcbb".to_string()), 3);
+        assert_eq!(
+            Solution::length_of_longest_substring("abcabcbb".to_string()),
+            3
+        );
         assert_eq!(Solution::length_of_longest_substring("bbbb".to_string()), 1);
-        assert_eq!(Solution::length_of_longest_substring("pwwkew".to_string()), 3);
+        assert_eq!(
+            Solution::length_of_longest_substring("pwwkew".to_string()),
+            3
+        );
     }
 }

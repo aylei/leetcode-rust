@@ -47,11 +47,10 @@ impl Solution {
         loop {
             match (s_iter.next(), p_iter.next()) {
                 (Some(sub), Some(ch)) => {
-                    if *p2s.entry(ch).or_insert(sub) != sub ||
-                        *s2p.entry(sub).or_insert(ch) != ch {
-                        return false
+                    if *p2s.entry(ch).or_insert(sub) != sub || *s2p.entry(sub).or_insert(ch) != ch {
+                        return false;
                     }
-                },
+                }
                 (None, None) => break,
                 _ => return false,
             }
@@ -68,8 +67,17 @@ mod tests {
 
     #[test]
     fn test_290() {
-        assert_eq!(Solution::word_pattern("abba".to_owned(), "dog cat cat dog".to_owned()), true);
-        assert_eq!(Solution::word_pattern("aaaa".to_owned(), "dog cat cat dog".to_owned()), false);
-        assert_eq!(Solution::word_pattern("abba".to_owned(), "dog cat cat fish".to_owned()), false);
+        assert_eq!(
+            Solution::word_pattern("abba".to_owned(), "dog cat cat dog".to_owned()),
+            true
+        );
+        assert_eq!(
+            Solution::word_pattern("aaaa".to_owned(), "dog cat cat dog".to_owned()),
+            false
+        );
+        assert_eq!(
+            Solution::word_pattern("abba".to_owned(), "dog cat cat fish".to_owned()),
+            false
+        );
     }
 }

@@ -65,7 +65,13 @@ mod tests {
 
     #[test]
     fn test_299() {
-        assert_eq!(Solution::get_hint("1807".to_owned(), "7810".to_owned()), "1A3B".to_owned());
-        assert_eq!(Solution::get_hint("1123".to_owned(), "0111".to_owned()), "1A1B".to_owned());
+        assert_eq!(
+            Solution::get_hint("1807".to_owned(), "7810".to_owned()),
+            "1A3B".to_owned()
+        );
+        assert_eq!(
+            Solution::get_hint("1123".to_owned(), "0111".to_owned()),
+            "1A1B".to_owned()
+        );
     }
 }
