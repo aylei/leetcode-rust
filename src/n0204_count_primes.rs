@@ -2,15 +2,15 @@
  * [204] Count Primes
  *
  * Count the number of prime numbers less than a non-negative number, n.
- * 
+ *
  * Example:
- * 
- * 
+ *
+ *
  * Input: 10
  * Output: 4
  * Explanation: There are 4 prime numbers less than 10, they are 2, 3, 5, 7.
- * 
- * 
+ *
+ *
  */
 pub struct Solution {}
 
@@ -18,7 +18,9 @@ pub struct Solution {}
 
 impl Solution {
     pub fn count_primes(n: i32) -> i32 {
-        if n <= 2 { return 0 }
+        if n <= 2 {
+            return 0;
+        }
         let mut is_prime = vec![true; n as usize];
         is_prime[0] = false;
         is_prime[1] = false;
@@ -26,7 +28,7 @@ impl Solution {
         while i * i < n {
             if !is_prime[i as usize] {
                 i += 1;
-                continue
+                continue;
             }
             let mut j = i * i;
             while j < n {
@@ -37,11 +39,12 @@ impl Solution {
         }
         let mut count = 0;
         for &v in is_prime.iter() {
-            if v { count += 1 }
+            if v {
+                count += 1
+            }
         }
         count
     }
-
 }
 
 // submission codes end

@@ -2,17 +2,17 @@
  * [203] Remove Linked List Elements
  *
  * Remove all elements from a linked list of integers that have value val.
- * 
+ *
  * Example:
- * 
- * 
+ *
+ *
  * Input:  1->2->6->3->4->5->6, val = 6
  * Output: 1->2->3->4->5
- * 
- * 
+ *
+ *
  */
 pub struct Solution {}
-use super::util::linked_list::{ListNode, to_list};
+use super::util::linked_list::{to_list, ListNode};
 
 // submission codes start here
 
@@ -39,6 +39,9 @@ mod tests {
 
     #[test]
     fn test_203() {
-        assert_eq!(Solution::remove_elements(linked![1,2,6,3,4,5,6], 6), linked![1,2,3,4,5]);
+        assert_eq!(
+            Solution::remove_elements(linked![1, 2, 6, 3, 4, 5, 6], 6),
+            linked![1, 2, 3, 4, 5]
+        );
     }
 }

@@ -45,6 +45,6 @@ mod tests {
 
     #[test]
     fn test_274() {
-        assert_eq!(Solution::h_index(vec![3,0,6,1,5]), 3);
+        assert_eq!(Solution::h_index(vec![3, 0, 6, 1, 5]), 3);
     }
 }

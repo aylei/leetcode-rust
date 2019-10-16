@@ -33,13 +33,17 @@ pub struct Solution {}
 
 impl Solution {
     pub fn h_index(citations: Vec<i32>) -> i32 {
-        if citations.is_empty() { return 0 }
+        if citations.is_empty() {
+            return 0;
+        }
         let len = citations.len();
         let (mut low, mut high) = (0_usize, len - 1);
         while low <= high {
             let mid = low + (high - low) / 2;
             if citations[mid] >= (len - mid) as i32 {
-                if mid == 0 { break }
+                if mid == 0 {
+                    break;
+                }
                 high = mid - 1;
             } else {
                 low = mid + 1;
@@ -61,7 +65,7 @@ mod tests {
         assert_eq!(Solution::h_index(vec![0]), 0);
         assert_eq!(Solution::h_index(vec![11, 15]), 2);
         assert_eq!(Solution::h_index(vec![1]), 1);
-        assert_eq!(Solution::h_index(vec![0,1,3,5,6]), 3);
-        assert_eq!(Solution::h_index(vec![0,4,4,5,6]), 4);
+        assert_eq!(Solution::h_index(vec![0, 1, 3, 5, 6]), 3);
+        assert_eq!(Solution::h_index(vec![0, 4, 4, 5, 6]), 4);
     }
 }

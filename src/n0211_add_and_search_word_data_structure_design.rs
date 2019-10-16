@@ -30,7 +30,6 @@ pub struct Solution {}
 
 // submission codes start here
 
-
 struct WordDictionary {
     root: Option<Box<Trie>>,
 }
@@ -124,5 +123,4 @@ mod tests {
         // assert_eq!(dict.search(".ad".to_owned()), true);
         // assert_eq!(dict.search("da.".to_owned()), true);
     }
-
 }

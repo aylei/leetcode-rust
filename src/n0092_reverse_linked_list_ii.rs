@@ -2,19 +2,19 @@
  * [92] Reverse Linked List II
  *
  * Reverse a linked list from position m to n. Do it in one-pass.
- * 
+ *
  * Note: 1 &le; m &le; n &le; length of list.
- * 
+ *
  * Example:
- * 
- * 
+ *
+ *
  * Input: 1->2->3->4->5->NULL, m = 2, n = 4
  * Output: 1->4->3->2->5->NULL
- * 
- * 
+ *
+ *
  */
 pub struct Solution {}
-use super::util::linked_list::{ListNode, to_list};
+use super::util::linked_list::{to_list, ListNode};
 
 // submission codes start here
 
@@ -24,7 +24,7 @@ use super::util::linked_list::{ListNode, to_list};
 //   pub val: i32,
 //   pub next: Option<Box<ListNode>>
 // }
-// 
+//
 // impl ListNode {
 //   #[inline]
 //   fn new(val: i32) -> Self {
@@ -47,6 +47,5 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_92() {
-    }
+    fn test_92() {}
 }

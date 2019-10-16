@@ -58,7 +58,8 @@ impl Solution {
             ret.push(remain == 0);
             n = remain;
         }
-        return ret;
+
+        ret
     }
 }
 

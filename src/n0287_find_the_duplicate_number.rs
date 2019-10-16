@@ -63,9 +63,9 @@ mod tests {
 
     #[test]
     fn test_287() {
-        assert_eq!(Solution::find_duplicate(vec![1,3,4,2,2]), 2);
-        assert_eq!(Solution::find_duplicate(vec![3,1,3,4,2]), 3);
-        assert_eq!(Solution::find_duplicate(vec![1,2,3,4,5,5]), 5);
-        assert_eq!(Solution::find_duplicate(vec![5,1,2,3,4,5]), 5);
+        assert_eq!(Solution::find_duplicate(vec![1, 3, 4, 2, 2]), 2);
+        assert_eq!(Solution::find_duplicate(vec![3, 1, 3, 4, 2]), 3);
+        assert_eq!(Solution::find_duplicate(vec![1, 2, 3, 4, 5, 5]), 5);
+        assert_eq!(Solution::find_duplicate(vec![5, 1, 2, 3, 4, 5]), 5);
     }
 }

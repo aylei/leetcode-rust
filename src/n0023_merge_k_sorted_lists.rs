@@ -2,10 +2,10 @@
  * [23] Merge k Sorted Lists
  *
  * Merge k sorted linked lists and return it as one sorted list. Analyze and describe its complexity.
- * 
+ *
  * Example:
- * 
- * 
+ *
+ *
  * Input:
  * [
  *   1->4->5,
@@ -13,15 +13,15 @@
  *   2->6
  * ]
  * Output: 1->1->2->3->4->4->5->6
- * 
- * 
+ *
+ *
  */
 pub struct Solution {}
-use super::util::linked_list::{ListNode, to_list};
+use super::util::linked_list::{to_list, ListNode};
 
 // submission codes start here
-use std::collections::BinaryHeap;
 use std::cmp::Ordering;
+use std::collections::BinaryHeap;
 
 // head value and the index
 struct Node(i32, usize);
@@ -48,17 +48,22 @@ impl Solution {
     pub fn merge_k_lists(lists: Vec<Option<Box<ListNode>>>) -> Option<Box<ListNode>> {
         let mut heap: BinaryHeap<Node> = BinaryHeap::new();
         for (idx, node) in lists.iter().enumerate() {
-            node.as_ref().and_then(|n| Some(heap.push(Node(n.val, idx))));
+            node.as_ref()
+                .and_then(|n| Some(heap.push(Node(n.val, idx))));
         }
         Solution::next(lists, &mut heap)
     }
 
-    fn next(mut lists: Vec<Option<Box<ListNode>>>, heap: &mut BinaryHeap<Node> ) -> Option<Box<ListNode>> {
+    fn next(
+        mut lists: Vec<Option<Box<ListNode>>>,
+        heap: &mut BinaryHeap<Node>,
+    ) -> Option<Box<ListNode>> {
         heap.pop().map(|node| {
             let next = lists[node.1].take().unwrap().next;
-            next.as_ref().and_then(|n| Some(heap.push(Node(n.val, node.1))));
+            next.as_ref()
+                .and_then(|n| Some(heap.push(Node(n.val, node.1))));
             lists[node.1] = next;
-            Box::new(ListNode{
+            Box::new(ListNode {
                 val: node.0,
                 next: Solution::next(lists, heap),
             })
@@ -74,16 +79,14 @@ mod tests {
 
     #[test]
     fn test_23() {
-        assert_eq!(Solution::merge_k_lists(
-            vec![
-                to_list(vec![1,4,5]),
-                to_list(vec![1,3,4]),
-                to_list(vec![2,6]),
+        assert_eq!(
+            Solution::merge_k_lists(vec![
+                to_list(vec![1, 4, 5]),
+                to_list(vec![1, 3, 4]),
+                to_list(vec![2, 6]),
             ]),
-            to_list(vec![1,1,2,3,4,4,5,6])
+            to_list(vec![1, 1, 2, 3, 4, 4, 5, 6])
         );
-        assert_eq!(Solution::merge_k_lists(vec![]),
-            None
-        );
+        assert_eq!(Solution::merge_k_lists(vec![]), None);
     }
 }

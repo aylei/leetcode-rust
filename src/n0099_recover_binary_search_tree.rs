@@ -2,60 +2,60 @@
  * [99] Recover Binary Search Tree
  *
  * Two elements of a binary search tree (BST) are swapped by mistake.
- * 
+ *
  * Recover the tree without changing its structure.
- * 
+ *
  * Example 1:
- * 
- * 
+ *
+ *
  * Input: [1,3,null,null,2]
- * 
+ *
  *    1
  *   /
  *  3
  *   \
  *    2
- * 
+ *
  * Output: [3,1,null,null,2]
- * 
+ *
  *    3
  *   /
  *  1
  *   \
  *    2
- * 
- * 
+ *
+ *
  * Example 2:
- * 
- * 
+ *
+ *
  * Input: [3,1,4,null,null,2]
- * 
+ *
  *   3
  *  / \
  * 1   4
  *    /
  *   2
- * 
+ *
  * Output: [2,1,4,null,null,3]
- * 
+ *
  *   2
  *  / \
  * 1   4
  *    /
  *   3
- * 
- * 
+ *
+ *
  * Follow up:
- * 
- * 
+ *
+ *
  * 	A solution using O(n) space is pretty straight forward.
  * 	Could you devise a constant space solution?
- * 
- * 
+ *
+ *
  */
 pub struct Solution {}
 
-use super::util::tree::{TreeNode, to_tree};
+use super::util::tree::{to_tree, TreeNode};
 
 // submission codes start here
 
@@ -81,15 +81,20 @@ use super::util::tree::{TreeNode, to_tree};
 
 这个办法时间复杂度 O(N), 空间 O(1). 题解就用 Bottom-up 来写.
  */
-use std::rc::Rc;
 use std::cell::RefCell;
+use std::rc::Rc;
 impl Solution {
     pub fn recover_tree(root: &mut Option<Rc<RefCell<TreeNode>>>) {
         Solution::recover_helper(root.as_ref());
     }
 
-    fn recover_helper(root: Option<&Rc<RefCell<TreeNode>>>)
-        -> (Option<Rc<RefCell<TreeNode>>>, Option<Rc<RefCell<TreeNode>>>, bool) {
+    fn recover_helper(
+        root: Option<&Rc<RefCell<TreeNode>>>,
+    ) -> (
+        Option<Rc<RefCell<TreeNode>>>,
+        Option<Rc<RefCell<TreeNode>>>,
+        bool,
+    ) {
         if let Some(node) = root {
             let (l_min, l_max, l_flag) = Solution::recover_helper(node.borrow().left.as_ref());
             let (r_min, r_max, r_flag) = Solution::recover_helper(node.borrow().right.as_ref());
@@ -103,17 +108,32 @@ impl Solution {
             // invalid sub-tree found, do swap
             if l_err || r_err {
                 if l_err && r_err {
-
                 } else if l_err {
-                    std::mem::swap(&mut l_max.unwrap().borrow_mut().val, &mut node.borrow_mut().val);
+                    std::mem::swap(
+                        &mut l_max.unwrap().borrow_mut().val,
+                        &mut node.borrow_mut().val,
+                    );
                 } else if r_err {
-                    std::mem::swap(&mut r_min.unwrap().borrow_mut().val, &mut node.borrow_mut().val)
+                    std::mem::swap(
+                        &mut r_min.unwrap().borrow_mut().val,
+                        &mut node.borrow_mut().val,
+                    )
                 }
                 return (None, None, true);
             }
-            (if l_min.is_some() { l_min } else { Some(node.clone()) },
-             if r_max.is_some() { r_max } else { Some(node.clone()) },
-             false)
+            (
+                if l_min.is_some() {
+                    l_min
+                } else {
+                    Some(node.clone())
+                },
+                if r_max.is_some() {
+                    r_max
+                } else {
+                    Some(node.clone())
+                },
+                false,
+            )
         } else {
             (None, None, false)
         }
@@ -128,12 +148,12 @@ mod tests {
 
     #[test]
     fn test_99() {
-        let mut tree = tree![3,1,4,null,null,2];
+        let mut tree = tree![3, 1, 4, null, null, 2];
         Solution::recover_tree(&mut tree);
-        assert_eq!(tree, tree![2,1,4,null,null,3]);
+        assert_eq!(tree, tree![2, 1, 4, null, null, 3]);
 
-        let mut tree = tree![2,6,5,null,null,3,1,null,4];
+        let mut tree = tree![2, 6, 5, null, null, 3, 1, null, 4];
         Solution::recover_tree(&mut tree);
-        assert_eq!(tree, tree![2,1,5,null,null,3,6,null,4]);
+        assert_eq!(tree, tree![2, 1, 5, null, null, 3, 6, null, 4]);
     }
 }

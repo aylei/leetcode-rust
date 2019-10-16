@@ -35,15 +35,17 @@ impl Solution {
     }
 
     pub fn helper(input: &str) -> Vec<i32> {
-        if input.is_empty() { return vec![] }
+        if input.is_empty() {
+            return vec![];
+        }
         if let Ok(digit) = input.parse::<i32>() {
-            return vec![digit]
+            return vec![digit];
         }
         let mut res: Vec<i32> = Vec::new();
         for (i, ch) in input.chars().enumerate() {
             if ch == '+' || ch == '-' || ch == '*' {
                 let left = Solution::helper(&input[..i]);
-                let right = Solution::helper(&input[i+1..]);
+                let right = Solution::helper(&input[i + 1..]);
                 for &a in left.iter() {
                     for &b in right.iter() {
                         res.push(match ch {
@@ -68,6 +70,9 @@ mod tests {
 
     #[test]
     fn test_241() {
-        assert_eq!(Solution::diff_ways_to_compute("2*3-4*5".to_owned()), vec![-34, -10, -14, -10, 10]);
+        assert_eq!(
+            Solution::diff_ways_to_compute("2*3-4*5".to_owned()),
+            vec![-34, -10, -14, -10, 10]
+        );
     }
 }

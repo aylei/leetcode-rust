@@ -2,33 +2,33 @@
  * [94] Binary Tree Inorder Traversal
  *
  * Given a binary tree, return the inorder traversal of its nodes' values.
- * 
+ *
  * Example:
- * 
- * 
+ *
+ *
  * Input: [1,null,2,3]
  *    1
  *     \
  *      2
  *     /
  *    3
- * 
+ *
  * Output: [1,3,2]
- * 
+ *
  * Follow up: Recursive solution is trivial, could you do it iteratively?
- * 
+ *
  */
 pub struct Solution {}
 
 // submission codes start here
 
-use super::util::tree::{TreeNode, to_tree};
-use std::rc::Rc;
+use super::util::tree::{to_tree, TreeNode};
 use std::cell::RefCell;
+use std::rc::Rc;
 impl Solution {
     pub fn inorder_traversal(root: Option<Rc<RefCell<TreeNode>>>) -> Vec<i32> {
         let mut res = Vec::new();
-        Solution::inorder_traverse(root.as_ref(), &mut (|v| {res.push(v)}));
+        Solution::inorder_traverse(root.as_ref(), &mut (|v| res.push(v)));
         res
     }
 
@@ -50,12 +50,12 @@ mod tests {
     #[test]
     fn test_94() {
         assert_eq!(
-            Solution::inorder_traversal(tree![1,null,2,3]),
-            vec![1,3,2]
+            Solution::inorder_traversal(tree![1, null, 2, 3]),
+            vec![1, 3, 2]
         );
         assert_eq!(
-            Solution::inorder_traversal(tree![1,2,3,4,5,6,7]),
-            vec![4,2,5,1,6,3,7]
+            Solution::inorder_traversal(tree![1, 2, 3, 4, 5, 6, 7]),
+            vec![4, 2, 5, 1, 6, 3, 7]
         );
     }
 }

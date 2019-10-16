@@ -21,40 +21,43 @@ pub struct Solution {}
 // submission codes start here
 
 /*
- DP, f(i, j) to represent the max square of matrix that end with (i, j) (right bottom corener), then:
+DP, f(i, j) to represent the max square of matrix that end with (i, j) (right bottom corener), then:
 
- f(0, 0) = matrix[0][0]
- f(i, j) = if matrix[0][0] { min(f(i-1,j), f(i,j-1), f(i-1)(j-1)) + 1 } else { 0 }
+f(0, 0) = matrix[0][0]
+f(i, j) = if matrix[0][0] { min(f(i-1,j), f(i,j-1), f(i-1)(j-1)) + 1 } else { 0 }
 
- The equation explained:
+The equation explained:
 
- matrix:    dp:
- 1 1 1      1 1 1
- 1 1 1   -> 1 2 2
- 1 1 1      1 2 3
- */
+matrix:    dp:
+1 1 1      1 1 1
+1 1 1   -> 1 2 2
+1 1 1      1 2 3
+*/
 impl Solution {
     pub fn maximal_square(matrix: Vec<Vec<char>>) -> i32 {
-        if matrix.is_empty() || matrix[0].is_empty() { return 0 }
+        if matrix.is_empty() || matrix[0].is_empty() {
+            return 0;
+        }
         let (height, width) = (matrix.len(), matrix[0].len());
         let mut dp = vec![vec![0; width]; height];
         let mut max = 0;
         for i in 0..height {
             for j in 0..width {
-                if matrix[i][j] == '0' { continue }
+                if matrix[i][j] == '0' {
+                    continue;
+                }
                 dp[i][j] = i32::min(
                     i32::min(
-                        if i < 1 { 0 } else { dp[i-1][j] },
-                        if j < 1 { 0 } else { dp[i][j-1] }
+                        if i < 1 { 0 } else { dp[i - 1][j] },
+                        if j < 1 { 0 } else { dp[i][j - 1] },
                     ),
-                    if i < 1 || j < 1 { 0 } else { dp[i-1][j-1] }
+                    if i < 1 || j < 1 { 0 } else { dp[i - 1][j - 1] },
                 ) + 1;
                 max = i32::max(max, dp[i][j])
             }
         }
         max * max
     }
-
 }
 
 // submission codes end
@@ -66,13 +69,13 @@ mod tests {
     #[test]
     fn test_221() {
         assert_eq!(
-            Solution::maximal_square(
-                vec![
-                    vec!['1','0','1','0','0'],
-                    vec!['1','0','1','1','1'],
-                    vec!['1','1','1','1','1'],
-                    vec!['1','0','0','1','0'],
-                ]),
-            4)
+            Solution::maximal_square(vec![
+                vec!['1', '0', '1', '0', '0'],
+                vec!['1', '0', '1', '1', '1'],
+                vec!['1', '1', '1', '1', '1'],
+                vec!['1', '0', '0', '1', '0'],
+            ]),
+            4
+        )
     }
 }

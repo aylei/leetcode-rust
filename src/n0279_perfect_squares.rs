@@ -25,14 +25,16 @@ pub struct Solution {}
 use std::collections::VecDeque;
 impl Solution {
     pub fn num_squares(n: i32) -> i32 {
-        if n < 1 { return 0 }
+        if n < 1 {
+            return 0;
+        }
         let mut deq = VecDeque::new();
-        deq.push_back((1,n));
+        deq.push_back((1, n));
         while let Some((level, num)) = deq.pop_front() {
             let mut base = 1;
             while base * base <= num {
                 if base * base == num {
-                    return level
+                    return level;
                 }
                 deq.push_back((level + 1, num - base * base));
                 base += 1;

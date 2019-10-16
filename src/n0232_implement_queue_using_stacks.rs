@@ -46,7 +46,7 @@ struct MyQueue {
 impl MyQueue {
     /** Initialize your data structure here. */
     fn new() -> Self {
-        MyQueue{
+        MyQueue {
             vec1: Vec::new(),
             vec2: Vec::new(),
         }
@@ -100,8 +100,8 @@ mod tests {
 
         queue.push(1);
         queue.push(2);
-        assert_eq!(queue.peek(), 1);  // returns 1
-        assert_eq!(queue.pop(), 1);   // returns 1
+        assert_eq!(queue.peek(), 1); // returns 1
+        assert_eq!(queue.pop(), 1); // returns 1
         assert_eq!(queue.empty(), false); // returns false
     }
 }

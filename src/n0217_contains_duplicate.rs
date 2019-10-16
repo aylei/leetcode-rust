@@ -30,13 +30,15 @@ pub struct Solution {}
 
 impl Solution {
     pub fn contains_duplicate(nums: Vec<i32>) -> bool {
-        if nums.is_empty() { return false }
+        if nums.is_empty() {
+            return false;
+        }
         let mut nums = nums;
         nums.sort_unstable();
         let mut prev = nums[0];
         for i in 1..nums.len() {
             if nums[i] == prev {
-                return true
+                return true;
             }
             prev = nums[i]
         }
@@ -54,7 +56,7 @@ mod tests {
     fn test_217() {
         assert_eq!(Solution::contains_duplicate(vec![1]), false);
         assert_eq!(Solution::contains_duplicate(vec![]), false);
-        assert_eq!(Solution::contains_duplicate(vec![1,2,3,4]), false);
-        assert_eq!(Solution::contains_duplicate(vec![1,2,3,1]), true);
+        assert_eq!(Solution::contains_duplicate(vec![1, 2, 3, 4]), false);
+        assert_eq!(Solution::contains_duplicate(vec![1, 2, 3, 1]), true);
     }
 }

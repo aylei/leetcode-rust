@@ -36,12 +36,15 @@ impl Solution {
                         min = i32::min(min, j as i32 - i as i32 + 2);
                         break;
                     }
-
                 }
             }
             j += 1;
         }
-        if found { min } else { 0 }
+        if found {
+            min
+        } else {
+            0
+        }
     }
 }
 
@@ -53,11 +56,7 @@ mod tests {
 
     #[test]
     fn test_209() {
-        assert_eq!(Solution::min_sub_array_len(7, vec![2,3,1,2,4,3]), 2);
-        assert_eq!(Solution::min_sub_array_len(4, vec![1,4,4]), 1);
+        assert_eq!(Solution::min_sub_array_len(7, vec![2, 3, 1, 2, 4, 3]), 2);
+        assert_eq!(Solution::min_sub_array_len(4, vec![1, 4, 4]), 1);
     }
 }
-
-
-
-

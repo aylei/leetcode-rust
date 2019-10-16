@@ -1,7 +1,7 @@
-extern crate serde_json;
 extern crate reqwest;
+extern crate serde_json;
 
-use std::fmt::{Display, Formatter, Error};
+use std::fmt::{Display, Error, Formatter};
 
 const PROBLEMS_URL: &str = "https://leetcode.com/api/problems/algorithms/";
 const GRAPHQL_URL: &str = "https://leetcode.com/graphql";
@@ -21,25 +21,29 @@ pub fn get_problem(frontend_question_id: u32) -> Option<Problem> {
     let problems = get_problems().unwrap();
     for problem in problems.stat_status_pairs.iter() {
         if problem.stat.frontend_question_id == frontend_question_id {
-
             if problem.paid_only {
-                return None
+                return None;
             }
 
             let client = reqwest::Client::new();
-            let resp: RawProblem = client.post(GRAPHQL_URL)
-                .json(&Query::question_query(problem.stat.question_title_slug.as_ref().unwrap()))
-                .send().unwrap()
-                .json().unwrap();
+            let resp: RawProblem = client
+                .post(GRAPHQL_URL)
+                .json(&Query::question_query(
+                    problem.stat.question_title_slug.as_ref().unwrap(),
+                ))
+                .send()
+                .unwrap()
+                .json()
+                .unwrap();
             return Some(Problem {
                 title: problem.stat.question_title.clone().unwrap(),
                 title_slug: problem.stat.question_title_slug.clone().unwrap(),
-                code_definition: serde_json::from_str( & resp.data.question.code_definition).unwrap(),
+                code_definition: serde_json::from_str(&resp.data.question.code_definition).unwrap(),
                 content: resp.data.question.content,
                 sample_test_case: resp.data.question.sample_test_case,
                 difficulty: problem.difficulty.to_string(),
                 question_id: problem.stat.question_id,
-            })
+            });
         }
     }
     None
@@ -70,7 +74,6 @@ pub struct CodeDefinition {
     pub default_code: String,
 }
 
-
 #[derive(Debug, Serialize, Deserialize)]
 struct Query {
     #[serde(rename = "operationName")]
@@ -83,7 +86,7 @@ impl Query {
     fn question_query(title_slug: &str) -> Query {
         Query {
             operation_name: QUESTION_QUERY_OPERATION.to_owned(),
-            variables: json!({"titleSlug": title_slug}),
+            variables: json!({ "titleSlug": title_slug }),
             query: QUESTION_QUERY_STRING.to_owned(),
         }
     }

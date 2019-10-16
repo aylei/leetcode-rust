@@ -7,10 +7,7 @@ pub struct Point {
 impl Point {
     #[inline]
     pub fn new(x: i32, y: i32) -> Self {
-        Point {
-            x,
-            y
-        }
+        Point { x, y }
     }
 }
 

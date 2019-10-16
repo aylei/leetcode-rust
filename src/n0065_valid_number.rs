@@ -2,7 +2,7 @@
  * [65] Valid Number
  *
  * Validate if a given string can be interpreted as a decimal number.
- * 
+ *
  * Some examples:<br />
  * "0" => true<br />
  * " 0.1 " => true<br />
@@ -18,21 +18,21 @@
  * " --6 " => false<br />
  * "-+3" => false<br />
  * "95a54e53" => false
- * 
+ *
  * Note: It is intended for the problem statement to be ambiguous. You should gather all requirements up front before implementing one. However, here is a list of characters that can be in a valid decimal number:
- * 
- * 
+ *
+ *
  * 	Numbers 0-9
  * 	Exponent - "e"
  * 	Positive/negative sign - "+"/"-"
  * 	Decimal point - "."
- * 
- * 
+ *
+ *
  * Of course, the context of these characters also matters in the input.
- * 
+ *
  * Update (2015-02-10):<br />
  * The signature of the C++ function had been updated. If you still see your function signature accepts a const char * argument, please click the reload button to reset your code definition.
- * 
+ *
  */
 pub struct Solution {}
 
@@ -53,6 +53,5 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_65() {
-    }
+    fn test_65() {}
 }

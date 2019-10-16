@@ -70,7 +70,11 @@ impl Solution {
                 }
             }
         }
-        if res.len() == num { res } else { vec![] }
+        if res.len() == num {
+            res
+        } else {
+            vec![]
+        }
     }
 }
 
@@ -83,6 +87,9 @@ mod tests {
     #[test]
     fn test_210() {
         assert_eq!(Solution::find_order(2, vec![vec![1, 0]]), vec![0, 1]);
-        assert_eq!(Solution::find_order(4, vec![vec![1, 0], vec![2,0], vec![3,1], vec![3,2]]), vec![0,1,2,3]);
+        assert_eq!(
+            Solution::find_order(4, vec![vec![1, 0], vec![2, 0], vec![3, 1], vec![3, 2]]),
+            vec![0, 1, 2, 3]
+        );
     }
 }

@@ -26,7 +26,7 @@ pub struct Solution {}
 
 impl Solution {
     pub fn missing_number(nums: Vec<i32>) -> i32 {
-        ((nums.len() + 1)  * nums.len()) as i32 / 2 - nums.into_iter().fold(0, |acc, v| { acc + v })
+        ((nums.len() + 1) * nums.len()) as i32 / 2 - nums.into_iter().fold(0, |acc, v| acc + v)
     }
 }
 
@@ -38,6 +38,6 @@ mod tests {
 
     #[test]
     fn test_268() {
-        assert_eq!(Solution::missing_number(vec![3,0,1]), 2);
+        assert_eq!(Solution::missing_number(vec![3, 0, 1]), 2);
     }
 }

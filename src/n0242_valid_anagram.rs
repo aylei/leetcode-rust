@@ -34,7 +34,7 @@ impl Solution {
     }
 
     fn hit(s: String) -> Vec<i32> {
-        let mut hit = vec![0;27];
+        let mut hit = vec![0; 27];
         for ch in s.chars() {
             hit[(ch as u8 - 'a' as u8) as usize] += 1;
         }
@@ -50,6 +50,9 @@ mod tests {
 
     #[test]
     fn test_242() {
-        assert_eq!(Solution::is_anagram("anagram".to_owned(), "nagaram".to_owned()), true);
+        assert_eq!(
+            Solution::is_anagram("anagram".to_owned(), "nagaram".to_owned()),
+            true
+        );
     }
 }

@@ -26,7 +26,9 @@ pub struct Solution {}
 
 impl Solution {
     pub fn summary_ranges(nums: Vec<i32>) -> Vec<String> {
-        if nums.is_empty() { return vec![] }
+        if nums.is_empty() {
+            return vec![];
+        }
         let mut res = Vec::new();
         let mut curr = nums[0];
         let mut start = nums[0];
@@ -61,6 +63,9 @@ mod tests {
 
     #[test]
     fn test_228() {
-        assert_eq!(Solution::summary_ranges(vec![0,1,2,3,4,5,6]), vec_string!["0->6"]);
+        assert_eq!(
+            Solution::summary_ranges(vec![0, 1, 2, 3, 4, 5, 6]),
+            vec_string!["0->6"]
+        );
     }
 }

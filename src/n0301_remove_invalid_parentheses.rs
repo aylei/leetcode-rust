@@ -56,30 +56,54 @@ impl Solution {
         res.into_iter().collect()
     }
 
-    fn helper(chs: &Vec<char>, idx: usize, left: i32, l_remain: i32, r_remain: i32, exp: &mut Vec<char>, res: &mut HashSet<String>) {
+    fn helper(
+        chs: &Vec<char>,
+        idx: usize,
+        left: i32,
+        l_remain: i32,
+        r_remain: i32,
+        exp: &mut Vec<char>,
+        res: &mut HashSet<String>,
+    ) {
         if idx >= chs.len() {
             if left == 0 {
                 res.insert(exp.iter().collect());
             }
-            return
+            return;
         }
         if chs[idx] == '(' {
             if l_remain > 0 {
-                Solution::helper(chs, idx+1, left, l_remain-1, r_remain, &mut exp.clone(), res);
+                Solution::helper(
+                    chs,
+                    idx + 1,
+                    left,
+                    l_remain - 1,
+                    r_remain,
+                    &mut exp.clone(),
+                    res,
+                );
             }
             exp.push('(');
-            Solution::helper(chs, idx+1, left+1, l_remain, r_remain, exp, res);
+            Solution::helper(chs, idx + 1, left + 1, l_remain, r_remain, exp, res);
         } else if chs[idx] == ')' {
             if r_remain > 0 {
-                Solution::helper(chs, idx+1, left, l_remain, r_remain-1, &mut exp.clone(), res);
+                Solution::helper(
+                    chs,
+                    idx + 1,
+                    left,
+                    l_remain,
+                    r_remain - 1,
+                    &mut exp.clone(),
+                    res,
+                );
             }
             if left > 0 {
                 exp.push(')');
-                Solution::helper(chs, idx+1, left-1, l_remain, r_remain, exp, res);
+                Solution::helper(chs, idx + 1, left - 1, l_remain, r_remain, exp, res);
             }
         } else {
             exp.push(chs[idx]);
-            Solution::helper(chs, idx+1, left, l_remain, r_remain, exp, res);
+            Solution::helper(chs, idx + 1, left, l_remain, r_remain, exp, res);
         }
     }
 }
@@ -92,7 +116,13 @@ mod tests {
 
     #[test]
     fn test_301() {
-        assert_eq!(Solution::remove_invalid_parentheses("()())()".to_owned()), vec_string!["(())()", "()()()"]);
-        assert_eq!(Solution::remove_invalid_parentheses("(a)())()".to_owned()), vec_string!["(a)()()", "(a())()"]);
+        assert_eq!(
+            Solution::remove_invalid_parentheses("()())()".to_owned()),
+            vec_string!["(())()", "()()()"]
+        );
+        assert_eq!(
+            Solution::remove_invalid_parentheses("(a)())()".to_owned()),
+            vec_string!["(a)()()", "(a())()"]
+        );
     }
 }

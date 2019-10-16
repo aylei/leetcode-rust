@@ -37,7 +37,7 @@ pub struct Solution {}
 // submission codes start here
 
 struct NumMatrix {
-    cache: Vec<Vec<i32>>
+    cache: Vec<Vec<i32>>,
 }
 
 /**               region[2, 2, 3, 4] =
@@ -51,27 +51,45 @@ struct NumMatrix {
 impl NumMatrix {
     fn new(matrix: Vec<Vec<i32>>) -> Self {
         if matrix.is_empty() || matrix[0].is_empty() {
-            return NumMatrix{cache: vec![vec![]]}
+            return NumMatrix {
+                cache: vec![vec![]],
+            };
         }
         let (x_max, y_max) = (matrix.len(), matrix[0].len());
         let mut cache = vec![vec![0; y_max]; x_max];
         for x in 0..x_max {
             for y in 0..y_max {
-                cache[x][y] =  matrix[x][y] +
-                    if y > 0 { cache[x][y-1] } else { 0 } +
-                    if x > 0 { cache[x-1][y] } else { 0 } -
-                    if x > 0 && y > 0 { cache[x-1][y-1] } else { 0 }
+                cache[x][y] = matrix[x][y]
+                    + if y > 0 { cache[x][y - 1] } else { 0 }
+                    + if x > 0 { cache[x - 1][y] } else { 0 }
+                    - if x > 0 && y > 0 {
+                        cache[x - 1][y - 1]
+                    } else {
+                        0
+                    }
             }
         }
-        NumMatrix{cache: cache}
+        NumMatrix { cache: cache }
     }
 
     fn sum_region(&self, row1: i32, col1: i32, row2: i32, col2: i32) -> i32 {
-        let (row1,col1,row2,col2) = (row1 as usize, col1 as usize, row2 as usize, col2 as usize);
-        self.cache[row2][col2] -
-            if row1 > 0 { self.cache[row1-1][col2] } else { 0 } -
-            if col1 > 0 { self.cache[row2][col1-1] } else { 0 } +
-            if row1 > 0 && col1 > 0 { self.cache[row1-1][col1-1]} else { 0 }
+        let (row1, col1, row2, col2) = (row1 as usize, col1 as usize, row2 as usize, col2 as usize);
+        self.cache[row2][col2]
+            - if row1 > 0 {
+                self.cache[row1 - 1][col2]
+            } else {
+                0
+            }
+            - if col1 > 0 {
+                self.cache[row2][col1 - 1]
+            } else {
+                0
+            }
+            + if row1 > 0 && col1 > 0 {
+                self.cache[row1 - 1][col1 - 1]
+            } else {
+                0
+            }
     }
 }
 
@@ -89,15 +107,13 @@ mod tests {
 
     #[test]
     fn test_304() {
-        let matrix = NumMatrix::new(
-            vec![
-                vec![3, 0, 1, 4, 2],
-                vec![5, 6, 3, 2, 1],
-                vec![1, 2, 0, 1, 5],
-                vec![4, 1, 0, 1, 7],
-                vec![1, 0, 3, 0, 5]
-            ]
-        );
+        let matrix = NumMatrix::new(vec![
+            vec![3, 0, 1, 4, 2],
+            vec![5, 6, 3, 2, 1],
+            vec![1, 2, 0, 1, 5],
+            vec![4, 1, 0, 1, 7],
+            vec![1, 0, 3, 0, 5],
+        ]);
         assert_eq!(matrix.sum_region(1, 1, 2, 2), 11);
         assert_eq!(matrix.sum_region(2, 1, 4, 3), 8);
         assert_eq!(matrix.sum_region(1, 2, 2, 4), 12);

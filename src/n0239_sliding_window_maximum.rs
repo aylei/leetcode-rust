@@ -74,10 +74,19 @@ mod tests {
 
     #[test]
     fn test_239() {
-        assert_eq!(Solution::max_sliding_window(vec![9,10,9,-7,-4,-8,2,-6], 5), vec![10,10,9,2]);
-        assert_eq!(Solution::max_sliding_window(vec![1,3,1,2,0,5], 3), vec![3,3,2,5]);
-        assert_eq!(Solution::max_sliding_window(vec![7,2,4], 2), vec![7, 4]);
-        assert_eq!(Solution::max_sliding_window(vec![1,-1], 1), vec![1, -1]);
-        assert_eq!(Solution::max_sliding_window(vec![1,3,-1,-3,5,3,6,7], 3), vec![3,3,5,5,6,7]);
+        assert_eq!(
+            Solution::max_sliding_window(vec![9, 10, 9, -7, -4, -8, 2, -6], 5),
+            vec![10, 10, 9, 2]
+        );
+        assert_eq!(
+            Solution::max_sliding_window(vec![1, 3, 1, 2, 0, 5], 3),
+            vec![3, 3, 2, 5]
+        );
+        assert_eq!(Solution::max_sliding_window(vec![7, 2, 4], 2), vec![7, 4]);
+        assert_eq!(Solution::max_sliding_window(vec![1, -1], 1), vec![1, -1]);
+        assert_eq!(
+            Solution::max_sliding_window(vec![1, 3, -1, -3, 5, 3, 6, 7], 3),
+            vec![3, 3, 5, 5, 6, 7]
+        );
     }
 }

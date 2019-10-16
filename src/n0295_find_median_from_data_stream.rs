@@ -41,11 +41,11 @@ pub struct Solution {}
 
 // submission codes start here
 
-use std::collections::BinaryHeap;
 use std::cmp::Ordering;
+use std::collections::BinaryHeap;
 #[derive(Eq, PartialEq)]
 struct Invert {
-    value: i32
+    value: i32,
 }
 
 impl Ord for Invert {
@@ -73,7 +73,7 @@ struct MedianFinder {
 impl MedianFinder {
     /** initialize your data structure here. */
     fn new() -> Self {
-        MedianFinder{
+        MedianFinder {
             head: BinaryHeap::new(),
             tail: BinaryHeap::new(),
             count: 0,
@@ -83,7 +83,7 @@ impl MedianFinder {
     fn add_num(&mut self, num: i32) {
         self.count += 1;
         if self.head.is_empty() || num > self.head.peek().unwrap().value {
-            self.head.push(Invert{value: num});
+            self.head.push(Invert { value: num });
         } else {
             self.tail.push(num);
         }
@@ -91,7 +91,9 @@ impl MedianFinder {
         if self.head.len() > self.tail.len() + 1 {
             self.tail.push(self.head.pop().unwrap().value);
         } else if self.head.len() + 1 < self.tail.len() {
-            self.head.push(Invert{value:self.tail.pop().unwrap()});
+            self.head.push(Invert {
+                value: self.tail.pop().unwrap(),
+            });
         }
     }
 

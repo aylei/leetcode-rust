@@ -2,32 +2,32 @@
  * [41] First Missing Positive
  *
  * Given an unsorted integer array, find the smallest missing positive integer.
- * 
+ *
  * Example 1:
- * 
- * 
+ *
+ *
  * Input: [1,2,0]
  * Output: 3
- * 
- * 
+ *
+ *
  * Example 2:
- * 
- * 
+ *
+ *
  * Input: [3,4,-1,1]
  * Output: 2
- * 
- * 
+ *
+ *
  * Example 3:
- * 
- * 
+ *
+ *
  * Input: [7,8,9,11,12]
  * Output: 1
- * 
- * 
+ *
+ *
  * Note:
- * 
+ *
  * Your algorithm should run in O(n) time and uses constant extra space.
- * 
+ *
  */
 pub struct Solution {}
 
@@ -53,10 +53,10 @@ impl Solution {
         println!("{}", c);
         for (i, &num) in nums.iter().enumerate() {
             if num != ((i + 1) as i32) {
-                return (i+1) as i32
+                return (i + 1) as i32;
             }
         }
-        return (len + 1) as i32
+        return (len + 1) as i32;
     }
 }
 
@@ -68,12 +68,21 @@ mod tests {
 
     #[test]
     fn test_41() {
-        assert_eq!(Solution::first_missing_positive(vec![2,2]), 1);
-        assert_eq!(Solution::first_missing_positive(vec![12,11,10,9,8,7,6,5,4,3,2]), 1);
-        assert_eq!(Solution::first_missing_positive(vec![2,2,2,2,2,2,2]), 1);
-        assert_eq!(Solution::first_missing_positive(vec![3,4,-1,1]), 2);
-        assert_eq!(Solution::first_missing_positive(vec![2,1,0]), 3);
-        assert_eq!(Solution::first_missing_positive(vec![7,8,9,11,12]), 1);
-        assert_eq!(Solution::first_missing_positive(vec![7,8,1,2,3,3,3,3,3,3,3,-5,-7,1234]), 4);
+        assert_eq!(Solution::first_missing_positive(vec![2, 2]), 1);
+        assert_eq!(
+            Solution::first_missing_positive(vec![12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2]),
+            1
+        );
+        assert_eq!(
+            Solution::first_missing_positive(vec![2, 2, 2, 2, 2, 2, 2]),
+            1
+        );
+        assert_eq!(Solution::first_missing_positive(vec![3, 4, -1, 1]), 2);
+        assert_eq!(Solution::first_missing_positive(vec![2, 1, 0]), 3);
+        assert_eq!(Solution::first_missing_positive(vec![7, 8, 9, 11, 12]), 1);
+        assert_eq!(
+            Solution::first_missing_positive(vec![7, 8, 1, 2, 3, 3, 3, 3, 3, 3, 3, -5, -7, 1234]),
+            4
+        );
     }
 }

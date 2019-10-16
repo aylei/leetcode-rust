@@ -2,26 +2,26 @@
  * [84] Largest Rectangle in Histogram
  *
  * Given n non-negative integers representing the histogram's bar height where the width of each bar is 1, find the area of largest rectangle in the histogram.
- * 
+ *
  *  
- * 
+ *
  * <img src="https://assets.leetcode.com/uploads/2018/10/12/histogram.png" style="width: 188px; height: 204px;" /><br />
  * <small>Above is a histogram where width of each bar is 1, given height = [2,1,5,6,2,3].</small>
- * 
+ *
  *  
- * 
+ *
  * <img src="https://assets.leetcode.com/uploads/2018/10/12/histogram_area.png" style="width: 188px; height: 204px;" /><br />
  * <small>The largest rectangle is shown in the shaded area, which has area = 10 unit.</small>
- * 
+ *
  *  
- * 
+ *
  * Example:
- * 
- * 
+ *
+ *
  * Input: [2,1,5,6,2,3]
  * Output: 10
- * 
- * 
+ *
+ *
  */
 pub struct Solution {}
 
@@ -37,16 +37,26 @@ impl Solution {
         for (i, h) in heights.into_iter().enumerate() {
             let mut last_pop = None;
             while hs.last().is_some() && *hs.last().unwrap() >= h {
-                max_area = i32::max(max_area, hs.last().unwrap() * ((i - positions.last().unwrap()) as i32));
+                max_area = i32::max(
+                    max_area,
+                    hs.last().unwrap() * ((i - positions.last().unwrap()) as i32),
+                );
                 hs.pop();
                 last_pop = positions.pop();
             }
-            if last_pop.is_some() { positions.push(last_pop.unwrap()); } else { positions.push(i); }
+            if last_pop.is_some() {
+                positions.push(last_pop.unwrap());
+            } else {
+                positions.push(i);
+            }
             hs.push(h);
         }
         // drain stack
         while !hs.is_empty() {
-            max_area = i32::max(max_area, hs.last().unwrap() * ((len - positions.last().unwrap()) as i32));
+            max_area = i32::max(
+                max_area,
+                hs.last().unwrap() * ((len - positions.last().unwrap()) as i32),
+            );
             positions.pop();
             hs.pop();
         }
@@ -62,11 +72,17 @@ mod tests {
 
     #[test]
     fn test_84() {
-        assert_eq!(Solution::largest_rectangle_area(vec![2,1,5,6,2,3]), 10);
-        assert_eq!(Solution::largest_rectangle_area(vec![1,1,1,1,1,1,1,1]), 8);
-        assert_eq!(Solution::largest_rectangle_area(vec![2,2]), 4);
-        assert_eq!(Solution::largest_rectangle_area(vec![1,2,8,8,2,2,1]), 16);
-        assert_eq!(Solution::largest_rectangle_area(vec![2,1,2]), 3);
-        assert_eq!(Solution::largest_rectangle_area(vec![1,3,2,1,2]), 5);
+        assert_eq!(Solution::largest_rectangle_area(vec![2, 1, 5, 6, 2, 3]), 10);
+        assert_eq!(
+            Solution::largest_rectangle_area(vec![1, 1, 1, 1, 1, 1, 1, 1]),
+            8
+        );
+        assert_eq!(Solution::largest_rectangle_area(vec![2, 2]), 4);
+        assert_eq!(
+            Solution::largest_rectangle_area(vec![1, 2, 8, 8, 2, 2, 1]),
+            16
+        );
+        assert_eq!(Solution::largest_rectangle_area(vec![2, 1, 2]), 3);
+        assert_eq!(Solution::largest_rectangle_area(vec![1, 3, 2, 1, 2]), 5);
     }
 }

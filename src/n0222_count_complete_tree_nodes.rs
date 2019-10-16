@@ -26,8 +26,8 @@ use super::util::tree::{to_tree, TreeNode};
 
 // submission codes start here
 
-use std::rc::Rc;
 use std::cell::RefCell;
+use std::rc::Rc;
 impl Solution {
     pub fn count_nodes(root: Option<Rc<RefCell<TreeNode>>>) -> i32 {
         // 0. get the hight of full nodes
@@ -36,10 +36,12 @@ impl Solution {
         let mut result = 0;
         while let Some(inner) = curr {
             height += 1;
-            result += 2_i32.pow(height-1);
+            result += 2_i32.pow(height - 1);
             curr = inner.borrow().right.clone();
         }
-        if height == 0 { return result }
+        if height == 0 {
+            return result;
+        }
         // 1. 'binary search' to find the node number of the lowest level
         // the lowest level may have 0~2^H-1 node
         let mut curr_root = root.clone();
@@ -53,7 +55,7 @@ impl Solution {
             }
             if node.unwrap().borrow().right.is_some() {
                 curr_root = curr_root.unwrap().borrow().right.clone();
-                result += 2_i32.pow(height-1);
+                result += 2_i32.pow(height - 1);
             } else {
                 curr_root = curr_root.unwrap().borrow().left.clone();
             }
@@ -74,10 +76,10 @@ mod tests {
 
     #[test]
     fn test_222() {
-        assert_eq!(Solution::count_nodes(tree![1,1,1,1,1,1,1]), 7);
+        assert_eq!(Solution::count_nodes(tree![1, 1, 1, 1, 1, 1, 1]), 7);
         assert_eq!(Solution::count_nodes(tree![]), 0);
-        assert_eq!(Solution::count_nodes(tree![1,1]), 2);
+        assert_eq!(Solution::count_nodes(tree![1, 1]), 2);
         assert_eq!(Solution::count_nodes(tree![1]), 1);
-        assert_eq!(Solution::count_nodes(tree![1,1,1]), 3);
+        assert_eq!(Solution::count_nodes(tree![1, 1, 1]), 3);
     }
 }

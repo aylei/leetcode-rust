@@ -24,7 +24,9 @@ pub struct Solution {}
 
 impl Solution {
     pub fn majority_element(nums: Vec<i32>) -> Vec<i32> {
-        if nums.is_empty() { return vec![] }
+        if nums.is_empty() {
+            return vec![];
+        }
         let (mut vote0, mut vote1, mut candidate0, mut candidate1) = (0, 0, -1, -2);
         for &num in nums.iter() {
             if num == candidate0 {
@@ -67,10 +69,16 @@ mod tests {
 
     #[test]
     fn test_229() {
-        assert_eq!(Solution::majority_element(vec![1,1,1,2,2,2,3,3,3]), vec![]);
-        assert_eq!(Solution::majority_element(vec![1,1,1,2,2,3,3,3]), vec![1,3]);
+        assert_eq!(
+            Solution::majority_element(vec![1, 1, 1, 2, 2, 2, 3, 3, 3]),
+            vec![]
+        );
+        assert_eq!(
+            Solution::majority_element(vec![1, 1, 1, 2, 2, 3, 3, 3]),
+            vec![1, 3]
+        );
         assert_eq!(Solution::majority_element(vec![1]), vec![1]);
-        assert_eq!(Solution::majority_element(vec![5,6,6]), vec![6]);
-        assert_eq!(Solution::majority_element(vec![1,2,3,4]), vec![]);
+        assert_eq!(Solution::majority_element(vec![5, 6, 6]), vec![6]);
+        assert_eq!(Solution::majority_element(vec![1, 2, 3, 4]), vec![]);
     }
 }

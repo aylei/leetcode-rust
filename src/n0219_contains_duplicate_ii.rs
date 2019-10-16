@@ -46,8 +46,10 @@ impl Solution {
                         return true;
                     }
                     map.insert(num, idx);
-                },
-                None => { map.insert(num, idx); },
+                }
+                None => {
+                    map.insert(num, idx);
+                }
             }
         }
         false
@@ -62,7 +64,13 @@ mod tests {
 
     #[test]
     fn test_219() {
-        assert_eq!(Solution::contains_nearby_duplicate(vec![1,2,3,1,2,3], 2), false);
-        assert_eq!(Solution::contains_nearby_duplicate(vec![1,2,3,1,2,3], 3), true);
+        assert_eq!(
+            Solution::contains_nearby_duplicate(vec![1, 2, 3, 1, 2, 3], 2),
+            false
+        );
+        assert_eq!(
+            Solution::contains_nearby_duplicate(vec![1, 2, 3, 1, 2, 3], 3),
+            true
+        );
     }
 }

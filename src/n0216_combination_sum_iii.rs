@@ -33,12 +33,12 @@ pub struct Solution {}
 impl Solution {
     pub fn combination_sum3(k: i32, n: i32) -> Vec<Vec<i32>> {
         if k > 9 || k < 1 {
-            return vec![]
+            return vec![];
         }
-        let max = (0..k).fold(0, |acc, t| { acc + 9 - t });
-        let min = (0..k).fold(0, |acc, t| { acc + t });
+        let max = (0..k).fold(0, |acc, t| acc + 9 - t);
+        let min = (0..k).fold(0, |acc, t| acc + t);
         if n < min || n > max {
-            return vec![]
+            return vec![];
         }
         let mut res = Vec::new();
         let mut seed = Vec::new();
@@ -51,9 +51,9 @@ impl Solution {
             if distance == 0 {
                 res.push(curr);
             }
-            return
+            return;
         }
-        for i in (prev+1..=9) {
+        for i in (prev + 1..=9) {
             if distance - i < 0 {
                 break;
             }
@@ -72,6 +72,9 @@ mod tests {
 
     #[test]
     fn test_216() {
-        assert_eq!(Solution::combination_sum3(3, 9), vec![vec![1,2,6],vec![1,3,5], vec![2,3,4]]);
+        assert_eq!(
+            Solution::combination_sum3(3, 9),
+            vec![vec![1, 2, 6], vec![1, 3, 5], vec![2, 3, 4]]
+        );
     }
 }

@@ -40,8 +40,8 @@ mod tests {
 
     #[test]
     fn test_283() {
-        let mut vec = vec![0,1,0,3,12];
+        let mut vec = vec![0, 1, 0, 3, 12];
         Solution::move_zeroes(&mut vec);
-        assert_eq!(vec, vec![1,3,12,0,0]);
+        assert_eq!(vec, vec![1, 3, 12, 0, 0]);
     }
 }
