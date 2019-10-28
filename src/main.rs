@@ -34,7 +34,7 @@ fn main() {
             _ => {
                 id = id_arg
                     .parse::<u32>()
-                    .expect(&format!("not a number: {}", id_arg));
+                    .unwrap_or_else(|_| panic!("not a number: {}", id_arg));
                 if solved_ids.contains(&id) {
                     println!(
                         "The problem you chose is invalid (the problem may have been solved \
@@ -45,16 +45,14 @@ fn main() {
             }
         }
 
-        let problem = problem::get_problem(id).expect(&format!(
-            "Error: failed to get problem #{} \
-             (The problem may be paid-only or may not be exist).",
-            id
-        ));
-        let code = problem
-            .code_definition
-            .iter()
-            .filter(|&d| d.value == "rust")
-            .next();
+        let problem = problem::get_problem(id).unwrap_or_else(|| {
+            panic!(
+                "Error: failed to get problem #{} \
+                 (The problem may be paid-only or may not be exist).",
+                id
+            )
+        });
+        let code = problem.code_definition.iter().find(|&d| d.value == "rust");
         if code.is_none() {
             println!("Problem {} has no rust version.", &id);
             solved_ids.push(problem.question_id);
@@ -100,7 +98,7 @@ fn main() {
     }
 }
 
-fn generate_random_id(except_ids: &Vec<u32>) -> u32 {
+fn generate_random_id(except_ids: &[u32]) -> u32 {
     use rand::Rng;
     use std::fs;
     let mut rng = rand::thread_rng();
@@ -124,7 +122,7 @@ fn get_solved_ids() -> Vec<u32> {
     for path in paths {
         let path = path.unwrap().path();
         let s = path.to_str().unwrap();
-        if s.chars().next().unwrap() != 'n' {
+        if !s.starts_with('n') {
             continue;
         }
         let id = &s[7..11];
