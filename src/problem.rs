@@ -42,7 +42,7 @@ pub fn get_problem(frontend_question_id: u32) -> Option<Problem> {
                 content: resp.data.question.content,
                 sample_test_case: resp.data.question.sample_test_case,
                 difficulty: problem.difficulty.to_string(),
-                question_id: problem.stat.question_id,
+                question_id: problem.stat.frontend_question_id,
             });
         }
     }
