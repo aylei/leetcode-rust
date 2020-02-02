@@ -237,4 +237,3 @@ mod n0111_minimum_depth_of_binary_tree;
 mod n0092_reverse_linked_list_ii;
 mod n0303_range_sum_query_immutable;
 mod n0102_binary_tree_level_order_traversal;
-mod n0206_reverse_linked_list;
