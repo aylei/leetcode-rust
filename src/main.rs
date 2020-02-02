@@ -5,10 +5,12 @@ extern crate serde_json;
 
 mod fetcher;
 
+use regex::Regex;
 use std::env;
 use std::fs;
+use std::fs::File;
 use std::io;
-use std::io::Write;
+use std::io::{BufRead, Write};
 use std::path::Path;
 
 /// main() helps to generate the submission template .rs
@@ -18,30 +20,44 @@ fn main() {
     loop {
         println!("Please enter a frontend problem id, or \"random\" to generate a random one.");
         let mut is_random = false;
+        let mut is_solving = false;
         let mut id: u32 = 0;
         let mut id_arg = String::new();
         io::stdin()
             .read_line(&mut id_arg)
             .expect("Failed to read line");
         let id_arg = id_arg.trim();
-        match id_arg {
-            "random" => {
-                println!("You select random mode.");
-                id = generate_random_id(&solved_ids);
-                is_random = true;
-                println!("Generate random problem: {}", &id);
-            }
-            _ => {
-                id = id_arg
-                    .parse::<u32>()
-                    .unwrap_or_else(|_| panic!("not a number: {}", id_arg));
-                if solved_ids.contains(&id) {
-                    println!(
-                        "The problem you chose is invalid (the problem may have been initialized \
-                         or may have no rust version)."
-                    );
-                    continue;
-                }
+
+        let random_pattern = Regex::new(r"^random$").unwrap();
+        let solving_pattern = Regex::new(r"^solve (\d+)$").unwrap();
+
+        if random_pattern.is_match(id_arg) {
+            println!("You select random mode.");
+            id = generate_random_id(&solved_ids);
+            is_random = true;
+            println!("Generate random problem: {}", &id);
+        } else if solving_pattern.is_match(id_arg) {
+            // solve a problem
+            // move it from problem/ to solution/
+            is_solving = true;
+            id = solving_pattern
+                .captures(id_arg)
+                .unwrap()
+                .get(1)
+                .unwrap()
+                .as_str()
+                .parse()
+                .unwrap();
+        } else {
+            id = id_arg
+                .parse::<u32>()
+                .unwrap_or_else(|_| panic!("not a number: {}", id_arg));
+            if solved_ids.contains(&id) {
+                println!(
+                    "The problem you chose is invalid (the problem may have been initialized \
+                     or may have no rust version)."
+                );
+                continue;
             }
         }
 
@@ -66,6 +82,40 @@ fn main() {
             problem.title_slug.replace("-", "_")
         );
         let file_path = Path::new("./src/problem").join(format!("{}.rs", file_name));
+        if is_solving {
+            // check problem/ existence
+            if !file_path.exists() {
+                panic!("problem does not exist");
+            }
+            // check solution/ no existence
+            let solution_name = format!(
+                "s{:04}_{}",
+                problem.question_id,
+                problem.title_slug.replace("-", "_")
+            );
+            let solution_path = Path::new("./src/solution").join(format!("{}.rs", solution_name));
+            if solution_path.exists() {
+                panic!("solution exists");
+            }
+            // rename/move file
+            fs::rename(file_path, solution_path).unwrap();
+            // remove from problem/mod.rs
+            let mod_file = "./src/problem/mod.rs";
+            let target_line = format!("mod {};", file_name);
+            let lines: Vec<String> = io::BufReader::new(File::open(mod_file).unwrap())
+                .lines()
+                .map(|x| x.unwrap())
+                .filter(|x| *x != target_line)
+                .collect();
+            fs::write(mod_file, lines.join("\n"));
+            // insert into solution/mod.rs
+            let mut lib_file = fs::OpenOptions::new()
+                .append(true)
+                .open("./src/solution/mod.rs")
+                .unwrap();
+            writeln!(lib_file, "mod {};", solution_name);
+            break;
+        }
         if file_path.exists() {
             panic!("problem already initialized");
         }
