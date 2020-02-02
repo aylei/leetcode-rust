@@ -3,7 +3,7 @@ extern crate serde_derive;
 #[macro_use]
 extern crate serde_json;
 
-mod problem;
+mod fetcher;
 
 use std::env;
 use std::fs;
@@ -45,7 +45,7 @@ fn main() {
             }
         }
 
-        let problem = problem::get_problem(id).unwrap_or_else(|| {
+        let problem = fetcher::get_problem(id).unwrap_or_else(|| {
             panic!(
                 "Error: failed to get problem #{} \
                  (The problem may be paid-only or may not be exist).",
@@ -61,11 +61,11 @@ fn main() {
         let code = code.unwrap();
 
         let file_name = format!(
-            "n{:04}_{}",
+            "p{:04}_{}",
             problem.question_id,
             problem.title_slug.replace("-", "_")
         );
-        let file_path = Path::new("./src").join(format!("{}.rs", file_name));
+        let file_path = Path::new("./src/problem").join(format!("{}.rs", file_name));
         if file_path.exists() {
             panic!("problem already initialized");
         }
@@ -91,7 +91,7 @@ fn main() {
         let mut lib_file = fs::OpenOptions::new()
             .write(true)
             .append(true)
-            .open("./src/lib.rs")
+            .open("./src/problem/mod.rs")
             .unwrap();
         writeln!(lib_file, "mod {};", file_name);
         break;
@@ -136,13 +136,13 @@ fn parse_extra_use(code: &str) -> String {
     let mut extra_use_line = String::new();
     // a linked-list problem
     if code.contains("pub struct ListNode") {
-        extra_use_line.push_str("\nuse super::util::linked_list::{ListNode, to_list};")
+        extra_use_line.push_str("\nuse crate::util::linked_list::{ListNode, to_list};")
     }
     if code.contains("pub struct TreeNode") {
-        extra_use_line.push_str("\nuse super::util::tree::{TreeNode, to_tree};")
+        extra_use_line.push_str("\nuse crate::util::tree::{TreeNode, to_tree};")
     }
     if code.contains("pub struct Point") {
-        extra_use_line.push_str("\nuse super::util::point::Point;")
+        extra_use_line.push_str("\nuse crate::util::point::Point;")
     }
     extra_use_line
 }
