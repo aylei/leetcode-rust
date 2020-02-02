@@ -1,8 +1,8 @@
 extern crate reqwest;
 extern crate serde_json;
 
-use std::fmt::{Display, Error, Formatter};
 use serde_json::Value;
+use std::fmt::{Display, Error, Formatter};
 
 const PROBLEMS_URL: &str = "https://leetcode.com/api/problems/algorithms/";
 const GRAPHQL_URL: &str = "https://leetcode.com/graphql";
@@ -46,7 +46,7 @@ pub fn get_problem(frontend_question_id: u32) -> Option<Problem> {
                 question_id: problem.stat.frontend_question_id,
                 return_type: {
                     let v: Value = serde_json::from_str(&resp.data.question.meta_data).unwrap();
-                    v["return"]["type"].to_string().as_str().replace("\"", "").to_string()
+                    v["return"]["type"].to_string().replace("\"", "")
                 },
             });
         }
