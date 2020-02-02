@@ -116,7 +116,7 @@ fn generate_random_id(except_ids: &[u32]) -> u32 {
 }
 
 fn get_solved_ids() -> Vec<u32> {
-    let paths = fs::read_dir("./src").unwrap();
+    let paths = fs::read_dir("./src/problem").unwrap();
     let mut solved_ids = Vec::new();
 
     for path in paths {
