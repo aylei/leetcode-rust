@@ -2,6 +2,7 @@ extern crate reqwest;
 extern crate serde_json;
 
 use std::fmt::{Display, Error, Formatter};
+use serde_json::Value;
 
 const PROBLEMS_URL: &str = "https://leetcode.com/api/problems/algorithms/";
 const GRAPHQL_URL: &str = "https://leetcode.com/graphql";
@@ -43,7 +44,10 @@ pub fn get_problem(frontend_question_id: u32) -> Option<Problem> {
                 sample_test_case: resp.data.question.sample_test_case,
                 difficulty: problem.difficulty.to_string(),
                 question_id: problem.stat.frontend_question_id,
-                return_type: serde_json::from_str(&resp.data.question.meta_data.return_info.type_name).unwrap(),
+                return_type: {
+                    let v: Value = serde_json::from_str(&resp.data.question.meta_data).unwrap();
+                    v["return"]["type"].to_string().as_str().replace("\"", "").to_string()
+                },
             });
         }
     }
@@ -113,21 +117,7 @@ struct Question {
     #[serde(rename = "sampleTestCase")]
     sample_test_case: String,
     #[serde(rename = "metaData")]
-    meta_data: MetaData,
-}
-
-#[derive(Debug, Serialize, Deserialize)]
-struct MetaData {
-    name:String,
-    params: String,
-    return_info: ReturnInfo,
-}
-
-#[derive(Debug, Serialize, Deserialize)]
-struct ReturnInfo {
-    #[serde(rename = "type")]
-    type_name: String,
-    params: String,
+    meta_data: String,
 }
 
 #[derive(Debug, Serialize, Deserialize)]

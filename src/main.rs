@@ -150,11 +150,11 @@ fn parse_extra_use(code: &str) -> String {
 
 fn insert_return_in_code(return_type: &str, code: &str) -> String {
     match return_type {
-        "ListNode" => {
-            let re = Regex::new(r"\{\n +\n +}").unwrap();
-            re.replace(code, format!("{{\n{:8}Some(Box::new(ListNode::new(0)))\n{:4}}}")).to_string()
+         "ListNode" => {
+            let re = Regex::new(r"\{[ \n]+}").unwrap();
+            re.replace(&code, "{\n        Some(Box::new(ListNode::new(0)))\n    }").to_string()
         },
-        _ => code
+        _ => code.to_string()
     }
 }
 
