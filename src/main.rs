@@ -37,7 +37,7 @@ fn main() {
                     .unwrap_or_else(|_| panic!("not a number: {}", id_arg));
                 if solved_ids.contains(&id) {
                     println!(
-                        "The problem you chose is invalid (the problem may have been solved \
+                        "The problem you chose is invalid (the problem may have been downloaded \
                          or may have no rust version)."
                     );
                     continue;
