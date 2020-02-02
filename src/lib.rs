@@ -231,6 +231,7 @@ mod n0199_binary_tree_right_side_view;
 mod n0282_expression_add_operators;
 mod n0021_merge_two_sorted_lists;
 mod n0129_sum_root_to_leaf_numbers;
+mod n0206_reverse_linked_list;
 mod n0131_palindrome_partitioning;
 mod n0307_range_sum_query_mutable;
 mod n0111_minimum_depth_of_binary_tree;
