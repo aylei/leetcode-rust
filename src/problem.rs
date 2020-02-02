@@ -43,6 +43,7 @@ pub fn get_problem(frontend_question_id: u32) -> Option<Problem> {
                 sample_test_case: resp.data.question.sample_test_case,
                 difficulty: problem.difficulty.to_string(),
                 question_id: problem.stat.frontend_question_id,
+                return_type: serde_json::from_str(&resp.data.question.meta_data.return_info.type_name).unwrap(),
             });
         }
     }
@@ -64,6 +65,7 @@ pub struct Problem {
     pub sample_test_case: String,
     pub difficulty: String,
     pub question_id: u32,
+    pub return_type: String,
 }
 
 #[derive(Serialize, Deserialize)]
@@ -111,7 +113,21 @@ struct Question {
     #[serde(rename = "sampleTestCase")]
     sample_test_case: String,
     #[serde(rename = "metaData")]
-    meta_data: String,
+    meta_data: MetaData,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+struct MetaData {
+    name:String,
+    params: String,
+    return_info: ReturnInfo,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+struct ReturnInfo {
+    #[serde(rename = "type")]
+    type_name: String,
+    params: String,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
