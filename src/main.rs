@@ -10,6 +10,7 @@ use std::fs;
 use std::io;
 use std::io::Write;
 use std::path::Path;
+use regex::Regex;
 
 /// main() helps to generate the submission template .rs
 fn main() {
@@ -74,7 +75,7 @@ fn main() {
         let source = template
             .replace("__PROBLEM_TITLE__", &problem.title)
             .replace("__PROBLEM_DESC__", &build_desc(&problem.content))
-            .replace("__PROBLEM_DEFAULT_CODE__", &code.default_code)
+            .replace("__PROBLEM_DEFAULT_CODE__", &insert_return_in_code(&problem.return_type, &code.default_code))
             .replace("__PROBLEM_ID__", &format!("{}", problem.question_id))
             .replace("__EXTRA_USE__", &parse_extra_use(&code.default_code));
 
@@ -145,6 +146,16 @@ fn parse_extra_use(code: &str) -> String {
         extra_use_line.push_str("\nuse super::util::point::Point;")
     }
     extra_use_line
+}
+
+fn insert_return_in_code(return_type: &str, code: &str) -> String {
+    match return_type {
+        "ListNode" => {
+            let re = Regex::new(r"\{\n +\n +}").unwrap();
+            re.replace(code, format!("{{\n{:8}Some(Box::new(ListNode::new(0)))\n{:4}}}")).to_string()
+        },
+        _ => code
+    }
 }
 
 fn build_desc(content: &str) -> String {
