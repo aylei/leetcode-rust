@@ -5,6 +5,7 @@ extern crate serde_json;
 
 mod problem;
 
+use regex::Regex;
 use std::env;
 use std::fs;
 use std::io;
@@ -74,7 +75,10 @@ fn main() {
         let source = template
             .replace("__PROBLEM_TITLE__", &problem.title)
             .replace("__PROBLEM_DESC__", &build_desc(&problem.content))
-            .replace("__PROBLEM_DEFAULT_CODE__", &code.default_code)
+            .replace(
+                "__PROBLEM_DEFAULT_CODE__",
+                &insert_return_in_code(&problem.return_type, &code.default_code),
+            )
             .replace("__PROBLEM_ID__", &format!("{}", problem.question_id))
             .replace("__EXTRA_USE__", &parse_extra_use(&code.default_code));
 
@@ -145,6 +149,48 @@ fn parse_extra_use(code: &str) -> String {
         extra_use_line.push_str("\nuse super::util::point::Point;")
     }
     extra_use_line
+}
+
+fn insert_return_in_code(return_type: &str, code: &str) -> String {
+    let re = Regex::new(r"\{[ \n]+}").unwrap();
+    match return_type {
+        "ListNode" => re
+            .replace(&code, "{\n        Some(Box::new(ListNode::new(0)))\n    }")
+            .to_string(),
+        "ListNode[]" => re.replace(&code, "{\n        vec![]\n    }").to_string(),
+        "TreeNode" => re
+            .replace(
+                &code,
+                "{\n        Some(Rc::new(RefCell::new(TreeNode::new(0))))\n    }",
+            )
+            .to_string(),
+        "boolean" => re.replace(&code, "{\n        false\n    }").to_string(),
+        "character" => re.replace(&code, "{\n        '0'\n    }").to_string(),
+        "character[][]" => re.replace(&code, "{\n        vec![]\n    }").to_string(),
+        "double" => re.replace(&code, "{\n        0f64\n    }").to_string(),
+        "double[]" => re.replace(&code, "{\n        vec![]\n    }").to_string(),
+        "int[]" => re.replace(&code, "{\n        vec![]\n    }").to_string(),
+        "integer" => re.replace(&code, "{\n        0\n    }").to_string(),
+        "integer[]" => re.replace(&code, "{\n        vec![]\n    }").to_string(),
+        "integer[][]" => re.replace(&code, "{\n        vec![]\n    }").to_string(),
+        "list<String>" => re.replace(&code, "{\n        vec![]\n    }").to_string(),
+        "list<TreeNode>" => re.replace(&code, "{\n        vec![]\n    }").to_string(),
+        "list<boolean>" => re.replace(&code, "{\n        vec![]\n    }").to_string(),
+        "list<double>" => re.replace(&code, "{\n        vec![]\n    }").to_string(),
+        "list<integer>" => re.replace(&code, "{\n        vec![]\n    }").to_string(),
+        "list<list<integer>>" => re.replace(&code, "{\n        vec![]\n    }").to_string(),
+        "list<list<string>>" => re.replace(&code, "{\n        vec![]\n    }").to_string(),
+        "list<string>" => re.replace(&code, "{\n        vec![]\n    }").to_string(),
+        "null" => code.to_string(),
+        "string" => re
+            .replace(&code, "{\n        String::new()\n    }")
+            .to_string(),
+        "string[]" => re.replace(&code, "{\n        vec![]\n    }").to_string(),
+        "void" => code.to_string(),
+        "NestedInteger" => code.to_string(),
+        "Node" => code.to_string(),
+        _ => code.to_string(),
+    }
 }
 
 fn build_desc(content: &str) -> String {
