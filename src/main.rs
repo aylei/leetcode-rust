@@ -72,7 +72,7 @@ fn main() {
                 .parse()
                 .unwrap();
         } else if all_pattern.is_match(id_arg) {
-            println!("You've chosen to generate all problems, which may takes a while...");
+            println!("You've chosen to generate all problems, which may takes a while...\nIf error happens, you may need to rerun to download the missing ones");
             let mut pool = ThreadPool::new().unwrap();
             let mut res = vec![];
             let problems = fetcher::get_problems().unwrap();
@@ -291,10 +291,6 @@ fn build_desc(content: &str) -> String {
 async fn deal_problem(problem_stat: StatWithStatus) {
     let problem = async { fetcher::get_problem(&problem_stat) }.await;
     if problem.is_none() {
-        println!(
-            "Problem {} may be paid-only, or some error happens",
-            &problem_stat.stat.frontend_question_id
-        );
         return;
     }
     let problem = problem.unwrap();

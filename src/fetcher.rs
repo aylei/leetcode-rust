@@ -20,6 +20,10 @@ const QUESTION_QUERY_OPERATION: &str = "questionData";
 
 pub fn get_problem(problem_stat: &StatWithStatus) -> Option<Problem> {
     if problem_stat.paid_only {
+        println!(
+            "Problem {} is paid-only",
+            &problem_stat.stat.frontend_question_id
+        );
         return None;
     }
     let client = reqwest::Client::new();
@@ -30,10 +34,18 @@ pub fn get_problem(problem_stat: &StatWithStatus) -> Option<Problem> {
         ))
         .send();
     if resp.is_err() {
+        println!(
+            "Problem {} not initialized due to some error",
+            &problem_stat.stat.frontend_question_id
+        );
         return None;
     }
     let resp = resp.unwrap().json();
     if resp.is_err() {
+        println!(
+            "Problem {} not initialized due to some error",
+            &problem_stat.stat.frontend_question_id
+        );
         return None;
     }
     let resp: RawProblem = resp.unwrap();
