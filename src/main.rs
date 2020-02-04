@@ -53,10 +53,7 @@ fn main() {
                 .parse::<u32>()
                 .unwrap_or_else(|_| panic!("not a number: {}", id_arg));
             if solved_ids.contains(&id) {
-                println!(
-                    "The problem you chose is invalid (the problem may have been initialized \
-                     or may have no rust version)."
-                );
+                println!("The problem you chose has been initialized in problem/");
                 continue;
             }
         }
