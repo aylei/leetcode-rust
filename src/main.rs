@@ -113,13 +113,15 @@ fn main() {
         if is_solving {
             // check problem/ existence
             if !file_path.exists() {
-                panic!("problem does not exist");
+                print!("problem does not exist");
+                continue;
             }
             // check solution/ no existence
             let solution_name = get_file_name(&problem, SOLUTION_PREFIX);
             let solution_path = Path::new(SOLUTION_FOLDER).join(format!("{}.rs", solution_name));
             if solution_path.exists() {
-                panic!("solution exists");
+                print!("solution exists");
+                continue;
             }
             // rename/move file
             fs::rename(file_path, solution_path).unwrap();
