@@ -5,9 +5,9 @@ extern crate serde_json;
 
 mod fetcher;
 
-use crate::fetcher::Problem;
 use crate::fetcher::Problems;
 use crate::fetcher::StatWithStatus;
+use crate::fetcher::{CodeDefinition, Problem};
 use futures::executor::block_on;
 use futures::executor::ThreadPool;
 use futures::future::join_all;
@@ -24,7 +24,9 @@ use std::sync::Arc;
 use std::thread::sleep;
 
 const PROBLEM_FOLDER: &str = "./src/problem";
+const PROBLEM_PREFIX: &str = "p";
 const SOLUTION_FOLDER: &str = "./src/solution";
+const SOLUTION_PREFIX: &str = "s";
 const MOD_FILE: &str = "/mod.rs";
 const TEMPLATE_FILE: &str = "./template.rs";
 
@@ -105,11 +107,7 @@ fn main() {
         }
         let code = code.unwrap();
 
-        let file_name = format!(
-            "p{:04}_{}",
-            problem.question_id,
-            problem.title_slug.replace("-", "_")
-        );
+        let file_name = get_file_name(&problem, PROBLEM_PREFIX);
         let file_path = Path::new(PROBLEM_FOLDER).join(format!("{}.rs", file_name));
         if is_solving {
             // check problem/ existence
@@ -117,11 +115,7 @@ fn main() {
                 panic!("problem does not exist");
             }
             // check solution/ no existence
-            let solution_name = format!(
-                "s{:04}_{}",
-                problem.question_id,
-                problem.title_slug.replace("-", "_")
-            );
+            let solution_name = get_file_name(&problem, SOLUTION_PREFIX);
             let solution_path = Path::new(SOLUTION_FOLDER).join(format!("{}.rs", solution_name));
             if solution_path.exists() {
                 panic!("solution exists");
@@ -149,16 +143,8 @@ fn main() {
             panic!("problem already initialized");
         }
 
-        let template = fs::read_to_string(TEMPLATE_FILE).unwrap();
-        let source = template
-            .replace("__PROBLEM_TITLE__", &problem.title)
-            .replace("__PROBLEM_DESC__", &build_desc(&problem.content))
-            .replace(
-                "__PROBLEM_DEFAULT_CODE__",
-                &insert_return_in_code(&problem.return_type, &code.default_code),
-            )
-            .replace("__PROBLEM_ID__", &format!("{}", problem.question_id))
-            .replace("__EXTRA_USE__", &parse_extra_use(&code.default_code));
+        let template = read_template();
+        let source = parse_template(template, &problem, code);
 
         let mut file = fs::OpenOptions::new()
             .write(true)
@@ -309,23 +295,11 @@ async fn deal_problem(problem_stat: StatWithStatus) {
     }
     let code = code.unwrap();
 
-    let file_name = format!(
-        "p{:04}_{}",
-        problem.question_id,
-        problem.title_slug.replace("-", "_")
-    );
+    let file_name = get_file_name(&problem, PROBLEM_PREFIX);
     let file_path = Path::new(PROBLEM_FOLDER).join(format!("{}.rs", file_name));
 
-    let template = async { fs::read_to_string(TEMPLATE_FILE).unwrap() }.await;
-    let source = template
-        .replace("__PROBLEM_TITLE__", &problem.title)
-        .replace("__PROBLEM_DESC__", &build_desc(&problem.content))
-        .replace(
-            "__PROBLEM_DEFAULT_CODE__",
-            &insert_return_in_code(&problem.return_type, &code.default_code),
-        )
-        .replace("__PROBLEM_ID__", &format!("{}", problem.question_id))
-        .replace("__EXTRA_USE__", &parse_extra_use(&code.default_code));
+    let template = async { read_template() }.await;
+    let source = parse_template(template, &problem, code);
 
     let mut file = async {
         fs::OpenOptions::new()
@@ -356,4 +330,30 @@ pub fn get_problem_stat_map(problems: Problems) -> HashMap<u32, StatWithStatus> 
         ret.insert(problem_stat.stat.frontend_question_id, problem_stat);
     }
     ret
+}
+
+// extract common code
+pub fn get_file_name(problem: &Problem, prefix: &str) -> String {
+    format!(
+        "{}{:04}_{}",
+        prefix,
+        problem.question_id,
+        problem.title_slug.replace("-", "_")
+    )
+}
+
+pub fn read_template() -> String {
+    fs::read_to_string(TEMPLATE_FILE).unwrap()
+}
+
+pub fn parse_template(template: String, problem: &Problem, code: &CodeDefinition) -> String {
+    template
+        .replace("__PROBLEM_TITLE__", &problem.title)
+        .replace("__PROBLEM_DESC__", &build_desc(&problem.content))
+        .replace(
+            "__PROBLEM_DEFAULT_CODE__",
+            &insert_return_in_code(&problem.return_type, &code.default_code),
+        )
+        .replace("__PROBLEM_ID__", &format!("{}", problem.question_id))
+        .replace("__EXTRA_USE__", &parse_extra_use(&code.default_code))
 }
