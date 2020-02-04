@@ -163,20 +163,12 @@ fn generate_random_id(except_ids: &[u32]) -> u32 {
 }
 
 fn get_solved_ids() -> Vec<u32> {
-    let paths = fs::read_dir("./src/problem").unwrap();
-    let mut solved_ids = Vec::new();
-
-    for path in paths {
-        let path = path.unwrap().path();
-        let s = path.to_str().unwrap();
-        if !s.starts_with('n') {
-            continue;
-        }
-        let id = &s[7..11];
-        let id = id.parse::<u32>().unwrap();
-        solved_ids.push(id);
-    }
-    solved_ids
+    let content = fs::read_to_string("./src/problem/mod.rs").unwrap();
+    let id_pattern = Regex::new(r"p(\d{4})_").unwrap();
+    id_pattern
+        .captures_iter(&content)
+        .map(|x| x.get(1).unwrap().as_str().parse().unwrap())
+        .collect()
 }
 
 fn parse_extra_use(code: &str) -> String {
