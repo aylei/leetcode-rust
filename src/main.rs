@@ -23,6 +23,9 @@ use std::path::Path;
 use std::sync::Arc;
 use std::thread::sleep;
 
+const PROBLEM_FOLDER: &str = "./src/problem";
+const MOD_FILE: &str = "/mod.rs";
+
 /// main() helps to generate the submission template .rs
 fn main() {
     println!("Welcome to leetcode-rust system.");
@@ -89,7 +92,10 @@ fn main() {
                         id
                     )
                 });
-        let code = problem.code_definition.iter().find(|&d| d.value == "rust");
+        let code = problem
+            .code_definition
+            .iter()
+            .find(|&d| d.value == "rust".to_string());
         if code.is_none() {
             println!("Problem {} has no rust version.", &id);
             initialized_ids.push(problem.question_id);
@@ -102,7 +108,7 @@ fn main() {
             problem.question_id,
             problem.title_slug.replace("-", "_")
         );
-        let file_path = Path::new("./src/problem").join(format!("{}.rs", file_name));
+        let file_path = Path::new(PROBLEM_FOLDER).join(format!("{}.rs", file_name));
         if is_solving {
             // check problem/ existence
             if !file_path.exists() {
@@ -121,9 +127,9 @@ fn main() {
             // rename/move file
             fs::rename(file_path, solution_path).unwrap();
             // remove from problem/mod.rs
-            let mod_file = "./src/problem/mod.rs";
+            let mod_file = PROBLEM_FOLDER.to_owned() + MOD_FILE;
             let target_line = format!("mod {};", file_name);
-            let lines: Vec<String> = io::BufReader::new(File::open(mod_file).unwrap())
+            let lines: Vec<String> = io::BufReader::new(File::open(&mod_file).unwrap())
                 .lines()
                 .map(|x| x.unwrap())
                 .filter(|x| *x != target_line)
@@ -165,7 +171,7 @@ fn main() {
         let mut lib_file = fs::OpenOptions::new()
             .write(true)
             .append(true)
-            .open("./src/problem/mod.rs")
+            .open(PROBLEM_FOLDER.to_owned() + MOD_FILE)
             .unwrap();
         writeln!(lib_file, "mod {};", file_name);
         break;
@@ -190,7 +196,7 @@ fn generate_random_id(except_ids: &[u32]) -> u32 {
 }
 
 fn get_initialized_ids() -> Vec<u32> {
-    let content = fs::read_to_string("./src/problem/mod.rs").unwrap();
+    let content = fs::read_to_string(PROBLEM_FOLDER.to_owned() + MOD_FILE).unwrap();
     let id_pattern = Regex::new(r"p(\d{4})_").unwrap();
     id_pattern
         .captures_iter(&content)
@@ -306,7 +312,7 @@ async fn deal_problem(problem_stat: StatWithStatus) {
         problem.question_id,
         problem.title_slug.replace("-", "_")
     );
-    let file_path = Path::new("./src/problem").join(format!("{}.rs", file_name));
+    let file_path = Path::new(PROBLEM_FOLDER).join(format!("{}.rs", file_name));
 
     let template = async { fs::read_to_string("./template.rs").unwrap() }.await;
     let source = template
@@ -335,7 +341,7 @@ async fn deal_problem(problem_stat: StatWithStatus) {
         fs::OpenOptions::new()
             .write(true)
             .append(true)
-            .open("./src/problem/mod.rs")
+            .open(PROBLEM_FOLDER.to_owned() + MOD_FILE)
             .unwrap()
     }
     .await;
