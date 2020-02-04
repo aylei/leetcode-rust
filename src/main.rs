@@ -26,6 +26,7 @@ use std::thread::sleep;
 const PROBLEM_FOLDER: &str = "./src/problem";
 const SOLUTION_FOLDER: &str = "./src/solution";
 const MOD_FILE: &str = "/mod.rs";
+const TEMPLATE_FILE: &str = "./template.rs";
 
 /// main() helps to generate the submission template .rs
 fn main() {
@@ -148,7 +149,7 @@ fn main() {
             panic!("problem already initialized");
         }
 
-        let template = fs::read_to_string("./template.rs").unwrap();
+        let template = fs::read_to_string(TEMPLATE_FILE).unwrap();
         let source = template
             .replace("__PROBLEM_TITLE__", &problem.title)
             .replace("__PROBLEM_DESC__", &build_desc(&problem.content))
@@ -315,7 +316,7 @@ async fn deal_problem(problem_stat: StatWithStatus) {
     );
     let file_path = Path::new(PROBLEM_FOLDER).join(format!("{}.rs", file_name));
 
-    let template = async { fs::read_to_string("./template.rs").unwrap() }.await;
+    let template = async { fs::read_to_string(TEMPLATE_FILE).unwrap() }.await;
     let source = template
         .replace("__PROBLEM_TITLE__", &problem.title)
         .replace("__PROBLEM_DESC__", &build_desc(&problem.content))
