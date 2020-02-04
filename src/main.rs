@@ -20,6 +20,7 @@ use std::fs::File;
 use std::io;
 use std::io::{BufRead, Write};
 use std::path::Path;
+use std::path::PathBuf;
 use std::sync::Arc;
 use std::thread::sleep;
 
@@ -146,22 +147,13 @@ fn main() {
         let template = read_template();
         let source = parse_template(template, &problem, code);
 
-        let mut file = fs::OpenOptions::new()
-            .write(true)
-            .create(true)
-            .truncate(true)
-            .open(&file_path)
-            .unwrap();
+        let mut file = open_problem_file(&file_path);
 
-        file.write_all(source.as_bytes()).unwrap();
+        write_problem_file(&mut file, source);
         drop(file);
 
-        let mut lib_file = fs::OpenOptions::new()
-            .write(true)
-            .append(true)
-            .open(PROBLEM_FOLDER.to_owned() + MOD_FILE)
-            .unwrap();
-        writeln!(lib_file, "mod {};", file_name);
+        let mut lib_file = open_problem_lib_file();
+        write_problem_lib_file(&mut lib_file, file_name);
         break;
     }
 }
@@ -301,27 +293,12 @@ async fn deal_problem(problem_stat: StatWithStatus) {
     let template = async { read_template() }.await;
     let source = parse_template(template, &problem, code);
 
-    let mut file = async {
-        fs::OpenOptions::new()
-            .write(true)
-            .create(true)
-            .truncate(true)
-            .open(&file_path)
-            .unwrap()
-    }
-    .await;
+    let mut file = async { open_problem_file(&file_path) }.await;
 
-    async { file.write_all(source.as_bytes()).unwrap() }.await;
+    async { write_problem_file(&mut file, source) }.await;
 
-    let mut lib_file = async {
-        fs::OpenOptions::new()
-            .write(true)
-            .append(true)
-            .open(PROBLEM_FOLDER.to_owned() + MOD_FILE)
-            .unwrap()
-    }
-    .await;
-    async { writeln!(lib_file, "mod {};", file_name) }.await;
+    let mut lib_file = async { open_problem_lib_file() }.await;
+    async { write_problem_lib_file(&mut lib_file, file_name) }.await;
 }
 
 pub fn get_problem_stat_map(problems: Problems) -> HashMap<u32, StatWithStatus> {
@@ -356,4 +333,29 @@ pub fn parse_template(template: String, problem: &Problem, code: &CodeDefinition
         )
         .replace("__PROBLEM_ID__", &format!("{}", problem.question_id))
         .replace("__EXTRA_USE__", &parse_extra_use(&code.default_code))
+}
+
+pub fn open_problem_file(file_path: &PathBuf) -> File {
+    fs::OpenOptions::new()
+        .write(true)
+        .create(true)
+        .truncate(true)
+        .open(file_path)
+        .unwrap()
+}
+
+pub fn write_problem_file(file: &mut File, source: String) {
+    file.write_all(source.as_bytes()).unwrap()
+}
+
+pub fn open_problem_lib_file() -> File {
+    fs::OpenOptions::new()
+        .write(true)
+        .append(true)
+        .open(PROBLEM_FOLDER.to_owned() + MOD_FILE)
+        .unwrap()
+}
+
+pub fn write_problem_lib_file(lib_file: &mut File, file_name: String) {
+    writeln!(lib_file, "mod {};", file_name);
 }
