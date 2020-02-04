@@ -24,6 +24,7 @@ use std::sync::Arc;
 use std::thread::sleep;
 
 const PROBLEM_FOLDER: &str = "./src/problem";
+const SOLUTION_FOLDER: &str = "./src/solution";
 const MOD_FILE: &str = "/mod.rs";
 
 /// main() helps to generate the submission template .rs
@@ -120,7 +121,7 @@ fn main() {
                 problem.question_id,
                 problem.title_slug.replace("-", "_")
             );
-            let solution_path = Path::new("./src/solution").join(format!("{}.rs", solution_name));
+            let solution_path = Path::new(SOLUTION_FOLDER).join(format!("{}.rs", solution_name));
             if solution_path.exists() {
                 panic!("solution exists");
             }
@@ -138,7 +139,7 @@ fn main() {
             // insert into solution/mod.rs
             let mut lib_file = fs::OpenOptions::new()
                 .append(true)
-                .open("./src/solution/mod.rs")
+                .open(SOLUTION_FOLDER.to_owned() + MOD_FILE)
                 .unwrap();
             writeln!(lib_file, "mod {};", solution_name);
             break;
