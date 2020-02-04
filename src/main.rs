@@ -202,7 +202,7 @@ fn parse_extra_use(code: &str) -> String {
 }
 
 fn insert_return_in_code(return_type: &str, code: &str) -> String {
-    let re = Regex::new(r"\{[ \n]+}").unwrap();
+    let re = Regex::new(r"\{[ \n\r]+}").unwrap();
     match return_type {
         "ListNode" => re
             .replace(&code, "{\n        Some(Box::new(ListNode::new(0)))\n    }")
@@ -279,12 +279,24 @@ fn build_desc(content: &str) -> String {
 }
 
 async fn deal_problem(problem_stat: StatWithStatus) {
-    let problem = async { fetcher::get_problem(&problem_stat) }.await.unwrap();
+    let problem = async { fetcher::get_problem(&problem_stat) }.await;
+    if problem.is_none() {
+        println!(
+            "Problem {} may be paid-only, or some error happens",
+            &problem_stat.stat.frontend_question_id
+        );
+        return;
+    }
+    let problem = problem.unwrap();
     let code = problem
         .code_definition
         .iter()
         .find(|&d| d.value == "rust".to_string());
     if code.is_none() {
+        println!(
+            "Problem {} has no rust version.",
+            &problem_stat.stat.frontend_question_id
+        );
         return;
     }
     let code = code.unwrap();
@@ -301,6 +313,10 @@ async fn deal_problem(problem_stat: StatWithStatus) {
 
     let mut lib_file = async { open_problem_lib_file() }.await;
     async { write_problem_lib_file(&mut lib_file, file_name) }.await;
+    println!(
+        "problem: {}.{} initialized",
+        problem_stat.stat.frontend_question_id, problem.title_slug
+    );
 }
 
 pub fn get_problem_stat_map(problems: Problems) -> HashMap<u32, StatWithStatus> {

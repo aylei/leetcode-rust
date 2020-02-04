@@ -22,18 +22,22 @@ pub fn get_problem(problem_stat: &StatWithStatus) -> Option<Problem> {
     if problem_stat.paid_only {
         return None;
     }
-
     let client = reqwest::Client::new();
-    let resp: RawProblem = client
+    let resp = client
         .post(GRAPHQL_URL)
         .json(&Query::question_query(
             problem_stat.stat.question_title_slug.as_ref().unwrap(),
         ))
-        .send()
-        .unwrap()
-        .json()
-        .unwrap();
-    return Some(Problem {
+        .send();
+    if resp.is_err() {
+        return None;
+    }
+    let resp = resp.unwrap().json();
+    if resp.is_err() {
+        return None;
+    }
+    let resp: RawProblem = resp.unwrap();
+    Some(Problem {
         title: problem_stat.stat.question_title.clone().unwrap(),
         title_slug: problem_stat.stat.question_title_slug.clone().unwrap(),
         code_definition: serde_json::from_str(&resp.data.question.code_definition).unwrap(),
@@ -45,8 +49,7 @@ pub fn get_problem(problem_stat: &StatWithStatus) -> Option<Problem> {
             let v: Value = serde_json::from_str(&resp.data.question.meta_data).unwrap();
             v["return"]["type"].to_string().replace("\"", "")
         },
-    });
-    None
+    })
 }
 
 pub fn get_problems() -> Option<Problems> {
