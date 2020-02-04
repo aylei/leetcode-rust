@@ -320,8 +320,8 @@ async fn deal_problem(problem_stat: StatWithStatus) {
     let mut lib_file = async { open_problem_lib_file() }.await;
     async { write_problem_lib_file(&mut lib_file, file_name) }.await;
     println!(
-        "Problem: {}.{} initialized",
-        problem_stat.stat.frontend_question_id, problem.title_slug
+        "Problem {} initialized",
+        problem_stat.stat.frontend_question_id
     );
 }
 
