@@ -16,7 +16,7 @@ use std::path::Path;
 /// main() helps to generate the submission template .rs
 fn main() {
     println!("Welcome to leetcode-rust system.");
-    let mut solved_ids = get_solved_ids();
+    let mut initialized_ids = get_initialized_ids();
     loop {
         println!("Please enter a frontend problem id, or \"random\" to generate a random one, or \"solve $i\" to move problem to solution/");
         let mut is_random = false;
@@ -33,7 +33,7 @@ fn main() {
 
         if random_pattern.is_match(id_arg) {
             println!("You select random mode.");
-            id = generate_random_id(&solved_ids);
+            id = generate_random_id(&initialized_ids);
             is_random = true;
             println!("Generate random problem: {}", &id);
         } else if solving_pattern.is_match(id_arg) {
@@ -52,7 +52,7 @@ fn main() {
             id = id_arg
                 .parse::<u32>()
                 .unwrap_or_else(|_| panic!("not a number: {}", id_arg));
-            if solved_ids.contains(&id) {
+            if initialized_ids.contains(&id) {
                 println!("The problem you chose has been initialized in problem/");
                 continue;
             }
@@ -68,7 +68,7 @@ fn main() {
         let code = problem.code_definition.iter().find(|&d| d.value == "rust");
         if code.is_none() {
             println!("Problem {} has no rust version.", &id);
-            solved_ids.push(problem.question_id);
+            initialized_ids.push(problem.question_id);
             continue;
         }
         let code = code.unwrap();
@@ -162,7 +162,7 @@ fn generate_random_id(except_ids: &[u32]) -> u32 {
     }
 }
 
-fn get_solved_ids() -> Vec<u32> {
+fn get_initialized_ids() -> Vec<u32> {
     let content = fs::read_to_string("./src/problem/mod.rs").unwrap();
     let id_pattern = Regex::new(r"p(\d{4})_").unwrap();
     id_pattern
