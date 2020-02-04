@@ -18,8 +18,7 @@ query questionData($titleSlug: String!) {
 }"#;
 const QUESTION_QUERY_OPERATION: &str = "questionData";
 
-pub fn get_problem(frontend_question_id: u32) -> Option<Problem> {
-    let problems = get_problems().unwrap();
+pub fn get_problem(frontend_question_id: u32, problems: Problems) -> Option<Problem> {
     for problem in problems.stat_status_pairs.iter() {
         if problem.stat.frontend_question_id == frontend_question_id {
             if problem.paid_only {
@@ -54,7 +53,7 @@ pub fn get_problem(frontend_question_id: u32) -> Option<Problem> {
     None
 }
 
-fn get_problems() -> Option<Problems> {
+pub fn get_problems() -> Option<Problems> {
     reqwest::get(PROBLEMS_URL).unwrap().json().unwrap()
 }
 
@@ -121,7 +120,7 @@ struct Question {
 }
 
 #[derive(Debug, Serialize, Deserialize)]
-struct Problems {
+pub struct Problems {
     user_name: String,
     num_solved: u32,
     num_total: u32,

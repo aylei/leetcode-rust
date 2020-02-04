@@ -30,6 +30,7 @@ fn main() {
 
         let random_pattern = Regex::new(r"^random$").unwrap();
         let solving_pattern = Regex::new(r"^solve (\d+)$").unwrap();
+        let all_pattern = Regex::new(r"^all$").unwrap();
 
         if random_pattern.is_match(id_arg) {
             println!("You select random mode.");
@@ -48,6 +49,7 @@ fn main() {
                 .as_str()
                 .parse()
                 .unwrap();
+        } else if all_pattern.is_match(id_arg) {
         } else {
             id = id_arg
                 .parse::<u32>()
@@ -58,13 +60,14 @@ fn main() {
             }
         }
 
-        let problem = fetcher::get_problem(id).unwrap_or_else(|| {
-            panic!(
-                "Error: failed to get problem #{} \
+        let problem =
+            fetcher::get_problem(id, fetcher::get_problems().unwrap()).unwrap_or_else(|| {
+                panic!(
+                    "Error: failed to get problem #{} \
                  (The problem may be paid-only or may not be exist).",
-                id
-            )
-        });
+                    id
+                )
+            });
         let code = problem.code_definition.iter().find(|&d| d.value == "rust");
         if code.is_none() {
             println!("Problem {} has no rust version.", &id);
