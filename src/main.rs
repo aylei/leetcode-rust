@@ -5,6 +5,13 @@ extern crate serde_json;
 
 mod fetcher;
 
+use crate::fetcher::Problem;
+use crate::fetcher::Problems;
+use crate::fetcher::StatWithStatus;
+use futures::executor::block_on;
+use futures::executor::ThreadPool;
+use futures::future::join_all;
+use futures::task::SpawnExt;
 use regex::Regex;
 use std::env;
 use std::fs;
@@ -12,6 +19,8 @@ use std::fs::File;
 use std::io;
 use std::io::{BufRead, Write};
 use std::path::Path;
+use std::sync::Arc;
+use std::thread::sleep;
 
 /// main() helps to generate the submission template .rs
 fn main() {
@@ -50,6 +59,18 @@ fn main() {
                 .parse()
                 .unwrap();
         } else if all_pattern.is_match(id_arg) {
+            let problems = fetcher::get_problems().unwrap().stat_status_pairs;
+            let mut res = vec![];
+            let mut pool = ThreadPool::new().unwrap();
+            let tmp = Arc::new(initialized_ids);
+            for problem in problems {
+                res.push(
+                    pool.spawn_with_handle(deal_problem(Arc::clone(&tmp), problem))
+                        .unwrap(),
+                );
+            }
+            block_on(join_all(res));
+            break;
         } else {
             id = id_arg
                 .parse::<u32>()
@@ -267,4 +288,62 @@ fn build_desc(content: &str) -> String {
         .replace("&#39;", "'")
         .replace("\n\n", "\n")
         .replace("\n", "\n * ")
+}
+
+async fn deal_problem(initialized_ids: Arc<Vec<u32>>, problem: StatWithStatus) {
+    println!("{}", problem.stat.frontend_question_id);
+    let problem =
+        async { fetcher::get_problem_req(problem.stat.frontend_question_id, problem) }.await;
+    if problem.is_none() {
+        return;
+    }
+    let problem = problem.unwrap();
+    let code = problem
+        .code_definition
+        .iter()
+        .find(|&d| d.value == "rust".to_string());
+    if code.is_none() {
+        return;
+    }
+    let code = code.unwrap();
+
+    let file_name = format!(
+        "p{:04}_{}",
+        problem.question_id,
+        problem.title_slug.replace("-", "_")
+    );
+    let file_path = Path::new("./src/problem").join(format!("{}.rs", file_name));
+
+    let template = async { fs::read_to_string("./template.rs").unwrap() }.await;
+    let source = template
+        .replace("__PROBLEM_TITLE__", &problem.title)
+        .replace("__PROBLEM_DESC__", &build_desc(&problem.content))
+        .replace(
+            "__PROBLEM_DEFAULT_CODE__",
+            &insert_return_in_code(&problem.return_type, &code.default_code),
+        )
+        .replace("__PROBLEM_ID__", &format!("{}", problem.question_id))
+        .replace("__EXTRA_USE__", &parse_extra_use(&code.default_code));
+
+    let mut file = async {
+        fs::OpenOptions::new()
+            .write(true)
+            .create(true)
+            .truncate(true)
+            .open(&file_path)
+            .unwrap()
+    }
+    .await;
+
+    async { file.write_all(source.as_bytes()).unwrap() }.await;
+
+    let mut lib_file = async {
+        fs::OpenOptions::new()
+            .write(true)
+            .append(true)
+            .open("./src/problem/mod.rs")
+            .unwrap()
+    }
+    .await;
+    async { writeln!(lib_file, "mod {};", file_name) }.await;
 }

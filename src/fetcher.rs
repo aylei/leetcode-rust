@@ -19,38 +19,47 @@ query questionData($titleSlug: String!) {
 const QUESTION_QUERY_OPERATION: &str = "questionData";
 
 pub fn get_problem(frontend_question_id: u32, problems: Problems) -> Option<Problem> {
-    for problem in problems.stat_status_pairs.iter() {
+    for problem in problems.stat_status_pairs {
         if problem.stat.frontend_question_id == frontend_question_id {
-            if problem.paid_only {
-                return None;
-            }
-
-            let client = reqwest::Client::new();
-            let resp: RawProblem = client
-                .post(GRAPHQL_URL)
-                .json(&Query::question_query(
-                    problem.stat.question_title_slug.as_ref().unwrap(),
-                ))
-                .send()
-                .unwrap()
-                .json()
-                .unwrap();
-            return Some(Problem {
-                title: problem.stat.question_title.clone().unwrap(),
-                title_slug: problem.stat.question_title_slug.clone().unwrap(),
-                code_definition: serde_json::from_str(&resp.data.question.code_definition).unwrap(),
-                content: resp.data.question.content,
-                sample_test_case: resp.data.question.sample_test_case,
-                difficulty: problem.difficulty.to_string(),
-                question_id: problem.stat.frontend_question_id,
-                return_type: {
-                    let v: Value = serde_json::from_str(&resp.data.question.meta_data).unwrap();
-                    v["return"]["type"].to_string().replace("\"", "")
-                },
-            });
+            return get_problem_req(frontend_question_id, problem);
         }
     }
     None
+}
+
+pub fn get_problem_req(frontend_question_id: u32, problem: StatWithStatus) -> Option<Problem> {
+    if problem.paid_only {
+        return None;
+    }
+
+    let client = reqwest::Client::new();
+    let resp = client
+        .post(GRAPHQL_URL)
+        .json(&Query::question_query(
+            problem.stat.question_title_slug.as_ref().unwrap(),
+        ))
+        .send();
+    if resp.is_err() {
+        return None;
+    }
+    let resp = resp.unwrap().json();
+    if resp.is_err() {
+        return None;
+    }
+    let resp: RawProblem = resp.unwrap();
+    return Some(Problem {
+        title: problem.stat.question_title.clone().unwrap(),
+        title_slug: problem.stat.question_title_slug.clone().unwrap(),
+        code_definition: serde_json::from_str(&resp.data.question.code_definition).unwrap(),
+        content: resp.data.question.content,
+        sample_test_case: resp.data.question.sample_test_case,
+        difficulty: problem.difficulty.to_string(),
+        question_id: problem.stat.frontend_question_id,
+        return_type: {
+            let v: Value = serde_json::from_str(&resp.data.question.meta_data).unwrap();
+            v["return"]["type"].to_string().replace("\"", "")
+        },
+    });
 }
 
 pub fn get_problems() -> Option<Problems> {
@@ -127,12 +136,12 @@ pub struct Problems {
     ac_easy: u32,
     ac_medium: u32,
     ac_hard: u32,
-    stat_status_pairs: Vec<StatWithStatus>,
+    pub stat_status_pairs: Vec<StatWithStatus>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
-struct StatWithStatus {
-    stat: Stat,
+pub struct StatWithStatus {
+    pub stat: Stat,
     difficulty: Difficulty,
     paid_only: bool,
     is_favor: bool,
@@ -141,19 +150,19 @@ struct StatWithStatus {
 }
 
 #[derive(Debug, Serialize, Deserialize)]
-struct Stat {
+pub struct Stat {
     question_id: u32,
     #[serde(rename = "question__article__slug")]
     question_article_slug: Option<String>,
     #[serde(rename = "question__title")]
     question_title: Option<String>,
     #[serde(rename = "question__title_slug")]
-    question_title_slug: Option<String>,
+    pub question_title_slug: Option<String>,
     #[serde(rename = "question__hide")]
     question_hide: bool,
     total_acs: u32,
     total_submitted: u32,
-    frontend_question_id: u32,
+    pub frontend_question_id: u32,
     is_new_question: bool,
 }
 
