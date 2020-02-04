@@ -30,6 +30,10 @@ const SOLUTION_FOLDER: &str = "./src/solution";
 const SOLUTION_PREFIX: &str = "s";
 const MOD_FILE: &str = "/mod.rs";
 const TEMPLATE_FILE: &str = "./template.rs";
+const COMPLEX_PROBLEMS: [u32; 32] = [
+    1261, 1206, 1172, 1157, 1146, 1286, 1032, 981, 933, 919, 911, 901, 900, 519, 528, 497, 895,
+    478, 855, 710, 641, 622, 707, 706, 705, 703, 745, 731, 729, 732, 715, 722,
+];
 
 /// main() helps to generate the submission template .rs
 fn main() {
@@ -201,7 +205,13 @@ fn parse_extra_use(code: &str) -> String {
     extra_use_line
 }
 
-fn insert_return_in_code(return_type: &str, code: &str) -> String {
+fn insert_return_in_code(problem: &Problem, code: &str) -> String {
+    let problem_id = problem.question_id;
+    // the following problems has complex solution, so won't have default return value
+    if COMPLEX_PROBLEMS.contains(&problem_id) {
+        return code.to_string();
+    }
+    let return_type = problem.return_type.as_str();
     let re = Regex::new(r"\{[ \n\r]+}").unwrap();
     match return_type {
         "ListNode" => re
@@ -347,7 +357,7 @@ pub fn parse_template(template: String, problem: &Problem, code: &CodeDefinition
         .replace("__PROBLEM_DESC__", &build_desc(&problem.content))
         .replace(
             "__PROBLEM_DEFAULT_CODE__",
-            &insert_return_in_code(&problem.return_type, &code.default_code),
+            &insert_return_in_code(&problem, &code.default_code),
         )
         .replace("__PROBLEM_ID__", &format!("{}", problem.question_id))
         .replace("__EXTRA_USE__", &parse_extra_use(&code.default_code))
