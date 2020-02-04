@@ -40,7 +40,7 @@ fn main() {
     println!("Welcome to leetcode-rust system.");
     let mut initialized_ids = get_initialized_ids();
     loop {
-        println!("Please enter a frontend problem id, or \"random\" to generate a random one, or \"solve $i\" to move problem to solution/");
+        println!("Please enter a frontend problem id, \nor \"random\" to generate a random one, \nor \"solve $i\" to move problem to solution/\nor \"all\" to initialize all problems");
         let mut is_random = false;
         let mut is_solving = false;
         let mut id: u32 = 0;
@@ -320,7 +320,7 @@ async fn deal_problem(problem_stat: StatWithStatus) {
     let mut lib_file = async { open_problem_lib_file() }.await;
     async { write_problem_lib_file(&mut lib_file, file_name) }.await;
     println!(
-        "problem: {}.{} initialized",
+        "Problem: {}.{} initialized",
         problem_stat.stat.frontend_question_id, problem.title_slug
     );
 }
