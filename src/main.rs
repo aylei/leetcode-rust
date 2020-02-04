@@ -92,9 +92,18 @@ fn main() {
                 continue;
             }
         }
-
+        let mut problem_stat: Option<StatWithStatus> = None;
+        for p in fetcher::get_problems().unwrap().stat_status_pairs {
+            if p.stat.frontend_question_id == id {
+                problem_stat = Some(p);
+            }
+        }
+        if problem_stat.is_none() {
+            println!("Problem {} does not exist", id);
+            continue;
+        }
         let problem =
-            fetcher::get_problem(&get_problem_stat_map(fetcher::get_problems().unwrap())[&id])
+            fetcher::get_problem(&problem_stat.unwrap())
                 .unwrap_or_else(|| {
                     panic!(
                         "Error: failed to get problem #{} (The problem may be paid-only or may not be exist).",
@@ -323,14 +332,6 @@ async fn deal_problem(problem_stat: StatWithStatus) {
         "Problem {} initialized",
         problem_stat.stat.frontend_question_id
     );
-}
-
-pub fn get_problem_stat_map(problems: Problems) -> HashMap<u32, StatWithStatus> {
-    let mut ret = HashMap::new();
-    for problem_stat in problems.stat_status_pairs {
-        ret.insert(problem_stat.stat.frontend_question_id, problem_stat);
-    }
-    ret
 }
 
 // extract common code
