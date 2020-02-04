@@ -13,6 +13,7 @@ use futures::executor::ThreadPool;
 use futures::future::join_all;
 use futures::task::SpawnExt;
 use regex::Regex;
+use std::collections::HashMap;
 use std::env;
 use std::fs;
 use std::fs::File;
@@ -59,15 +60,14 @@ fn main() {
                 .parse()
                 .unwrap();
         } else if all_pattern.is_match(id_arg) {
-            let problems = fetcher::get_problems().unwrap().stat_status_pairs;
-            let mut res = vec![];
+            println!("You've chosen to generate all problems, which may takes a while...");
             let mut pool = ThreadPool::new().unwrap();
-            let tmp = Arc::new(initialized_ids);
-            for problem in problems {
-                res.push(
-                    pool.spawn_with_handle(deal_problem(Arc::clone(&tmp), problem))
-                        .unwrap(),
-                );
+            let mut res = vec![];
+            let problems = fetcher::get_problems().unwrap();
+            for problem_stat in problems.stat_status_pairs {
+                if !initialized_ids.contains(&problem_stat.stat.frontend_question_id) {
+                    res.push(pool.spawn_with_handle(deal_problem(problem_stat)).unwrap());
+                }
             }
             block_on(join_all(res));
             break;
@@ -82,13 +82,13 @@ fn main() {
         }
 
         let problem =
-            fetcher::get_problem(id, fetcher::get_problems().unwrap()).unwrap_or_else(|| {
-                panic!(
-                    "Error: failed to get problem #{} \
-                 (The problem may be paid-only or may not be exist).",
-                    id
-                )
-            });
+            fetcher::get_problem(&get_problem_stat_map(fetcher::get_problems().unwrap())[&id])
+                .unwrap_or_else(|| {
+                    panic!(
+                        "Error: failed to get problem #{} (The problem may be paid-only or may not be exist).",
+                        id
+                    )
+                });
         let code = problem.code_definition.iter().find(|&d| d.value == "rust");
         if code.is_none() {
             println!("Problem {} has no rust version.", &id);
@@ -290,14 +290,8 @@ fn build_desc(content: &str) -> String {
         .replace("\n", "\n * ")
 }
 
-async fn deal_problem(initialized_ids: Arc<Vec<u32>>, problem: StatWithStatus) {
-    println!("{}", problem.stat.frontend_question_id);
-    let problem =
-        async { fetcher::get_problem_req(problem.stat.frontend_question_id, problem) }.await;
-    if problem.is_none() {
-        return;
-    }
-    let problem = problem.unwrap();
+async fn deal_problem(problem_stat: StatWithStatus) {
+    let problem = async { fetcher::get_problem(&problem_stat) }.await.unwrap();
     let code = problem
         .code_definition
         .iter()
@@ -346,4 +340,12 @@ async fn deal_problem(initialized_ids: Arc<Vec<u32>>, problem: StatWithStatus) {
     }
     .await;
     async { writeln!(lib_file, "mod {};", file_name) }.await;
+}
+
+pub fn get_problem_stat_map(problems: Problems) -> HashMap<u32, StatWithStatus> {
+    let mut ret = HashMap::new();
+    for problem_stat in problems.stat_status_pairs {
+        ret.insert(problem_stat.stat.frontend_question_id, problem_stat);
+    }
+    ret
 }
