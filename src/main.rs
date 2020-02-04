@@ -18,7 +18,7 @@ fn main() {
     println!("Welcome to leetcode-rust system.");
     let mut solved_ids = get_solved_ids();
     loop {
-        println!("Please enter a frontend problem id, or \"random\" to generate a random one.");
+        println!("Please enter a frontend problem id, or \"random\" to generate a random one, or \"solve $i\" to move problem to solution/");
         let mut is_random = false;
         let mut is_solving = false;
         let mut id: u32 = 0;
