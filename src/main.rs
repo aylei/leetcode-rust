@@ -221,7 +221,7 @@ fn insert_return_in_code(problem: &Problem, code: &str) -> String {
         return code.to_string();
     }
     let return_type = problem.return_type.as_str();
-    let re = Regex::new(r"\{[ \n\r]+}").unwrap();
+    let re = Regex::new(r"\{\s+}").unwrap();
     match return_type {
         "ListNode" => re
             .replace(&code, "{\n        Some(Box::new(ListNode::new(0)))\n    }")
