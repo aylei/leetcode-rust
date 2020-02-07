@@ -90,6 +90,7 @@ fn main() {
                             println!("Problem {} has no rust version.", problem.question_id);
                             return;
                         }
+                        // not sure this can be async
                         async {
                             mod_file_addon.lock().unwrap().push(format!(
                                 "mod p{:04}_{};",
@@ -99,6 +100,8 @@ fn main() {
                         }
                         .await;
                         let code = code.unwrap();
+                        // not sure this can be async
+                        // maybe should use async-std io
                         async { deal_problem(&problem, &code, false) }.await
                     })
                     .unwrap(),
