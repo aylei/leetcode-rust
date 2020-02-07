@@ -23,10 +23,15 @@ use std::sync::{Arc, Mutex};
 
 /// main() helps to generate the submission template .rs
 fn main() {
-    println!("Welcome to leetcode-rust system.");
+    println!("Welcome to leetcode-rust system.\n");
     let mut initialized_ids = get_initialized_ids();
     loop {
-        println!("Please enter a frontend problem id, or \"random\" to generate a random one, or \"solve $i\" to move problem to solution/");
+        println!(
+            "Please enter a frontend problem id, \n\
+            or \"random\" to generate a random one, \n\
+            or \"solve $i\" to move problem to solution/, \n\
+            or \"all\" to initialize all problems"
+        );
         let mut is_random = false;
         let mut is_solving = false;
         let mut id: u32 = 0;
