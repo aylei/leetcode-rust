@@ -14,6 +14,12 @@ use std::io;
 use std::io::{BufRead, Write};
 use std::path::Path;
 
+use futures::executor::block_on;
+use futures::executor::ThreadPool;
+use futures::future::join_all;
+use futures::stream::StreamExt;
+use futures::task::SpawnExt;
+
 /// main() helps to generate the submission template .rs
 fn main() {
     println!("Welcome to leetcode-rust system.");
@@ -31,6 +37,7 @@ fn main() {
 
         let random_pattern = Regex::new(r"^random$").unwrap();
         let solving_pattern = Regex::new(r"^solve (\d+)$").unwrap();
+        let all_pattern = Regex::new(r"^all$").unwrap();
 
         if random_pattern.is_match(id_arg) {
             println!("You select random mode.");
@@ -51,6 +58,35 @@ fn main() {
                 .unwrap();
             deal_solving(&id);
             break;
+        } else if all_pattern.is_match(id_arg) {
+            // deal all problems
+            let pool = ThreadPool::new().unwrap();
+            let mut tasks = vec![];
+            let problems = fetcher::get_problems().unwrap();
+            for stat in problems.stat_status_pairs {
+                tasks.push(
+                    pool.spawn_with_handle(async move {
+                        let problem = fetcher::get_problem_async(stat).await;
+                        if problem.is_none() {
+                            return;
+                        }
+                        let problem = problem.unwrap();
+                        let code = problem
+                            .code_definition
+                            .iter()
+                            .find(|&d| d.value == "rust".to_string());
+                        if code.is_none() {
+                            println!("Problem {} has no rust version.", id);
+                            return;
+                        }
+                        let code = code.unwrap();
+                        async { deal_problem(&problem, &code) }.await
+                    })
+                    .unwrap(),
+                );
+            }
+            block_on(join_all(tasks));
+            break;
         } else {
             id = id_arg
                 .parse::<u32>()
@@ -68,7 +104,10 @@ fn main() {
                 id
             )
         });
-        let code = problem.code_definition.iter().find(|&d| d.value == "rust");
+        let code = problem
+            .code_definition
+            .iter()
+            .find(|&d| d.value == "rust".to_string());
         if code.is_none() {
             println!("Problem {} has no rust version.", &id);
             initialized_ids.push(problem.question_id);

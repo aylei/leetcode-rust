@@ -54,7 +54,49 @@ pub fn get_problem(frontend_question_id: u32) -> Option<Problem> {
     None
 }
 
-fn get_problems() -> Option<Problems> {
+pub async fn get_problem_async(problem_stat: StatWithStatus) -> Option<Problem> {
+    if problem_stat.paid_only {
+        println!(
+            "Problem {} is paid-only",
+            &problem_stat.stat.frontend_question_id
+        );
+        return None;
+    }
+    let resp = surf::post(GRAPHQL_URL).body_json(&Query::question_query(
+        problem_stat.stat.question_title_slug.as_ref().unwrap(),
+    ));
+    if resp.is_err() {
+        println!(
+            "Problem {} not initialized due to some error",
+            &problem_stat.stat.frontend_question_id
+        );
+        return None;
+    }
+    let resp = resp.unwrap().recv_json().await;
+    if resp.is_err() {
+        println!(
+            "Problem {} not initialized due to some error",
+            &problem_stat.stat.frontend_question_id
+        );
+        return None;
+    }
+    let resp: RawProblem = resp.unwrap();
+    return Some(Problem {
+        title: problem_stat.stat.question_title.clone().unwrap(),
+        title_slug: problem_stat.stat.question_title_slug.clone().unwrap(),
+        code_definition: serde_json::from_str(&resp.data.question.code_definition).unwrap(),
+        content: resp.data.question.content,
+        sample_test_case: resp.data.question.sample_test_case,
+        difficulty: problem_stat.difficulty.to_string(),
+        question_id: problem_stat.stat.frontend_question_id,
+        return_type: {
+            let v: Value = serde_json::from_str(&resp.data.question.meta_data).unwrap();
+            v["return"]["type"].to_string().replace("\"", "")
+        },
+    });
+}
+
+pub fn get_problems() -> Option<Problems> {
     reqwest::get(PROBLEMS_URL).unwrap().json().unwrap()
 }
 
@@ -121,18 +163,18 @@ struct Question {
 }
 
 #[derive(Debug, Serialize, Deserialize)]
-struct Problems {
+pub struct Problems {
     user_name: String,
     num_solved: u32,
     num_total: u32,
     ac_easy: u32,
     ac_medium: u32,
     ac_hard: u32,
-    stat_status_pairs: Vec<StatWithStatus>,
+    pub stat_status_pairs: Vec<StatWithStatus>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
-struct StatWithStatus {
+pub struct StatWithStatus {
     stat: Stat,
     difficulty: Difficulty,
     paid_only: bool,
