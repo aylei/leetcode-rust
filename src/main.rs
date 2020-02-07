@@ -5,6 +5,7 @@ extern crate serde_json;
 
 mod fetcher;
 
+use crate::fetcher::{CodeDefinition, Problem};
 use regex::Regex;
 use std::env;
 use std::fs;
@@ -74,44 +75,7 @@ fn main() {
             continue;
         }
         let code = code.unwrap();
-
-        let file_name = format!(
-            "p{:04}_{}",
-            problem.question_id,
-            problem.title_slug.replace("-", "_")
-        );
-        let file_path = Path::new("./src/problem").join(format!("{}.rs", file_name));
-        if file_path.exists() {
-            panic!("problem already initialized");
-        }
-
-        let template = fs::read_to_string("./template.rs").unwrap();
-        let source = template
-            .replace("__PROBLEM_TITLE__", &problem.title)
-            .replace("__PROBLEM_DESC__", &build_desc(&problem.content))
-            .replace(
-                "__PROBLEM_DEFAULT_CODE__",
-                &insert_return_in_code(&problem.return_type, &code.default_code),
-            )
-            .replace("__PROBLEM_ID__", &format!("{}", problem.question_id))
-            .replace("__EXTRA_USE__", &parse_extra_use(&code.default_code));
-
-        let mut file = fs::OpenOptions::new()
-            .write(true)
-            .create(true)
-            .truncate(true)
-            .open(&file_path)
-            .unwrap();
-
-        file.write_all(source.as_bytes()).unwrap();
-        drop(file);
-
-        let mut lib_file = fs::OpenOptions::new()
-            .write(true)
-            .append(true)
-            .open("./src/problem/mod.rs")
-            .unwrap();
-        writeln!(lib_file, "mod {};", file_name);
+        deal_problem(&problem, &code);
         break;
     }
 }
@@ -273,4 +237,44 @@ fn deal_solving(id: &u32) {
         .open("./src/solution/mod.rs")
         .unwrap();
     writeln!(lib_file, "mod {};", solution_name);
+}
+
+fn deal_problem(problem: &Problem, code: &CodeDefinition) {
+    let file_name = format!(
+        "p{:04}_{}",
+        problem.question_id,
+        problem.title_slug.replace("-", "_")
+    );
+    let file_path = Path::new("./src/problem").join(format!("{}.rs", file_name));
+    if file_path.exists() {
+        panic!("problem already initialized");
+    }
+
+    let template = fs::read_to_string("./template.rs").unwrap();
+    let source = template
+        .replace("__PROBLEM_TITLE__", &problem.title)
+        .replace("__PROBLEM_DESC__", &build_desc(&problem.content))
+        .replace(
+            "__PROBLEM_DEFAULT_CODE__",
+            &insert_return_in_code(&problem.return_type, &code.default_code),
+        )
+        .replace("__PROBLEM_ID__", &format!("{}", problem.question_id))
+        .replace("__EXTRA_USE__", &parse_extra_use(&code.default_code));
+
+    let mut file = fs::OpenOptions::new()
+        .write(true)
+        .create(true)
+        .truncate(true)
+        .open(&file_path)
+        .unwrap();
+
+    file.write_all(source.as_bytes()).unwrap();
+    drop(file);
+
+    let mut lib_file = fs::OpenOptions::new()
+        .write(true)
+        .append(true)
+        .open("./src/problem/mod.rs")
+        .unwrap();
+    writeln!(lib_file, "mod {};", file_name);
 }
