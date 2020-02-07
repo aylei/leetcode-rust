@@ -63,10 +63,21 @@ fn main() {
             let pool = ThreadPool::new().unwrap();
             let mut tasks = vec![];
             let problems = fetcher::get_problems().unwrap();
-            for stat in problems.stat_status_pairs {
+            let mut mod_file_addon = vec![];
+            for problem_stat in problems.stat_status_pairs {
+                mod_file_addon.push(format!(
+                    "mod p{:04}_{};",
+                    problem_stat.stat.frontend_question_id,
+                    problem_stat
+                        .stat
+                        .question_title_slug
+                        .clone()
+                        .unwrap()
+                        .replace("-", "_")
+                ));
                 tasks.push(
                     pool.spawn_with_handle(async move {
-                        let problem = fetcher::get_problem_async(stat).await;
+                        let problem = fetcher::get_problem_async(problem_stat).await;
                         if problem.is_none() {
                             return;
                         }
@@ -80,12 +91,18 @@ fn main() {
                             return;
                         }
                         let code = code.unwrap();
-                        async { deal_problem(&problem, &code) }.await
+                        async { deal_problem(&problem, &code, false) }.await
                     })
                     .unwrap(),
                 );
             }
             block_on(join_all(tasks));
+            let mut lib_file = fs::OpenOptions::new()
+                .write(true)
+                .append(true)
+                .open("./src/problem/mod.rs")
+                .unwrap();
+            writeln!(lib_file, "{}", mod_file_addon.join("\n"));
             break;
         } else {
             id = id_arg
@@ -114,7 +131,7 @@ fn main() {
             continue;
         }
         let code = code.unwrap();
-        deal_problem(&problem, &code);
+        deal_problem(&problem, &code, true);
         break;
     }
 }
@@ -278,7 +295,7 @@ fn deal_solving(id: &u32) {
     writeln!(lib_file, "mod {};", solution_name);
 }
 
-fn deal_problem(problem: &Problem, code: &CodeDefinition) {
+fn deal_problem(problem: &Problem, code: &CodeDefinition, write_mod_file: bool) {
     let file_name = format!(
         "p{:04}_{}",
         problem.question_id,
@@ -310,10 +327,12 @@ fn deal_problem(problem: &Problem, code: &CodeDefinition) {
     file.write_all(source.as_bytes()).unwrap();
     drop(file);
 
-    let mut lib_file = fs::OpenOptions::new()
-        .write(true)
-        .append(true)
-        .open("./src/problem/mod.rs")
-        .unwrap();
-    writeln!(lib_file, "mod {};", file_name);
+    if write_mod_file {
+        let mut lib_file = fs::OpenOptions::new()
+            .write(true)
+            .append(true)
+            .open("./src/problem/mod.rs")
+            .unwrap();
+        writeln!(lib_file, "mod {};", file_name);
+    }
 }
