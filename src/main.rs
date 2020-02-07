@@ -48,6 +48,7 @@ fn main() {
                 .as_str()
                 .parse()
                 .unwrap();
+            deal_solving(&id);
         } else {
             id = id_arg
                 .parse::<u32>()
@@ -79,40 +80,6 @@ fn main() {
             problem.title_slug.replace("-", "_")
         );
         let file_path = Path::new("./src/problem").join(format!("{}.rs", file_name));
-        if is_solving {
-            // check problem/ existence
-            if !file_path.exists() {
-                panic!("problem does not exist");
-            }
-            // check solution/ no existence
-            let solution_name = format!(
-                "s{:04}_{}",
-                problem.question_id,
-                problem.title_slug.replace("-", "_")
-            );
-            let solution_path = Path::new("./src/solution").join(format!("{}.rs", solution_name));
-            if solution_path.exists() {
-                panic!("solution exists");
-            }
-            // rename/move file
-            fs::rename(file_path, solution_path).unwrap();
-            // remove from problem/mod.rs
-            let mod_file = "./src/problem/mod.rs";
-            let target_line = format!("mod {};", file_name);
-            let lines: Vec<String> = io::BufReader::new(File::open(mod_file).unwrap())
-                .lines()
-                .map(|x| x.unwrap())
-                .filter(|x| *x != target_line)
-                .collect();
-            fs::write(mod_file, lines.join("\n"));
-            // insert into solution/mod.rs
-            let mut lib_file = fs::OpenOptions::new()
-                .append(true)
-                .open("./src/solution/mod.rs")
-                .unwrap();
-            writeln!(lib_file, "mod {};", solution_name);
-            break;
-        }
         if file_path.exists() {
             panic!("problem already initialized");
         }
@@ -264,4 +231,45 @@ fn build_desc(content: &str) -> String {
         .replace("&#39;", "'")
         .replace("\n\n", "\n")
         .replace("\n", "\n * ")
+}
+
+fn deal_solving(id: &u32) {
+    let problem = fetcher::get_problem(*id).unwrap();
+    let file_name = format!(
+        "p{:04}_{}",
+        problem.question_id,
+        problem.title_slug.replace("-", "_")
+    );
+    let file_path = Path::new("./src/problem").join(format!("{}.rs", file_name));
+    // check problem/ existence
+    if !file_path.exists() {
+        panic!("problem does not exist");
+    }
+    // check solution/ no existence
+    let solution_name = format!(
+        "s{:04}_{}",
+        problem.question_id,
+        problem.title_slug.replace("-", "_")
+    );
+    let solution_path = Path::new("./src/solution").join(format!("{}.rs", solution_name));
+    if solution_path.exists() {
+        panic!("solution exists");
+    }
+    // rename/move file
+    fs::rename(file_path, solution_path).unwrap();
+    // remove from problem/mod.rs
+    let mod_file = "./src/problem/mod.rs";
+    let target_line = format!("mod {};", file_name);
+    let lines: Vec<String> = io::BufReader::new(File::open(mod_file).unwrap())
+        .lines()
+        .map(|x| x.unwrap())
+        .filter(|x| *x != target_line)
+        .collect();
+    fs::write(mod_file, lines.join("\n"));
+    // insert into solution/mod.rs
+    let mut lib_file = fs::OpenOptions::new()
+        .append(true)
+        .open("./src/solution/mod.rs")
+        .unwrap();
+    writeln!(lib_file, "mod {};", solution_name);
 }
