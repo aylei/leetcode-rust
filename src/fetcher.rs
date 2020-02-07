@@ -175,7 +175,7 @@ pub struct Problems {
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct StatWithStatus {
-    stat: Stat,
+    pub stat: Stat,
     difficulty: Difficulty,
     paid_only: bool,
     is_favor: bool,
@@ -184,7 +184,7 @@ pub struct StatWithStatus {
 }
 
 #[derive(Debug, Serialize, Deserialize)]
-struct Stat {
+pub struct Stat {
     question_id: u32,
     #[serde(rename = "question__article__slug")]
     question_article_slug: Option<String>,
@@ -196,7 +196,7 @@ struct Stat {
     question_hide: bool,
     total_acs: u32,
     total_submitted: u32,
-    frontend_question_id: u32,
+    pub frontend_question_id: u32,
     is_new_question: bool,
 }
 

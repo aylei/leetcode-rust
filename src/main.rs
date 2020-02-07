@@ -30,7 +30,7 @@ fn main() {
             "Please enter a frontend problem id, \n\
             or \"random\" to generate a random one, \n\
             or \"solve $i\" to move problem to solution/, \n\
-            or \"all\" to initialize all problems"
+            or \"all\" to initialize all problems \n"
         );
         let mut is_random = false;
         let mut is_solving = false;
@@ -71,6 +71,9 @@ fn main() {
             let problems = fetcher::get_problems().unwrap();
             let mut mod_file_addon = Arc::new(Mutex::new(vec![]));
             for problem_stat in problems.stat_status_pairs {
+                if initialized_ids.contains(&problem_stat.stat.frontend_question_id) {
+                    continue;
+                }
                 let mod_file_addon = mod_file_addon.clone();
                 tasks.push(
                     pool.spawn_with_handle(async move {
