@@ -49,6 +49,7 @@ fn main() {
                 .parse()
                 .unwrap();
             deal_solving(&id);
+            break;
         } else {
             id = id_arg
                 .parse::<u32>()
