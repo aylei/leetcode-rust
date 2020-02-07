@@ -19,6 +19,7 @@ use futures::executor::ThreadPool;
 use futures::future::join_all;
 use futures::stream::StreamExt;
 use futures::task::SpawnExt;
+use std::sync::{Arc, Mutex};
 
 /// main() helps to generate the submission template .rs
 fn main() {
@@ -63,18 +64,9 @@ fn main() {
             let pool = ThreadPool::new().unwrap();
             let mut tasks = vec![];
             let problems = fetcher::get_problems().unwrap();
-            let mut mod_file_addon = vec![];
+            let mut mod_file_addon = Arc::new(Mutex::new(vec![]));
             for problem_stat in problems.stat_status_pairs {
-                mod_file_addon.push(format!(
-                    "mod p{:04}_{};",
-                    problem_stat.stat.frontend_question_id,
-                    problem_stat
-                        .stat
-                        .question_title_slug
-                        .clone()
-                        .unwrap()
-                        .replace("-", "_")
-                ));
+                let mod_file_addon = mod_file_addon.clone();
                 tasks.push(
                     pool.spawn_with_handle(async move {
                         let problem = fetcher::get_problem_async(problem_stat).await;
@@ -90,6 +82,14 @@ fn main() {
                             println!("Problem {} has no rust version.", problem.question_id);
                             return;
                         }
+                        async {
+                            mod_file_addon.lock().unwrap().push(format!(
+                                "mod p{:04}_{};",
+                                problem.question_id,
+                                problem.title_slug.replace("-", "_")
+                            ));
+                        }
+                        .await;
                         let code = code.unwrap();
                         async { deal_problem(&problem, &code, false) }.await
                     })
@@ -102,7 +102,7 @@ fn main() {
                 .append(true)
                 .open("./src/problem/mod.rs")
                 .unwrap();
-            writeln!(lib_file, "{}", mod_file_addon.join("\n"));
+            writeln!(lib_file, "{}", mod_file_addon.lock().unwrap().join("\n"));
             break;
         } else {
             id = id_arg
