@@ -87,7 +87,7 @@ fn main() {
                             .iter()
                             .find(|&d| d.value == "rust".to_string());
                         if code.is_none() {
-                            println!("Problem {} has no rust version.", id);
+                            println!("Problem {} has no rust version.", problem.question_id);
                             return;
                         }
                         let code = code.unwrap();
