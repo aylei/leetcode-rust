@@ -240,3 +240,7 @@ mod s0319_bulb_switcher;
 mod s0326_power_of_three;
 mod s0344_reverse_string;
 mod s0345_reverse_vowels_of_a_string;
+mod s0349_intersection_of_two_arrays;
+mod s0350_intersection_of_two_arrays_ii;
+mod s0367_valid_perfect_square;
+mod s0371_sum_of_two_integers;
