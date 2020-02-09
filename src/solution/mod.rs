@@ -235,3 +235,8 @@ mod s0111_minimum_depth_of_binary_tree;
 mod s0092_reverse_linked_list_ii;
 mod s0303_range_sum_query_immutable;
 mod s0102_binary_tree_level_order_traversal;
+mod s0318_maximum_product_of_word_lengths;
+mod s0319_bulb_switcher;
+mod s0326_power_of_three;
+mod s0344_reverse_string;
+mod s0345_reverse_vowels_of_a_string;
