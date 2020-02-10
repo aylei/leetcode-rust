@@ -235,3 +235,5 @@ mod s0111_minimum_depth_of_binary_tree;
 mod s0092_reverse_linked_list_ii;
 mod s0303_range_sum_query_immutable;
 mod s0102_binary_tree_level_order_traversal;
+mod s0383_ransom_note;
+mod s0387_first_unique_character_in_a_string;
