@@ -5,14 +5,14 @@
  */
 pub struct Solution {}__EXTRA_USE__
 
-// problem: __PROBLEM_LINK__
-// discuss: __DISCUSS_LINK__
-
 // submission codes start here
 
 __PROBLEM_DEFAULT_CODE__
 
 // submission codes end
+
+// problem: __PROBLEM_LINK__
+// discuss: __DISCUSS_LINK__
 
 #[cfg(test)]
 mod tests {
