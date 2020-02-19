@@ -38,6 +38,8 @@
 pub struct Solution {}
 use crate::util::point::Point;
 
+// submission codes start here
+
 /*
 要回顾下高中数学：已知两点, 求解一般式:
 
