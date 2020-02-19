@@ -24,6 +24,9 @@
  */
 pub struct Solution {}
 
+// problem: https://leetcode.com/problems/sort-colors/
+// discuss: https://leetcode.com/problems/sort-colors/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 
 // three-way partition

@@ -48,6 +48,9 @@ DP 向上递推即可
 BFS 也是可以的
 */
 
+// problem: https://leetcode.com/problems/word-break/
+// discuss: https://leetcode.com/problems/word-break/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 
 use std::collections::HashSet;

@@ -38,6 +38,9 @@
 pub struct Solution {}
 use crate::util::point::Point;
 
+// problem: https://leetcode.com/problems/max-points-on-a-line/
+// discuss: https://leetcode.com/problems/max-points-on-a-line/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 
 /*

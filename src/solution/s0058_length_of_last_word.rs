@@ -16,6 +16,9 @@
  */
 pub struct Solution {}
 
+// problem: https://leetcode.com/problems/length-of-last-word/
+// discuss: https://leetcode.com/problems/length-of-last-word/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 
 impl Solution {

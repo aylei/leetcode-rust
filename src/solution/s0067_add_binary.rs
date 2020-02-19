@@ -20,6 +20,9 @@
  */
 pub struct Solution {}
 
+// problem: https://leetcode.com/problems/add-binary/
+// discuss: https://leetcode.com/problems/add-binary/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 
 use std::char::from_digit;

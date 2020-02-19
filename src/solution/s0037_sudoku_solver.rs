@@ -30,6 +30,9 @@
  */
 pub struct Solution {}
 
+// problem: https://leetcode.com/problems/sudoku-solver/
+// discuss: https://leetcode.com/problems/sudoku-solver/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 
 // TODO

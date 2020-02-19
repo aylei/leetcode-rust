@@ -27,6 +27,9 @@
  */
 pub struct Solution {}
 
+// problem: https://leetcode.com/problems/unique-binary-search-trees-ii/
+// discuss: https://leetcode.com/problems/unique-binary-search-trees-ii/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 
 /*

@@ -24,6 +24,9 @@
  */
 pub struct Solution {}
 
+// problem: https://leetcode.com/problems/subsets/
+// discuss: https://leetcode.com/problems/subsets/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 
 impl Solution {

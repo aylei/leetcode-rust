@@ -34,6 +34,9 @@
  */
 pub struct Solution {}
 
+// problem: https://leetcode.com/problems/range-sum-query-2d-immutable/
+// discuss: https://leetcode.com/problems/range-sum-query-2d-immutable/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 
 struct NumMatrix {

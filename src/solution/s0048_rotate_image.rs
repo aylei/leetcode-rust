@@ -50,6 +50,9 @@
  */
 pub struct Solution {}
 
+// problem: https://leetcode.com/problems/rotate-image/
+// discuss: https://leetcode.com/problems/rotate-image/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 
 // x,y ->  y,n-x     2-dimension vector rotate -90 degree:

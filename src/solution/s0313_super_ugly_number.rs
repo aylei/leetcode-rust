@@ -25,6 +25,9 @@
  */
 pub struct Solution {}
 
+// problem: https://leetcode.com/problems/super-ugly-number/
+// discuss: https://leetcode.com/problems/super-ugly-number/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 
 use std::cmp::Ordering;

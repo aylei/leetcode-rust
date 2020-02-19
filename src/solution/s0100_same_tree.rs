@@ -45,6 +45,9 @@
 pub struct Solution {}
 
 use crate::util::tree::{to_tree, TreeNode};
+// problem: https://leetcode.com/problems/same-tree/
+// discuss: https://leetcode.com/problems/same-tree/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 use std::cell::RefCell;
 use std::rc::Rc;

@@ -23,6 +23,9 @@
 pub struct Solution {}
 use crate::util::linked_list::{to_list, ListNode};
 
+// problem: https://leetcode.com/problems/remove-nth-node-from-end-of-list/
+// discuss: https://leetcode.com/problems/remove-nth-node-from-end-of-list/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 
 // one pass (two pointer runner pattern) cannot make borrow checker happy

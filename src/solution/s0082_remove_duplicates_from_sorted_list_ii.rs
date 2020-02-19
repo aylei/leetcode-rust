@@ -21,6 +21,9 @@
 pub struct Solution {}
 use crate::util::linked_list::{to_list, ListNode};
 
+// problem: https://leetcode.com/problems/remove-duplicates-from-sorted-list-ii/
+// discuss: https://leetcode.com/problems/remove-duplicates-from-sorted-list-ii/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 
 // Definition for singly-linked list.

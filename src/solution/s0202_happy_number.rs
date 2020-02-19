@@ -19,6 +19,9 @@
  */
 pub struct Solution {}
 
+// problem: https://leetcode.com/problems/happy-number/
+// discuss: https://leetcode.com/problems/happy-number/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 
 use std::collections::HashSet;

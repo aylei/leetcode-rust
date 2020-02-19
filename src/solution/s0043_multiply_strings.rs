@@ -28,6 +28,9 @@
  */
 pub struct Solution {}
 
+// problem: https://leetcode.com/problems/multiply-strings/
+// discuss: https://leetcode.com/problems/multiply-strings/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 
 // TODO

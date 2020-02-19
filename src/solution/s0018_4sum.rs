@@ -23,6 +23,9 @@
  */
 pub struct Solution {}
 
+// problem: https://leetcode.com/problems/4sum/
+// discuss: https://leetcode.com/problems/4sum/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 
 // TODO: change to faster N^3 solution... maybe

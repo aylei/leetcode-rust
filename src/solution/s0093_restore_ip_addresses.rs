@@ -13,6 +13,9 @@
  */
 pub struct Solution {}
 
+// problem: https://leetcode.com/problems/restore-ip-addresses/
+// discuss: https://leetcode.com/problems/restore-ip-addresses/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 
 impl Solution {

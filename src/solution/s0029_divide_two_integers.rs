@@ -30,6 +30,9 @@
  */
 pub struct Solution {}
 
+// problem: https://leetcode.com/problems/divide-two-integers/
+// discuss: https://leetcode.com/problems/divide-two-integers/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 
 impl Solution {

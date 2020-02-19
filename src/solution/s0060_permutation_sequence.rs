@@ -40,6 +40,9 @@
  */
 pub struct Solution {}
 
+// problem: https://leetcode.com/problems/permutation-sequence/
+// discuss: https://leetcode.com/problems/permutation-sequence/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 
 // target: split k = i! + j! + ...

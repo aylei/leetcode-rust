@@ -22,6 +22,9 @@
  */
 pub struct Solution {}
 
+// problem: https://leetcode.com/problems/insert-interval/
+// discuss: https://leetcode.com/problems/insert-interval/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 
 // Definition for an interval.

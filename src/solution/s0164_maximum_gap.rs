@@ -30,6 +30,9 @@
  */
 pub struct Solution {}
 
+// problem: https://leetcode.com/problems/maximum-gap/
+// discuss: https://leetcode.com/problems/maximum-gap/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 /*
 想不出来, 一看解析居然是 Radix Sort 或 Bucket Sort, 我就 ??? 了...

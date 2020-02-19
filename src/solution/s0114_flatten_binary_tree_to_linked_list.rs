@@ -33,6 +33,9 @@
 pub struct Solution {}
 use crate::util::tree::{to_tree, TreeNode};
 
+// problem: https://leetcode.com/problems/flatten-binary-tree-to-linked-list/
+// discuss: https://leetcode.com/problems/flatten-binary-tree-to-linked-list/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 
 use std::cell::RefCell;

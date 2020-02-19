@@ -25,6 +25,9 @@
  */
 pub struct Solution {}
 
+// problem: https://leetcode.com/problems/largest-rectangle-in-histogram/
+// discuss: https://leetcode.com/problems/largest-rectangle-in-histogram/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 
 // record the height and start position using 2 stack, thus we reuse the previously scanned information

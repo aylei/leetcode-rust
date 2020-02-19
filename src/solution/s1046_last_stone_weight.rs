@@ -36,6 +36,9 @@
  */
 pub struct Solution {}
 
+// problem: https://leetcode.com/problems/last-stone-weight/
+// discuss: https://leetcode.com/problems/last-stone-weight/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 
 use std::collections::BinaryHeap;

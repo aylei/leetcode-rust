@@ -19,6 +19,9 @@
  */
 pub struct Solution {}
 
+// problem: https://leetcode.com/problems/maximal-rectangle/
+// discuss: https://leetcode.com/problems/maximal-rectangle/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 
 impl Solution {

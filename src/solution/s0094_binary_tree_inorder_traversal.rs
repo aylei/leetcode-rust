@@ -20,6 +20,9 @@
  */
 pub struct Solution {}
 
+// problem: https://leetcode.com/problems/binary-tree-inorder-traversal/
+// discuss: https://leetcode.com/problems/binary-tree-inorder-traversal/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 
 use crate::util::tree::{to_tree, TreeNode};

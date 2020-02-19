@@ -27,6 +27,9 @@
 pub struct Solution {}
 use crate::util::linked_list::{to_list, ListNode};
 
+// problem: https://leetcode.com/problems/reverse-nodes-in-k-group/
+// discuss: https://leetcode.com/problems/reverse-nodes-in-k-group/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 
 impl Solution {

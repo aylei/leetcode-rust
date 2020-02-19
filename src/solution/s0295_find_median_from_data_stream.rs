@@ -39,6 +39,9 @@
  */
 pub struct Solution {}
 
+// problem: https://leetcode.com/problems/find-median-from-data-stream/
+// discuss: https://leetcode.com/problems/find-median-from-data-stream/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 
 use std::cmp::Ordering;

@@ -18,6 +18,9 @@
  */
 pub struct Solution {}
 
+// problem: https://leetcode.com/problems/bitwise-and-of-numbers-range/
+// discuss: https://leetcode.com/problems/bitwise-and-of-numbers-range/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 
 // just find the highest bit 1 of m and n

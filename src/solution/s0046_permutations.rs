@@ -21,6 +21,9 @@
  */
 pub struct Solution {}
 
+// problem: https://leetcode.com/problems/permutations/
+// discuss: https://leetcode.com/problems/permutations/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 
 impl Solution {

@@ -37,6 +37,9 @@ pub struct Solution {}
 Consider the given array as ring, each time we split the ring and judge which part is the target belong to, then it's ordinary binary search.
 */
 
+// problem: https://leetcode.com/problems/search-in-rotated-sorted-array/
+// discuss: https://leetcode.com/problems/search-in-rotated-sorted-array/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 
 impl Solution {

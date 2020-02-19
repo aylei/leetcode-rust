@@ -29,6 +29,9 @@
  */
 pub struct Solution {}
 
+// problem: https://leetcode.com/problems/number-of-islands/
+// discuss: https://leetcode.com/problems/number-of-islands/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 
 // Union-Find Set

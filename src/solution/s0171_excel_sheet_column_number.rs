@@ -39,6 +39,9 @@
  */
 pub struct Solution {}
 
+// problem: https://leetcode.com/problems/excel-sheet-column-number/
+// discuss: https://leetcode.com/problems/excel-sheet-column-number/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 
 // TODO: boring

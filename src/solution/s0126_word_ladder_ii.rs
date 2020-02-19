@@ -52,6 +52,9 @@
  */
 pub struct Solution {}
 
+// problem: https://leetcode.com/problems/word-ladder-ii/
+// discuss: https://leetcode.com/problems/word-ladder-ii/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 
 /*

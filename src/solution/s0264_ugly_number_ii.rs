@@ -21,6 +21,9 @@
  */
 pub struct Solution {}
 
+// problem: https://leetcode.com/problems/ugly-number-ii/
+// discuss: https://leetcode.com/problems/ugly-number-ii/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 
 impl Solution {

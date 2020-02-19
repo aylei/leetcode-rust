@@ -31,6 +31,9 @@
  */
 pub struct Solution {}
 
+// problem: https://leetcode.com/problems/climbing-stairs/
+// discuss: https://leetcode.com/problems/climbing-stairs/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 
 // Bottom-up DP

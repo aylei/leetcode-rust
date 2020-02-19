@@ -20,6 +20,9 @@
 pub struct Solution {}
 use crate::util::linked_list::{to_list, ListNode};
 
+// problem: https://leetcode.com/problems/sort-list/
+// discuss: https://leetcode.com/problems/sort-list/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 
 /*

@@ -28,6 +28,9 @@
  */
 pub struct Solution {}
 
+// problem: https://leetcode.com/problems/remove-invalid-parentheses/
+// discuss: https://leetcode.com/problems/remove-invalid-parentheses/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 
 // 1. Calculate the number of misplaced left parenthese and right parenthese

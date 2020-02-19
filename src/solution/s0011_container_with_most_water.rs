@@ -22,6 +22,9 @@
  */
 pub struct Solution {}
 
+// problem: https://leetcode.com/problems/container-with-most-water/
+// discuss: https://leetcode.com/problems/container-with-most-water/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 
 // Brute force: O(N^2)

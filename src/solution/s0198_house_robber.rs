@@ -25,6 +25,9 @@
  */
 pub struct Solution {}
 
+// problem: https://leetcode.com/problems/house-robber/
+// discuss: https://leetcode.com/problems/house-robber/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 
 /*

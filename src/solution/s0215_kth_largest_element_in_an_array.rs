@@ -22,6 +22,9 @@
  */
 pub struct Solution {}
 
+// problem: https://leetcode.com/problems/kth-largest-element-in-an-array/
+// discuss: https://leetcode.com/problems/kth-largest-element-in-an-array/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 
 use std::cmp::Reverse;

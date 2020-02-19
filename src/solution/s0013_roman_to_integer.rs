@@ -61,6 +61,9 @@
  */
 pub struct Solution {}
 
+// problem: https://leetcode.com/problems/roman-to-integer/
+// discuss: https://leetcode.com/problems/roman-to-integer/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 
 impl Solution {

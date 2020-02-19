@@ -27,6 +27,9 @@
  */
 pub struct Solution {}
 
+// problem: https://leetcode.com/problems/longest-common-prefix/
+// discuss: https://leetcode.com/problems/longest-common-prefix/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 
 use std::str::Chars;

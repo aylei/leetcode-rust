@@ -18,6 +18,9 @@
  */
 pub struct Solution {}
 
+// problem: https://leetcode.com/problems/product-of-array-except-self/
+// discuss: https://leetcode.com/problems/product-of-array-except-self/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 
 /*

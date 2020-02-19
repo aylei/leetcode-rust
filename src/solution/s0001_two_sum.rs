@@ -18,6 +18,9 @@
  */
 pub struct Solution {}
 
+// problem: https://leetcode.com/problems/two-sum/
+// discuss: https://leetcode.com/problems/two-sum/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 
 use std::collections::HashMap;

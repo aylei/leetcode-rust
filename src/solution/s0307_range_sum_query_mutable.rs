@@ -36,6 +36,9 @@ pub struct Solution {}
 //    /    \        /    \     /     \
 //   N[0]  N[1]   N[2]  N[3]  N[4]  N[5]
 //
+// problem: https://leetcode.com/problems/range-sum-query-mutable/
+// discuss: https://leetcode.com/problems/range-sum-query-mutable/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 
 struct NumArray {

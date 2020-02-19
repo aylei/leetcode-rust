@@ -25,6 +25,9 @@
  */
 pub struct Solution {}
 
+// problem: https://leetcode.com/problems/house-robber-ii/
+// discuss: https://leetcode.com/problems/house-robber-ii/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 
 // DP twice: rob first one || not rob first one

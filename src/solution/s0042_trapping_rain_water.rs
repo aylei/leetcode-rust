@@ -15,6 +15,9 @@
  */
 pub struct Solution {}
 
+// problem: https://leetcode.com/problems/trapping-rain-water/
+// discuss: https://leetcode.com/problems/trapping-rain-water/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 
 // TODO

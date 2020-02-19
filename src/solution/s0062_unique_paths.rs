@@ -33,6 +33,9 @@
  */
 pub struct Solution {}
 
+// problem: https://leetcode.com/problems/unique-paths/
+// discuss: https://leetcode.com/problems/unique-paths/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 
 // its high school math: C(r,n) = n! / r!(n-r)! ...are you fxxking kidding me?

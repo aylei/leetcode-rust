@@ -19,6 +19,9 @@
 pub struct Solution {}
 use crate::util::linked_list::{to_list, ListNode};
 
+// problem: https://leetcode.com/problems/merge-k-sorted-lists/
+// discuss: https://leetcode.com/problems/merge-k-sorted-lists/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 use std::cmp::Ordering;
 use std::collections::BinaryHeap;

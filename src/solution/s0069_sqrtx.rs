@@ -26,6 +26,9 @@
  */
 pub struct Solution {}
 
+// problem: https://leetcode.com/problems/sqrtx/
+// discuss: https://leetcode.com/problems/sqrtx/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 
 // Newton-Raphson for: root^2 - n = 0

@@ -43,6 +43,9 @@
  */
 pub struct Solution {}
 
+// problem: https://leetcode.com/problems/game-of-life/
+// discuss: https://leetcode.com/problems/game-of-life/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 
 // in-place: 1: live->live, 0: die->die, 2: die->live, 3: live->die

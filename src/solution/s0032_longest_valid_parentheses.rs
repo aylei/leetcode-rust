@@ -22,6 +22,9 @@
  */
 pub struct Solution {}
 
+// problem: https://leetcode.com/problems/longest-valid-parentheses/
+// discuss: https://leetcode.com/problems/longest-valid-parentheses/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 
 // time: O(N) space: O(1)
