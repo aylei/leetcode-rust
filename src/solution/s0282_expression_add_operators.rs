@@ -39,6 +39,9 @@
  */
 pub struct Solution {}
 
+// problem: https://leetcode.com/problems/expression-add-operators/
+// discuss: https://leetcode.com/problems/expression-add-operators/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 
 impl Solution {

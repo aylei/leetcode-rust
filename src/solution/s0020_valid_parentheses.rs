@@ -50,6 +50,9 @@
  */
 pub struct Solution {}
 
+// problem: https://leetcode.com/problems/valid-parentheses/
+// discuss: https://leetcode.com/problems/valid-parentheses/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 
 impl Solution {

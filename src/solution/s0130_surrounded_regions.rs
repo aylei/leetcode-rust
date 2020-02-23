@@ -30,6 +30,9 @@
  */
 pub struct Solution {}
 
+// problem: https://leetcode.com/problems/surrounded-regions/
+// discuss: https://leetcode.com/problems/surrounded-regions/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 
 /*

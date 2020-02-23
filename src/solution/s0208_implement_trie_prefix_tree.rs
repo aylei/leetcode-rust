@@ -26,6 +26,9 @@
  */
 pub struct Solution {}
 
+// problem: https://leetcode.com/problems/implement-trie-prefix-tree/
+// discuss: https://leetcode.com/problems/implement-trie-prefix-tree/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 
 #[derive(Default)]

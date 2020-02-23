@@ -22,6 +22,9 @@
  */
 pub struct Solution {}
 
+// problem: https://leetcode.com/problems/factorial-trailing-zeroes/
+// discuss: https://leetcode.com/problems/factorial-trailing-zeroes/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 
 impl Solution {

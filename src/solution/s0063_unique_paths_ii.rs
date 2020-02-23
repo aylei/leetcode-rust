@@ -33,6 +33,9 @@
  */
 pub struct Solution {}
 
+// problem: https://leetcode.com/problems/unique-paths-ii/
+// discuss: https://leetcode.com/problems/unique-paths-ii/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 
 // Bottom-Up DP

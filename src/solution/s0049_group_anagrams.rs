@@ -24,6 +24,9 @@
  */
 pub struct Solution {}
 
+// problem: https://leetcode.com/problems/group-anagrams/
+// discuss: https://leetcode.com/problems/group-anagrams/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 
 use std::collections::HashMap;

@@ -28,6 +28,9 @@
  */
 pub struct Solution {}
 
+// problem: https://leetcode.com/problems/add-and-search-word-data-structure-design/
+// discuss: https://leetcode.com/problems/add-and-search-word-data-structure-design/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 
 struct WordDictionary {

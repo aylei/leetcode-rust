@@ -24,6 +24,9 @@
  */
 pub struct Solution {}
 
+// problem: https://leetcode.com/problems/single-number/
+// discuss: https://leetcode.com/problems/single-number/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 impl Solution {
     pub fn single_number(nums: Vec<i32>) -> i32 {

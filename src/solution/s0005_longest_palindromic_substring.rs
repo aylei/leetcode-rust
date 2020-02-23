@@ -21,6 +21,9 @@
  */
 pub struct Solution {}
 
+// problem: https://leetcode.com/problems/longest-palindromic-substring/
+// discuss: https://leetcode.com/problems/longest-palindromic-substring/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 
 impl Solution {

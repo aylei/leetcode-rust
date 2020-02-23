@@ -28,6 +28,9 @@
  */
 pub struct Solution {}
 
+// problem: https://leetcode.com/problems/spiral-matrix/
+// discuss: https://leetcode.com/problems/spiral-matrix/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 
 impl Solution {

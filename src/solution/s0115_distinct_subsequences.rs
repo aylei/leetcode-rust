@@ -48,6 +48,9 @@
  */
 pub struct Solution {}
 
+// problem: https://leetcode.com/problems/distinct-subsequences/
+// discuss: https://leetcode.com/problems/distinct-subsequences/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 
 /*

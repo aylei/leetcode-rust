@@ -45,6 +45,9 @@
  */
 pub struct Solution {}
 
+// problem: https://leetcode.com/problems/fibonacci-number/
+// discuss: https://leetcode.com/problems/fibonacci-number/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 
 impl Solution {

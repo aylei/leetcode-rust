@@ -13,6 +13,9 @@
 pub struct Solution {}
 use crate::util::linked_list::{to_list, ListNode};
 
+// problem: https://leetcode.com/problems/merge-two-sorted-lists/
+// discuss: https://leetcode.com/problems/merge-two-sorted-lists/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 
 // recursive will be much easier to understand

@@ -33,6 +33,9 @@
  */
 pub struct Solution {}
 
+// problem: https://leetcode.com/problems/palindrome-number/
+// discuss: https://leetcode.com/problems/palindrome-number/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 
 // TODO: not optimal, we only have to revert half of the string

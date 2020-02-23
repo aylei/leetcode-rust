@@ -37,6 +37,9 @@
  */
 pub struct Solution {}
 
+// problem: https://leetcode.com/problems/count-and-say/
+// discuss: https://leetcode.com/problems/count-and-say/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 
 use std::char::from_digit;

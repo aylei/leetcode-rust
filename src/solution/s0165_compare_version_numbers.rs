@@ -48,6 +48,9 @@
  */
 pub struct Solution {}
 
+// problem: https://leetcode.com/problems/compare-version-numbers/
+// discuss: https://leetcode.com/problems/compare-version-numbers/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 
 impl Solution {

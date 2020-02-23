@@ -42,6 +42,9 @@ use crate::util::tree::{to_tree, TreeNode};
 use std::cell::RefCell;
 use std::rc::Rc;
 
+// problem: https://leetcode.com/problems/binary-search-tree-iterator/
+// discuss: https://leetcode.com/problems/binary-search-tree-iterator/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 
 /*

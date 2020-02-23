@@ -32,6 +32,9 @@
  */
 pub struct Solution {}
 
+// problem: https://leetcode.com/problems/find-peak-element/
+// discuss: https://leetcode.com/problems/find-peak-element/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 
 impl Solution {

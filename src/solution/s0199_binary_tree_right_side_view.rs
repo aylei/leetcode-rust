@@ -20,6 +20,9 @@
 pub struct Solution {}
 use crate::util::tree::{to_tree, TreeNode};
 
+// problem: https://leetcode.com/problems/binary-tree-right-side-view/
+// discuss: https://leetcode.com/problems/binary-tree-right-side-view/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 
 use std::cell::RefCell;

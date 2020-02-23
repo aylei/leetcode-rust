@@ -35,6 +35,9 @@
  */
 pub struct Solution {}
 
+// problem: https://leetcode.com/problems/course-schedule/
+// discuss: https://leetcode.com/problems/course-schedule/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 
 // topology sort, BFS

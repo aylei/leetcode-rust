@@ -33,6 +33,9 @@
  */
 pub struct Solution {}
 
+// problem: https://leetcode.com/problems/integer-to-english-words/
+// discuss: https://leetcode.com/problems/integer-to-english-words/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 
 // static digits: Vec<&str> = vec!["One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine"];

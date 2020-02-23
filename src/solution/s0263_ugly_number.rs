@@ -37,6 +37,9 @@
  */
 pub struct Solution {}
 
+// problem: https://leetcode.com/problems/ugly-number/
+// discuss: https://leetcode.com/problems/ugly-number/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 
 impl Solution {

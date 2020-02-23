@@ -55,6 +55,9 @@
  */
 pub struct Solution {}
 
+// problem: https://leetcode.com/problems/gas-station/
+// discuss: https://leetcode.com/problems/gas-station/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 
 impl Solution {

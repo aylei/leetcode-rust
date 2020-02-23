@@ -31,6 +31,9 @@
  */
 pub struct Solution {}
 
+// problem: https://leetcode.com/problems/additive-number/
+// discuss: https://leetcode.com/problems/additive-number/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 
 // first_cut second_cut  third_cut

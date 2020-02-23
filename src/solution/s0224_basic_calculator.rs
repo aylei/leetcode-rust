@@ -33,6 +33,9 @@
  */
 pub struct Solution {}
 
+// problem: https://leetcode.com/problems/basic-calculator/
+// discuss: https://leetcode.com/problems/basic-calculator/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 
 #[derive(PartialEq, Copy, Clone, Debug)]

@@ -21,6 +21,9 @@
  */
 pub struct Solution {}
 
+// problem: https://leetcode.com/problems/merge-intervals/
+// discuss: https://leetcode.com/problems/merge-intervals/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 
 // Definition for an interval.

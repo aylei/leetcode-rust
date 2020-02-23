@@ -26,6 +26,9 @@
  */
 pub struct Solution {}
 
+// problem: https://leetcode.com/problems/substring-with-concatenation-of-all-words/
+// discuss: https://leetcode.com/problems/substring-with-concatenation-of-all-words/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 struct Term {
     expect: i32,

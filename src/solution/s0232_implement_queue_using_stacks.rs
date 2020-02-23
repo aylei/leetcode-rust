@@ -32,6 +32,9 @@
  */
 pub struct Solution {}
 
+// problem: https://leetcode.com/problems/implement-queue-using-stacks/
+// discuss: https://leetcode.com/problems/implement-queue-using-stacks/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 
 struct MyQueue {

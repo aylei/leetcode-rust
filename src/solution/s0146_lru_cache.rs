@@ -29,6 +29,9 @@
  *
  *
  */
+// problem: https://leetcode.com/problems/lru-cache/
+// discuss: https://leetcode.com/problems/lru-cache/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 
 /*

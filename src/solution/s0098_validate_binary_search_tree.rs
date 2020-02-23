@@ -37,6 +37,9 @@
  */
 pub struct Solution {}
 
+// problem: https://leetcode.com/problems/validate-binary-search-tree/
+// discuss: https://leetcode.com/problems/validate-binary-search-tree/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 
 // Definition for a binary tree node.

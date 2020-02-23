@@ -20,6 +20,9 @@
  */
 pub struct Solution {}
 
+// problem: https://leetcode.com/problems/minimum-window-substring/
+// discuss: https://leetcode.com/problems/minimum-window-substring/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 use std::collections::HashMap;
 impl Solution {

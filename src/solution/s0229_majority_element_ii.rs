@@ -20,6 +20,9 @@
  */
 pub struct Solution {}
 
+// problem: https://leetcode.com/problems/majority-element-ii/
+// discuss: https://leetcode.com/problems/majority-element-ii/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 
 impl Solution {

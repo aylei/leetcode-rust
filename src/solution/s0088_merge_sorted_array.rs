@@ -23,6 +23,9 @@
  */
 pub struct Solution {}
 
+// problem: https://leetcode.com/problems/merge-sorted-array/
+// discuss: https://leetcode.com/problems/merge-sorted-array/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 
 impl Solution {

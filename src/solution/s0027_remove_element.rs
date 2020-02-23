@@ -49,6 +49,9 @@
  */
 pub struct Solution {}
 
+// problem: https://leetcode.com/problems/remove-element/
+// discuss: https://leetcode.com/problems/remove-element/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 
 impl Solution {

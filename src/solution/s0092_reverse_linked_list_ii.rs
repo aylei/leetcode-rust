@@ -16,6 +16,9 @@
 pub struct Solution {}
 use crate::util::linked_list::{to_list, ListNode};
 
+// problem: https://leetcode.com/problems/reverse-linked-list-ii/
+// discuss: https://leetcode.com/problems/reverse-linked-list-ii/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 
 // Definition for singly-linked list.

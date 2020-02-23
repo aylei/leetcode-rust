@@ -22,6 +22,9 @@
  */
 pub struct Solution {}
 
+// problem: https://leetcode.com/problems/longest-increasing-subsequence/
+// discuss: https://leetcode.com/problems/longest-increasing-subsequence/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 // N^2, DP: L[i] = max(1 + L[j]) for j in [0, i) and nums[j] < nums[i]
 // N * logN, kick out strategy, maintain an increasing array, new elements kick out a formal one larger than it, if the new element is largest, expand the array

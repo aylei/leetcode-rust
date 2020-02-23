@@ -23,6 +23,9 @@
  */
 pub struct Solution {}
 
+// problem: https://leetcode.com/problems/word-search/
+// discuss: https://leetcode.com/problems/word-search/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 
 // TODO: use HashSet to record visited pos

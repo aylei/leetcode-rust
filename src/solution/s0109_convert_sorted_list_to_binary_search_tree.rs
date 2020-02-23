@@ -24,6 +24,9 @@ pub struct Solution {}
 use crate::util::linked_list::{to_list, ListNode};
 use crate::util::tree::{to_tree, TreeNode};
 
+// problem: https://leetcode.com/problems/convert-sorted-list-to-binary-search-tree/
+// discuss: https://leetcode.com/problems/convert-sorted-list-to-binary-search-tree/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 
 use std::cell::RefCell;

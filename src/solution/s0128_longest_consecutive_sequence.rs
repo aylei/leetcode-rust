@@ -16,6 +16,9 @@
  */
 pub struct Solution {}
 
+// problem: https://leetcode.com/problems/longest-consecutive-sequence/
+// discuss: https://leetcode.com/problems/longest-consecutive-sequence/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 
 /*

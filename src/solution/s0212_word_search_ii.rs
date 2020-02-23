@@ -34,6 +34,9 @@
  */
 pub struct Solution {}
 
+// problem: https://leetcode.com/problems/word-search-ii/
+// discuss: https://leetcode.com/problems/word-search-ii/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 // TODO
 

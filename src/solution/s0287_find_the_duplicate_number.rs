@@ -28,6 +28,9 @@
  */
 pub struct Solution {}
 
+// problem: https://leetcode.com/problems/find-the-duplicate-number/
+// discuss: https://leetcode.com/problems/find-the-duplicate-number/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 
 // 假如把值看做 next node 的下标, 那么:

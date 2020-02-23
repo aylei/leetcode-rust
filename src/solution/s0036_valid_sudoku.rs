@@ -64,6 +64,9 @@
  */
 pub struct Solution {}
 
+// problem: https://leetcode.com/problems/valid-sudoku/
+// discuss: https://leetcode.com/problems/valid-sudoku/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 
 // just brute force

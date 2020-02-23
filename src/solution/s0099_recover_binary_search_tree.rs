@@ -57,6 +57,9 @@ pub struct Solution {}
 
 use crate::util::tree::{to_tree, TreeNode};
 
+// problem: https://leetcode.com/problems/recover-binary-search-tree/
+// discuss: https://leetcode.com/problems/recover-binary-search-tree/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 
 /*

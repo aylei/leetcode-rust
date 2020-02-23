@@ -18,6 +18,9 @@
  */
 pub struct Solution {}
 
+// problem: https://leetcode.com/problems/maximal-square/
+// discuss: https://leetcode.com/problems/maximal-square/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 
 /*

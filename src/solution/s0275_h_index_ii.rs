@@ -29,6 +29,9 @@
  */
 pub struct Solution {}
 
+// problem: https://leetcode.com/problems/h-index-ii/
+// discuss: https://leetcode.com/problems/h-index-ii/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 
 impl Solution {

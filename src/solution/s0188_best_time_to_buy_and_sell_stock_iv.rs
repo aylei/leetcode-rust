@@ -27,6 +27,9 @@
  */
 pub struct Solution {}
 
+// problem: https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iv/
+// discuss: https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iv/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 
 /*

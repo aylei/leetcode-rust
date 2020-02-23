@@ -36,6 +36,11 @@
  */
 pub struct Solution {}
 
+// problem: https://leetcode.com/problems/search-a-2d-matrix/
+// discuss: https://leetcode.com/problems/search-a-2d-matrix/discuss/?currentPage=1&orderBy=most_votes&query=
+
+// submission codes start here
+
 impl Solution {
     pub fn search_matrix(matrix: Vec<Vec<i32>>, target: i32) -> bool {
         if matrix.is_empty() {

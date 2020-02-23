@@ -18,6 +18,9 @@
  */
 pub struct Solution {}
 
+// problem: https://leetcode.com/problems/single-number-iii/
+// discuss: https://leetcode.com/problems/single-number-iii/discuss/?currentPage=1&orderBy=most_votes&query=
+
 // submission codes start here
 
 impl Solution {
