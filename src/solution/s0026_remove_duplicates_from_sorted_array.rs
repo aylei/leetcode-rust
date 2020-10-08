@@ -63,6 +63,7 @@ impl Solution {
                 nums[slow] = nums[fast];
             }
         }
+        nums.truncate(slow + 1);
         (slow + 1) as i32
     }
 }
