@@ -59,7 +59,7 @@ impl Solution {
         if nums.len() < 1 {
             return 0;
         }
-        let (mut start, mut end) = (0_usize, nums.len() - 1);
+        let (mut start, mut end) = (0_usize, nums.len());
         while start < end {
             if nums[start] == val {
                 nums[start] = nums[end - 1];
