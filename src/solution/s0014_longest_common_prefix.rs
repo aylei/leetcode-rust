@@ -33,33 +33,44 @@ pub struct Solution {}
 // submission codes start here
 
 use std::str::Chars;
+
 impl Solution {
+    
     pub fn longest_common_prefix(strs: Vec<String>) -> String {
-        let mut prefix = String::new();
-        let mut iters: Vec<Chars> = strs.iter().map(|s| s.chars()).collect();
-        let mut curr_char: Option<char> = None;
-        if strs.len() < 1 {
-            return prefix;
-        }
-        loop {
-            curr_char.take().map(|ch| prefix.push(ch));
-            for iter in iters.iter_mut() {
-                let mut ch = iter.next();
-                if ch.is_none() {
-                    return prefix;
-                }
-                match curr_char {
-                    None => curr_char = ch.take(),
-                    Some(curr) => {
-                        if curr != ch.unwrap() {
-                            return prefix;
-                        }
-                    }
+        let mut chars = strs.first().expect("Ok").clone();
+        strs.iter().map(|v| v.chars()).fold(chars, |prev, cur: Chars| {
+            let len = longest_len(&(prev.chars()), &cur);
+            let mut ch = String::from("");
+            if len == 0 {
+                return ch;
+            }
+            
+
+
+            let mut iter_prev = prev.chars().into_iter();
+            let mut iter_cur = cur.into_iter();
+
+            for i in 0..=len-1 {
+                let p = iter_prev.next().unwrap();
+                if p == iter_cur.next().unwrap() {
+                   ch.push(p);
+                } else {
+                    break;
                 }
             }
-        }
+            return ch;
+        })
     }
 }
+pub fn longest_len<'a>(a: &'a Chars, b: &'a Chars) -> usize {
+    let a_len = a.clone().count();
+    let b_len = b.clone().count();
+    if a_len > b_len {
+        return b_len;
+    }
+    a_len
+}
+    
 
 // submission codes end
 
