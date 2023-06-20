@@ -189,12 +189,12 @@ fn parse_extra_use(code: &str) -> String {
 }
 
 fn parse_problem_link(problem: &Problem) -> String {
-    format!("https://leetcode.com/problems/{}/", problem.title_slug)
+    format!("https://leetcode.cn/problems/{}/", problem.title_slug)
 }
 
 fn parse_discuss_link(problem: &Problem) -> String {
     format!(
-        "https://leetcode.com/problems/{}/discuss/?currentPage=1&orderBy=most_votes&query=",
+        "https://leetcode.cn/problems/{}/discuss/?currentPage=1&orderBy=most_votes&query=",
         problem.title_slug
     )
 }
