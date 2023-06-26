@@ -189,12 +189,12 @@ fn parse_extra_use(code: &str) -> String {
 }
 
 fn parse_problem_link(problem: &Problem) -> String {
-    format!("https://leetcode.com/problems/{}/", problem.title_slug)
+    format!("https://leetcode.cn/problems/{}/", problem.title_slug)
 }
 
 fn parse_discuss_link(problem: &Problem) -> String {
     format!(
-        "https://leetcode.com/problems/{}/discuss/?currentPage=1&orderBy=most_votes&query=",
+        "https://leetcode.cn/problems/{}/discuss/?currentPage=1&orderBy=most_votes&query=",
         problem.title_slug
     )
 }
@@ -277,12 +277,19 @@ fn build_desc(content: &str) -> String {
 }
 
 fn deal_solving(id: &u32) {
-    let problem = fetcher::get_problem(*id).unwrap();
-    let file_name = format!(
-        "p{:04}_{}",
-        problem.question_id,
-        problem.title_slug.replace("-", "_")
-    );
+    let problem_pattern = Regex::new(format!(r"^p{:04}_[^.]+", id).as_str()).unwrap();
+    let mut file_name = String::new();
+    for entry in fs::read_dir("./src/problem").unwrap() {
+        let entry = entry.unwrap();
+        let fname = entry.file_name();
+        match problem_pattern.find(fname.to_str().unwrap()) {
+            Some(m) => {
+                file_name = String::from(m.as_str());
+                break;
+            },
+            None => continue,
+        }
+    }
     let file_path = Path::new("./src/problem").join(format!("{}.rs", file_name));
     // check problem/ existence
     if !file_path.exists() {
@@ -290,9 +297,8 @@ fn deal_solving(id: &u32) {
     }
     // check solution/ no existence
     let solution_name = format!(
-        "s{:04}_{}",
-        problem.question_id,
-        problem.title_slug.replace("-", "_")
+        "s{}",
+        &file_name[1..]
     );
     let solution_path = Path::new("./src/solution").join(format!("{}.rs", solution_name));
     if solution_path.exists() {

@@ -5,7 +5,7 @@ use serde_json::Value;
 use std::fmt::{Display, Error, Formatter};
 
 const PROBLEMS_URL: &str = "https://leetcode.com/api/problems/algorithms/";
-const GRAPHQL_URL: &str = "https://leetcode.com/graphql";
+const GRAPHQL_URL: &str = "https://leetcode.cn/graphql";
 const QUESTION_QUERY_STRING: &str = r#"
 query questionData($titleSlug: String!) {
     question(titleSlug: $titleSlug) {
@@ -17,6 +17,15 @@ query questionData($titleSlug: String!) {
     }
 }"#;
 const QUESTION_QUERY_OPERATION: &str = "questionData";
+
+const QUESTION_TRANSLATIONS_QUERY_STRING: &str = r#"
+query questionTranslations($titleSlug: String!) {
+    question(titleSlug: $titleSlug) {
+        translatedTitle
+        translatedContent
+    }
+}"#;
+const QUESTION_TRANSLATIONS_QUERY_OPERATION: &str = "questionTranslations";
 
 pub fn get_problem(frontend_question_id: u32) -> Option<Problem> {
     let problems = get_problems().unwrap();
@@ -36,11 +45,20 @@ pub fn get_problem(frontend_question_id: u32) -> Option<Problem> {
                 .unwrap()
                 .json()
                 .unwrap();
+            let resp_translation: RawTranslationProblem = client
+                .post(GRAPHQL_URL)
+                .json(&Query::question_translation_query(
+                    problem.stat.question_title_slug.as_ref().unwrap(),
+                ))
+                .send()
+                .unwrap()
+                .json()
+                .unwrap();
             return Some(Problem {
-                title: problem.stat.question_title.clone().unwrap(),
+                title: resp_translation.data.question.translated_title,
                 title_slug: problem.stat.question_title_slug.clone().unwrap(),
                 code_definition: serde_json::from_str(&resp.data.question.code_definition).unwrap(),
-                content: resp.data.question.content,
+                content: resp_translation.data.question.translated_content,
                 sample_test_case: resp.data.question.sample_test_case,
                 difficulty: problem.difficulty.to_string(),
                 question_id: problem.stat.frontend_question_id,
@@ -138,6 +156,13 @@ impl Query {
             query: QUESTION_QUERY_STRING.to_owned(),
         }
     }
+    fn question_translation_query(title_slug: &str) -> Query {
+        Query {
+            operation_name: QUESTION_TRANSLATIONS_QUERY_OPERATION.to_owned(),
+            variables: json!({ "titleSlug": title_slug }),
+            query: QUESTION_TRANSLATIONS_QUERY_STRING.to_owned(),
+        }
+    }
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -160,6 +185,24 @@ struct Question {
     sample_test_case: String,
     #[serde(rename = "metaData")]
     meta_data: String,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+struct RawTranslationProblem {
+    data: TranslationData,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+struct TranslationData {
+    question: TranslationQuestion,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+struct TranslationQuestion {
+    #[serde(rename = "translatedTitle")]
+    translated_title: String,
+    #[serde(rename = "translatedContent")]
+    translated_content: String,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
